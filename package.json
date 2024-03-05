@@ -1,5 +1,5 @@
 {
-  "name": "unknown-project",
+  "name": "@jaypie/core",
   "version": "0.0.1",
   "author": "Finlayson Studio",
   "main": "src/index.js",
