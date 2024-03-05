@@ -4,7 +4,7 @@ Utility package with constants, errors, functions and logging
 
 _In an ideal world the bird would be looking at the pie_
 
-## ℹ️ Introduction
+## 🐦‍⬛ Introduction
 
 Jaypie is an opinionated approach to application development centered around JavaScript and the JSON:API specification
 
