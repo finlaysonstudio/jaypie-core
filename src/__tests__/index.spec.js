@@ -2,7 +2,16 @@ import { afterEach, beforeEach, describe, expect, it } from "vitest";
 
 // Subject
 import index from "../index.js";
-import { CDK, getHeaderFrom, HTTP } from "../index.js";
+import {
+  CDK,
+  getHeaderFrom,
+  HTTP,
+  LOG_LEVEL,
+  log,
+  Logger,
+  moduleLogger,
+  silent,
+} from "../index.js";
 
 //
 //
@@ -46,13 +55,28 @@ describe("Jaypie Core", () => {
   });
   describe("Constants", () => {
     it("Exposes HTTP", () => {
-      expect(HTTP).toBeObject();
       expect(CDK).toBeObject();
+      expect(HTTP).toBeObject();
+      expect(LOG_LEVEL).toBeObject();
     });
   });
   describe("Functions", () => {
     it("Exposes getHeaderFrom", () => {
       expect(getHeaderFrom).toBeFunction();
+    });
+  });
+  describe("Logging", () => {
+    it("Exposes log, Logger, moduleLogger, and silent", () => {
+      expect(log).toBeObject();
+      expect(Logger).toBeFunction();
+      expect(moduleLogger).toBeObject();
+      expect(silent).toBeObject();
+    });
+    it("Logger can be instantiated", () => {
+      const logger = new Logger();
+      expect(logger).toBeObject();
+      expect(logger).toBeInstanceOf(Logger);
+      expect(logger.trace).toBeFunction();
     });
   });
 });

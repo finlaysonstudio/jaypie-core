@@ -16,7 +16,8 @@
     "test:spec:index": "vitest run ./src/__tests__/index.spec.js"
   },
   "dependencies": {
-    "@knowdev/http": "^1.4.0"
+    "@knowdev/http": "^1.4.0",
+    "@knowdev/log": "^1.0.2"
   },
   "devDependencies": {
     "eslint": "^8.57.0",
