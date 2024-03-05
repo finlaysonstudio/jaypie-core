@@ -2,6 +2,7 @@
   "name": "@jaypie/core",
   "version": "0.0.2",
   "author": "Finlayson Studio",
+  "type": "module",
   "main": "src/index.js",
   "scripts": {
     "format": "npm run format:package && npm run format:lint",
