@@ -16,3 +16,4 @@ const init = () => {
 export default init;
 
 export { default as HTTP } from "@knowdev/http";
+export { CDK } from "./constants";

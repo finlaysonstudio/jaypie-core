@@ -2,7 +2,7 @@ import { afterEach, beforeEach, describe, expect, it } from "vitest";
 
 // Subject
 import index from "../index.js";
-import { HTTP } from "../index.js";
+import { CDK, HTTP } from "../index.js";
 
 //
 //
@@ -47,6 +47,7 @@ describe("Jaypie Core", () => {
   describe("Constants", () => {
     it("Exposes HTTP", () => {
       expect(HTTP).toBeObject();
+      expect(CDK).toBeObject();
     });
   });
 });
