@@ -2,13 +2,13 @@
 
 Utility package with constants, errors, functions and logging
 
-_In an ideal world the bird would be looking at the pie_
-
 ## 🐦‍⬛ Introduction
 
 Jaypie is an opinionated approach to application development centered around JavaScript and the JSON:API specification
 
 Beyond that Jaypie core tries to stay neutral. Jaypie libraries such as `@jaypie/express` build off of this core into specific ecosystems
+
+In an ideal world the bird would be looking at the pie
 
 ## 📋 Usage
 
