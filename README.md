@@ -1,62 +1,36 @@
-# Init Zero - Library Template 🏫👥
+# Jaypie Core 🐦‍⬛🥧
 
-## ✏️ Repository Naming Conventions
+Utility package with constants, errors, functions and logging
 
-* `SPONSOR-PROJECT` most deliverable projects, even if the GitHub organization is `SPONSOR`. I.e., `company-PROJECT`
-* `hello-` simple demonstrations of a single technology
-* `lib-` libraries, even internal, if they are general purpose
-* `sandbox-` experiments or `poc-` proof of concept, a sandbox you want to preserve
-* `template-` blueprints for future projects
-* `toy-` educational projects
+_In an ideal world the bird would be looking at the pie_
 
-## 📋 Setup
+## ℹ️ Introduction
 
-1. Delete the things you don't need (usually `/express`, `/lambda`, or `/vue`)
-    * If you delete `/vue` you may delete `index.html`
-2. Customize the checklist below
-3. Run `./bin/init`
-4. Commit
+Jaypie is an opinionated approach to application development centered around JavaScript and the JSON:API specification
 
-### Customization Checklist ☑️
-
-* package.json - package name
-* README.md - Write a decent README. Use the sample readme below
-
-## 📝 Changelog
-
-| Date       | Version | Summary        |
-| ---------- | ------- | -------------- |
-|   3/4/2024 |   0.0.1 | Initial commit |
-
-## 🛣 Roadmap
-
-### Wishlist 🌠
-
-## 📎 Appendix
-
-### Sample Readme 📄
-
-* Search for `TODO` for customization points
-
-```markdown
-# Initial JavaScript Library Template 👥
-
-TODO: update the project header and optionally write a description here
+Beyond that Jaypie core tries to stay neutral. Jaypie libraries such as `@jaypie/express` build off of this core into specific ecosystems
 
 ## 📋 Usage
 
 ### Installation
 
 ```bash
-npm install MY_INITIAL_PACKAGE # TODO: rename this
+npm install @jaypie/core
 ```
+
+### Example
+
+TODO: Example should include one trivial and possibly one thorough example of using the library
+
+## 📖 Reference
+
+TODO: Reference should be a complete list of everything in the package
 
 ## 📝 Changelog
 
 | Date       | Version | Summary        |
 | ---------- | ------- | -------------- |
-| TODO: DATE |   0.0.1 | Initial commit |
-```
+|   3/5/2024 |   0.0.1 | Initial commit |
 
 ## 📜 License
 
