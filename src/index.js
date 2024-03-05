@@ -1,7 +1,11 @@
+import HTTP from "@knowdev/http";
+
 //
 //
 // Functions
 //
+
+const getHeaderFrom = HTTP.getHeaderFrom;
 
 const init = () => {
   // Placeholder
@@ -13,7 +17,12 @@ const init = () => {
 // Export
 //
 
+// Default
 export default init;
 
-export { default as HTTP } from "@knowdev/http";
+// Constants
 export { CDK } from "./constants";
+export { HTTP };
+
+// Functions
+export { getHeaderFrom };
