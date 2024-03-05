@@ -10,6 +10,9 @@ import {
   log,
   Logger,
   moduleLogger,
+  // eslint-disable-next-line import/named
+  NAME,
+  ProjectError,
   silent,
 } from "../index.js";
 
@@ -58,6 +61,17 @@ describe("Jaypie Core", () => {
       expect(CDK).toBeObject();
       expect(HTTP).toBeObject();
       expect(LOG_LEVEL).toBeObject();
+    });
+  });
+  describe("Errors", () => {
+    it("Exposes ProjectError", () => {
+      expect(ProjectError).toBeFunction();
+    });
+    it("Does not expose NAME", () => {
+      expect(NAME).toBeUndefined();
+      // If it does expose name:
+      //   - Delete this test if you want to expose NAME, especially if it is not "ProjectError"
+      //   - If you did not want to expose name and it is ProjectError, now is the time to fix it
     });
   });
   describe("Functions", () => {

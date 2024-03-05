@@ -29,6 +29,32 @@ export const LOG_LEVEL = log.LOG_LEVEL;
 // Functions
 export { getHeaderFrom };
 
+// Errors
+export {
+  BadGatewayError,
+  BadRequestError,
+  ConfigurationError,
+  ERROR,
+  ForbiddenError,
+  GatewayTimeoutError,
+  GoneError,
+  IllogicalError,
+  InternalError,
+  MethodNotAllowedError,
+  MultiError,
+  // NAME, // Do not export NAME
+  NotFoundError,
+  NotImplementedError,
+  ProjectError,
+  ProjectMultiError,
+  RejectedError,
+  TeapotError,
+  UnauthorizedError,
+  UnavailableError,
+  UnhandledError,
+  UnreachableCodeError,
+} from "@knowdev/errors";
+
 // Logging
 const Logger = log.Logger;
 const moduleLogger = log.moduleLogger;

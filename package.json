@@ -16,6 +16,7 @@
     "test:spec:index": "vitest run ./src/__tests__/index.spec.js"
   },
   "dependencies": {
+    "@knowdev/errors": "^2.0.2",
     "@knowdev/http": "^1.4.0",
     "@knowdev/log": "^1.0.2"
   },
