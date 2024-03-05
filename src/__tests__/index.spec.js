@@ -2,6 +2,7 @@ import { afterEach, beforeEach, describe, expect, it } from "vitest";
 
 // Subject
 import index from "../index.js";
+import { HTTP } from "../index.js";
 
 //
 //
@@ -42,5 +43,10 @@ describe("Jaypie Core", () => {
   });
   it("Right now it is true 🙃", () => {
     expect(index()).toBeTrue();
+  });
+  describe("Constants", () => {
+    it("Exposes HTTP", () => {
+      expect(HTTP).toBeObject();
+    });
   });
 });
