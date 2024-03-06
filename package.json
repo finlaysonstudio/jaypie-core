@@ -21,7 +21,8 @@
     "@knowdev/errors": "^2.0.2",
     "@knowdev/functions": "^1.0.0",
     "@knowdev/http": "^1.4.0",
-    "@knowdev/log": "^1.0.2"
+    "@knowdev/log": "^1.0.2",
+    "lodash.clonedeep": "^4.5.0"
   },
   "devDependencies": {
     "eslint": "^8.57.0",
