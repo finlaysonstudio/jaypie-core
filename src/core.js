@@ -28,6 +28,7 @@ export const LOG_LEVEL = log.LOG_LEVEL;
 const getHeaderFrom = HTTP.getHeaderFrom;
 export { getHeaderFrom };
 export { envBoolean, placeholders } from "@knowdev/functions";
+export { default as cloneDeep } from "lodash.clonedeep";
 
 // Errors
 export {

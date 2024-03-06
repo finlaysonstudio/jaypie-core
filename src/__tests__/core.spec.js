@@ -5,6 +5,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import core from "../core.js";
 import {
   CDK,
+  cloneDeep,
   envBoolean,
   getHeaderFrom,
   HTTP,
@@ -79,9 +80,16 @@ describe("Jaypie Core", () => {
   });
   describe("Functions", () => {
     it("Exposes envBoolean, getHeaderFrom, and placeholders", () => {
+      expect(cloneDeep).toBeFunction();
       expect(envBoolean).toBeFunction();
       expect(getHeaderFrom).toBeFunction();
       expect(placeholders).toBeFunction();
+    });
+    it("cloneDeep works as expected", () => {
+      const obj = { a: { b: { c: 1 } } };
+      const clone = cloneDeep(obj);
+      expect(clone).not.toBe(obj);
+      expect(clone).toEqual(obj);
     });
   });
   describe("Logging", () => {
