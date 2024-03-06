@@ -44,6 +44,7 @@ describe("Jaypie Handler Module", () => {
     it.todo("Will catch an unhandled thrown async error");
   });
   describe("Observability", () => {
+    it.todo("Does not log above trace in happy path");
     it.todo("Logs debug if a Jaypie error is caught"); // It is the thrower's responsibility to log the error. Throwing a Jaypie error is an intentional act and the right time to log
     it.todo("Logs fatal if a non-Jaypie error is caught");
   });
