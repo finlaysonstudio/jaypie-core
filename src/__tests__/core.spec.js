@@ -1,12 +1,12 @@
-import { afterEach, beforeEach, describe, expect, it } from "vitest";
+// eslint-disable-next-line no-unused-vars
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 // Subject
-import index from "../index.js";
+import core from "../core.js";
 import {
   CDK,
   getHeaderFrom,
   HTTP,
-  jaypieHandler,
   LOG_LEVEL,
   log,
   Logger,
@@ -15,7 +15,7 @@ import {
   NAME,
   ProjectError,
   silent,
-} from "../index.js";
+} from "../core.js";
 
 //
 //
@@ -47,15 +47,15 @@ afterEach(() => {
 
 describe("Jaypie Core", () => {
   it("Exposes a function", () => {
-    expect(index).toBeFunction();
+    expect(core).toBeFunction();
   });
   it("Function returns boolean", () => {
-    const result = index();
+    const result = core();
     expect(result).not.toBeUndefined();
     expect(result).toBeBoolean();
   });
   it("Right now it is true 🙃", () => {
-    expect(index()).toBeTrue();
+    expect(core()).toBeTrue();
   });
   describe("Constants", () => {
     it("Exposes HTTP", () => {
@@ -92,11 +92,6 @@ describe("Jaypie Core", () => {
       expect(logger).toBeObject();
       expect(logger).toBeInstanceOf(Logger);
       expect(logger.trace).toBeFunction();
-    });
-  });
-  describe("Jaypie", () => {
-    it("Exposes jaypieHandler", () => {
-      expect(jaypieHandler).toBeFunction();
     });
   });
 });
