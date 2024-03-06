@@ -6,8 +6,6 @@ import log from "@knowdev/log";
 // Functions
 //
 
-const getHeaderFrom = HTTP.getHeaderFrom;
-
 const init = () => {
   // Placeholder
   return true;
@@ -27,6 +25,7 @@ export { HTTP };
 export const LOG_LEVEL = log.LOG_LEVEL;
 
 // Functions
+const getHeaderFrom = HTTP.getHeaderFrom;
 export { getHeaderFrom };
 
 // Errors
