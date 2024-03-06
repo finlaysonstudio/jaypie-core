@@ -13,7 +13,8 @@
     "new": "hygen jaypie vite",
     "test": "vitest",
     "test:spec:constants": "vitest run ./src/__tests__/constants.spec.js",
-    "test:spec:index": "vitest run ./src/__tests__/index.spec.js"
+    "test:spec:index": "vitest run ./src/__tests__/index.spec.js",
+    "test:spec:jaypieHandler.module": "vitest run ./src//__tests__/jaypieHandler.module.spec.js"
   },
   "dependencies": {
     "@knowdev/errors": "^2.0.2",
