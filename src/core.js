@@ -27,6 +27,7 @@ export const LOG_LEVEL = log.LOG_LEVEL;
 // Functions
 const getHeaderFrom = HTTP.getHeaderFrom;
 export { getHeaderFrom };
+export { envBoolean, placeholders } from "@knowdev/functions";
 
 // Errors
 export {

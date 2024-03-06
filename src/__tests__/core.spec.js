@@ -5,6 +5,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import core from "../core.js";
 import {
   CDK,
+  envBoolean,
   getHeaderFrom,
   HTTP,
   LOG_LEVEL,
@@ -14,6 +15,7 @@ import {
   // eslint-disable-next-line import/named
   NAME,
   ProjectError,
+  placeholders,
   silent,
 } from "../core.js";
 
@@ -76,8 +78,10 @@ describe("Jaypie Core", () => {
     });
   });
   describe("Functions", () => {
-    it("Exposes getHeaderFrom", () => {
+    it("Exposes envBoolean, getHeaderFrom, and placeholders", () => {
+      expect(envBoolean).toBeFunction();
       expect(getHeaderFrom).toBeFunction();
+      expect(placeholders).toBeFunction();
     });
   });
   describe("Logging", () => {
