@@ -282,10 +282,70 @@ describe("Jaypie Handler Module", () => {
         });
       });
       describe("Setup", () => {
-        it.todo("Calls setup functions in order");
-        it.todo("Handles any thrown errors");
-        it.todo("Will wrap unhandled setup errors in UnhandledError");
-        it.todo("Will skip any setup functions that are not functions");
+        it("Calls setup functions in order", async () => {
+          // Arrange
+          const mockSetup1 = vi.fn(async () => {});
+          const mockSetup2 = vi.fn(async () => {});
+          const handler = jaypieHandler(() => {}, {
+            setup: [mockSetup1, mockSetup2],
+          });
+          // Act
+          await handler();
+          // Assert
+          expect(mockSetup1).toHaveBeenCalledTimes(1);
+          expect(mockSetup2).toHaveBeenCalledTimes(1);
+          expect(mockSetup1).toHaveBeenCalledBefore(mockSetup2);
+        });
+        it("Will wrap unhandled setup errors in UnhandledError", async () => {
+          // Arrange
+          const handler = jaypieHandler(() => {}, {
+            setup: [
+              async () => {
+                throw new Error("Sorpresa!");
+              },
+            ],
+          });
+          // Act
+          try {
+            await handler();
+          } catch (error) {
+            // Assert
+            expect(error.isProjectError).toBeTrue();
+            expect(error.status).toBe(HTTP.CODE.INTERNAL_ERROR);
+            expect(error.message).not.toBe("Sorpresa!");
+          }
+          expect.assertions(3);
+        });
+        it("Will re-throw a Jaypie error", async () => {
+          // Arrange
+          const handler = jaypieHandler(() => {}, {
+            setup: [
+              async () => {
+                throw new ProjectError("Sorpresa!");
+              },
+            ],
+          });
+          // Act
+          try {
+            await handler();
+          } catch (error) {
+            // Assert
+            expect(error.isProjectError).toBeTrue();
+            expect(error.status).toBe(HTTP.CODE.INTERNAL_ERROR);
+            expect(error.message).toBe("Sorpresa!");
+          }
+          expect.assertions(3);
+        });
+        it("Will skip any setup functions that are not functions", async () => {
+          // Arrange
+          const handler = jaypieHandler(() => {}, {
+            setup: [null, undefined, 42, "string", {}, []],
+          });
+          // Act
+          await handler();
+          // Assert
+          expect(log.warn).toHaveBeenCalledTimes(6);
+        });
       });
       describe("Teardown", () => {
         it.todo("Calls teardown functions in order");
