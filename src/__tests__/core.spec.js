@@ -7,6 +7,7 @@ import {
   CDK,
   cloneDeep,
   envBoolean,
+  force,
   getHeaderFrom,
   HTTP,
   LOG_LEVEL,
@@ -18,6 +19,8 @@ import {
   ProjectError,
   placeholders,
   silent,
+  validate,
+  VALIDATE,
 } from "../core.js";
 
 //
@@ -65,6 +68,7 @@ describe("Jaypie Core", () => {
       expect(CDK).toBeObject();
       expect(HTTP).toBeObject();
       expect(LOG_LEVEL).toBeObject();
+      expect(VALIDATE).toBeObject();
     });
   });
   describe("Errors", () => {
@@ -82,8 +86,10 @@ describe("Jaypie Core", () => {
     it("Exposes envBoolean, getHeaderFrom, and placeholders", () => {
       expect(cloneDeep).toBeFunction();
       expect(envBoolean).toBeFunction();
+      expect(force).toBeFunction();
       expect(getHeaderFrom).toBeFunction();
       expect(placeholders).toBeFunction();
+      expect(validate).toBeFunction();
     });
     it("cloneDeep works as expected", () => {
       const obj = { a: { b: { c: 1 } } };

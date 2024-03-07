@@ -1,3 +1,4 @@
+import validate from "@knowdev/arguments";
 import HTTP from "@knowdev/http";
 import log from "@knowdev/log";
 
@@ -20,13 +21,16 @@ const init = () => {
 export default init;
 
 // Constants
+const VALIDATE = validate.TYPE;
+
 export { CDK } from "./constants.js";
-export { HTTP };
+export { HTTP, VALIDATE };
 export const LOG_LEVEL = log.LOG_LEVEL;
 
 // Functions
+const force = validate.force;
 const getHeaderFrom = HTTP.getHeaderFrom;
-export { getHeaderFrom };
+export { force, getHeaderFrom, validate };
 export { envBoolean, placeholders } from "@knowdev/functions";
 export { default as cloneDeep } from "lodash.clonedeep";
 
