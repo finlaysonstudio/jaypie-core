@@ -42,8 +42,35 @@ describe("Jaypie Handler Module", () => {
     });
   });
   describe("Error Conditions", () => {
-    it.todo("Will catch an unhandled thrown error");
-    it.todo("Will catch an unhandled thrown async error");
+    it("Will catch an unhandled thrown error", async () => {
+      // Arrange
+      const handler = jaypieHandler(() => {
+        throw new Error("Sorpresa!");
+      });
+      // Act
+      try {
+        await handler();
+      } catch (error) {
+        // Assert
+        expect(error.isProjectError).toBeTrue();
+        expect(error.status).toBe(HTTP.CODE.INTERNAL_ERROR);
+      }
+      expect.assertions(2);
+    });
+    it("Will catch an unhandled thrown async error", async () => {
+      // Arrange
+      const handler = jaypieHandler(async () => {
+        throw new Error("Sorpresa!");
+      });
+      // Act
+      try {
+        await handler();
+      } catch (error) {
+        // Assert
+        expect(error.isProjectError).toBeTrue();
+        expect(error.status).toBe(HTTP.CODE.INTERNAL_ERROR);
+      }
+    });
   });
   describe("Observability", () => {
     it.todo("Does not log above trace in happy path");
