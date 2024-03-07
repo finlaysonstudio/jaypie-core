@@ -63,19 +63,32 @@ const jaypieHandler = (
     }
 
     // Lifecycle: Validate
-    if (Array.isArray(validate) && validate.length > 0) {
-      log.trace(`[handler] Validate`);
-      for (const validator of validate) {
-        if (typeof validator === "function") {
-          const result = await validator(...args);
-          if (result === false) {
-            log.warn("[handler] Validation failed");
-            throw new BadRequestError();
+    try {
+      if (Array.isArray(validate) && validate.length > 0) {
+        log.trace(`[handler] Validate`);
+        for (const validator of validate) {
+          if (typeof validator === "function") {
+            const result = await validator(...args);
+            if (result === false) {
+              log.warn("[handler] Validation failed");
+              throw new BadRequestError();
+            }
+          } else {
+            log.warn("[handler] Validate skipping non-function in array");
+            log.var({ skippedValidate: validator });
           }
-        } else {
-          log.warn("[handler] Validate skipping non-function in array");
-          log.var({ skippedValidate: validator });
         }
+      }
+    } catch (error) {
+      // Log and re-throw
+      if (error.isProjectError) {
+        log.debug("[handler] Caught Jaypie error");
+        throw error;
+      } else {
+        // otherwise, respond as unhandled
+        log.fatal("[handler] Caught unhandled error");
+        log.var({ unhandedError: error.message });
+        throw new UnhandledError();
       }
     }
 
