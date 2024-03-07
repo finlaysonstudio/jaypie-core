@@ -1,6 +1,8 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
-import { HTTP } from "../core.js";
+import { spyLog, restoreLog } from "../../test/mockLog.js"; // test.mockLog
+
+import { HTTP, ProjectError, log } from "../core.js";
 
 // Subject
 import jaypieHandler from "../jaypieHandler.module.js";
@@ -23,9 +25,11 @@ import jaypieHandler from "../jaypieHandler.module.js";
 const DEFAULT_ENV = process.env;
 beforeEach(() => {
   process.env = { ...process.env };
+  spyLog(log);
 });
 afterEach(() => {
   process.env = DEFAULT_ENV;
+  restoreLog(log);
   vi.resetAllMocks();
 });
 
@@ -73,9 +77,47 @@ describe("Jaypie Handler Module", () => {
     });
   });
   describe("Observability", () => {
-    it.todo("Does not log above trace in happy path");
-    it.todo("Logs debug if a Jaypie error is caught"); // It is the thrower's responsibility to log the error. Throwing a Jaypie error is an intentional act and the right time to log
-    it.todo("Logs fatal if a non-Jaypie error is caught");
+    it("Does not log above trace in happy path", async () => {
+      // Arrange
+      const handler = jaypieHandler(() => {});
+      // Act
+      await handler();
+      // Assert
+      expect(log.trace).toHaveBeenCalledTimes(2);
+      expect(log.debug).not.toHaveBeenCalled();
+      expect(log.info).not.toHaveBeenCalled();
+      expect(log.warn).not.toHaveBeenCalled();
+      expect(log.error).not.toHaveBeenCalled();
+      expect(log.fatal).not.toHaveBeenCalled();
+    });
+    it("Logs debug if a Jaypie error is caught", async () => {
+      // Arrange
+      const handler = jaypieHandler(() => {
+        throw new ProjectError("Sorpresa!");
+      });
+      // Act
+      try {
+        await handler();
+      } catch (error) {
+        // Assert
+        expect(log.debug).toHaveBeenCalledTimes(1);
+      }
+      expect.assertions(1);
+    });
+    it("Logs fatal if a non-Jaypie error is caught", async () => {
+      // Arrange
+      const handler = jaypieHandler(() => {
+        throw new Error("Sorpresa!");
+      });
+      // Act
+      try {
+        await handler();
+      } catch (error) {
+        // Assert
+        expect(log.fatal).toHaveBeenCalledTimes(1);
+      }
+      expect.assertions(1);
+    });
   });
   describe("Happy Paths", () => {
     it("Calls a function I pass it", async () => {
