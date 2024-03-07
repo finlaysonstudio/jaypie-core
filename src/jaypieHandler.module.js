@@ -132,9 +132,13 @@ const jaypieHandler = (
             try {
               await teardownFunction(...args);
             } catch (error) {
-              log.error("[handler] Teardown error");
-              log.var({ error });
               // TODO: this should throw if it is the first error
+              if (error.isProjectError) {
+                log.debug("[handler] Teardown error");
+              } else {
+                log.error("[handler] Unhandled teardown error");
+                log.var({ unhandedError: error.message });
+              }
             }
           } else {
             log.warn("[handler] Teardown skipping non-function in array");
