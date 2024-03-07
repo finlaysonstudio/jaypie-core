@@ -132,7 +132,6 @@ const jaypieHandler = (
             try {
               await teardownFunction(...args);
             } catch (error) {
-              // TODO: this should throw if it is the first error
               if (error.isProjectError) {
                 log.debug("[handler] Teardown error");
               } else {

@@ -455,7 +455,6 @@ describe("Jaypie Handler Module", () => {
           // Assert
           expect(log.warn).toHaveBeenCalledTimes(6);
         });
-        it.todo("Handler will throw if teardown is the only thing that throws");
       });
     });
   });
