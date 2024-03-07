@@ -30,6 +30,7 @@ TODO: Reference should be a complete list of everything in the package
 
 | Date       | Version | Summary        |
 | ---------- | ------- | -------------- |
+|   3/5/2024 |   0.1.0 | Export all the core helpers |
 |   3/5/2024 |   0.0.1 | Initial commit |
 
 ## 📜 License
