@@ -20,7 +20,7 @@ const init = () => {
 export default init;
 
 // Constants
-export { CDK } from "./constants";
+export { CDK } from "./constants.js";
 export { HTTP };
 export const LOG_LEVEL = log.LOG_LEVEL;
 
