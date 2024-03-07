@@ -348,14 +348,114 @@ describe("Jaypie Handler Module", () => {
         });
       });
       describe("Teardown", () => {
-        it.todo("Calls teardown functions in order");
-        it.todo("Calls all functions even on error");
-        it.todo("Will call teardown functions even if setup throws an error");
-        it.todo(
-          "Will call teardown functions even if the handler throws an error",
-        );
-        it.todo("Will NOT call teardown functions if validate throws an error");
-        it.todo("Will skip any teardown functions that are not functions");
+        it("Calls teardown functions in order", async () => {
+          // Arrange
+          const mockTeardown1 = vi.fn(async () => {});
+          const mockTeardown2 = vi.fn(async () => {});
+          const handler = jaypieHandler(() => {}, {
+            teardown: [mockTeardown1, mockTeardown2],
+          });
+          // Act
+          await handler();
+          // Assert
+          expect(mockTeardown1).toHaveBeenCalledTimes(1);
+          expect(mockTeardown2).toHaveBeenCalledTimes(1);
+          expect(mockTeardown1).toHaveBeenCalledBefore(mockTeardown2);
+        });
+        it("Calls all functions even on error", async () => {
+          // Arrange
+          const mockTeardown1 = vi.fn(async () => {});
+          const mockTeardown2 = vi.fn(async () => {
+            throw new Error("Sorpresa!");
+          });
+          const mockTeardown3 = vi.fn(async () => {});
+          const handler = jaypieHandler(() => {}, {
+            teardown: [mockTeardown1, mockTeardown2, mockTeardown3],
+          });
+          // Act
+          await handler();
+          // Assert
+          expect(mockTeardown1).toHaveBeenCalledTimes(1);
+          expect(mockTeardown2).toHaveBeenCalledTimes(1);
+          expect(mockTeardown3).toHaveBeenCalledTimes(1);
+        });
+        it("Will call teardown functions even if setup throws an error", async () => {
+          // Arrange
+          const mockTeardown1 = vi.fn(async () => {});
+          const mockTeardown2 = vi.fn(async () => {});
+          const handler = jaypieHandler(() => {}, {
+            setup: [
+              async () => {
+                throw new Error("Sorpresa!");
+              },
+            ],
+            teardown: [mockTeardown1, mockTeardown2],
+          });
+          // Act
+          try {
+            await handler();
+          } catch (error) {
+            // Assert
+            expect(mockTeardown1).toHaveBeenCalledTimes(1);
+            expect(mockTeardown2).toHaveBeenCalledTimes(1);
+          }
+          expect.assertions(2);
+        });
+        it("Will call teardown functions even if the handler throws an error", async () => {
+          // Arrange
+          const mockTeardown1 = vi.fn(async () => {});
+          const mockTeardown2 = vi.fn(async () => {});
+          const handler = jaypieHandler(
+            () => {
+              throw new Error("Sorpresa!");
+            },
+            {
+              teardown: [mockTeardown1, mockTeardown2],
+            },
+          );
+          // Act
+          try {
+            await handler();
+          } catch (error) {
+            // Assert
+            expect(mockTeardown1).toHaveBeenCalledTimes(1);
+            expect(mockTeardown2).toHaveBeenCalledTimes(1);
+          }
+          expect.assertions(2);
+        });
+        it("Will NOT call teardown functions if validate throws an error", async () => {
+          // Arrange
+          const mockTeardown1 = vi.fn(async () => {});
+          const mockTeardown2 = vi.fn(async () => {});
+          const handler = jaypieHandler(() => {}, {
+            validate: [
+              async () => {
+                throw new Error("Sorpresa!");
+              },
+            ],
+            teardown: [mockTeardown1, mockTeardown2],
+          });
+          // Act
+          try {
+            await handler();
+          } catch (error) {
+            // Assert
+            expect(mockTeardown1).not.toHaveBeenCalled();
+            expect(mockTeardown2).not.toHaveBeenCalled();
+          }
+          expect.assertions(2);
+        });
+        it("Will skip any teardown functions that are not functions", async () => {
+          // Arrange
+          const handler = jaypieHandler(() => {}, {
+            teardown: [null, undefined, 42, "string", {}, []],
+          });
+          // Act
+          await handler();
+          // Assert
+          expect(log.warn).toHaveBeenCalledTimes(6);
+        });
+        it.todo("Handler will throw if teardown is the only thing that throws");
       });
     });
   });
