@@ -1,5 +1,6 @@
-// eslint-disable-next-line no-unused-vars
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+
+import { HTTP } from "../core.js";
 
 // Subject
 import jaypieHandler from "../jaypieHandler.module.js";
@@ -25,6 +26,7 @@ beforeEach(() => {
 });
 afterEach(() => {
   process.env = DEFAULT_ENV;
+  vi.resetAllMocks();
 });
 
 //
@@ -49,10 +51,44 @@ describe("Jaypie Handler Module", () => {
     it.todo("Logs fatal if a non-Jaypie error is caught");
   });
   describe("Happy Paths", () => {
-    it.todo("Calls a function I pass it");
-    it.todo("Awaits a function I pass it");
-    it.todo("Returns what the function returns");
-    it.todo("Returns what async functions resolve");
+    it("Calls a function I pass it", async () => {
+      // Arrange
+      const mockFunction = vi.fn();
+      const handler = jaypieHandler(mockFunction);
+      const args = [1, 2, 3];
+      // Act
+      await handler(...args);
+      // Assert
+      expect(mockFunction).toHaveBeenCalledTimes(1);
+      expect(mockFunction).toHaveBeenCalledWith(...args);
+    });
+    it("Awaits a function I pass it", async () => {
+      // Arrange
+      const mockFunction = vi.fn(async () => {});
+      const handler = jaypieHandler(mockFunction);
+      // Act
+      await handler();
+      // Assert
+      expect(mockFunction).toHaveBeenCalledTimes(1);
+    });
+    it("Returns what the function returns", async () => {
+      // Arrange
+      const mockFunction = vi.fn(() => 42);
+      const handler = jaypieHandler(mockFunction);
+      // Act
+      const result = await handler();
+      // Assert
+      expect(result).toBe(42);
+    });
+    it("Returns what async functions resolve", async () => {
+      // Arrange
+      const mockFunction = vi.fn(async () => 42);
+      const handler = jaypieHandler(mockFunction);
+      // Act
+      const result = await handler();
+      // Assert
+      expect(result).toBe(42);
+    });
   });
   describe("Features", () => {
     describe("Lifecycle Functions", () => {
@@ -89,6 +125,38 @@ describe("Jaypie Handler Module", () => {
         it.todo("Will NOT call teardown functions if validate throws an error");
         it.todo("Will skip any teardown functions that are not functions");
       });
+    });
+  });
+  describe("Edge Cases", () => {
+    it("Literally waits if I pass it a timeout", async () => {
+      // Arrange
+      const handler = jaypieHandler(async () => {
+        // 200ms is unnoticeable to us, but will catch anything that tries to log after the fact
+        await new Promise((resolve) => setTimeout(resolve, 200));
+      });
+      // Act
+      const start = Date.now();
+      await handler();
+      const end = Date.now();
+      // Assert
+      expect(end - start).toBeGreaterThanOrEqual(200);
+    });
+    it("Throws an unhandled error if async throws after a delay", async () => {
+      // Arrange
+      const handler = jaypieHandler(async () => {
+        // 200ms is unnoticeable to us, but will catch anything that tries to log after the fact
+        await new Promise((resolve) => setTimeout(resolve, 200));
+        throw new Error("Sorpresa!");
+      });
+      // Act
+      try {
+        await handler();
+      } catch (error) {
+        // Assert
+        expect(error.isProjectError).toBeTrue();
+        expect(error.status).toBe(HTTP.CODE.INTERNAL_ERROR);
+      }
+      expect.assertions(2);
     });
   });
 });
