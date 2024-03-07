@@ -1,4 +1,10 @@
-import { BadRequestError, envBoolean, log, UnavailableError } from "./core.js";
+import {
+  BadRequestError,
+  envBoolean,
+  log,
+  UnavailableError,
+  UnhandledError,
+} from "./core.js";
 
 //
 //
@@ -97,12 +103,13 @@ const jaypieHandler = (
       // Log and re-throw
       if (error.isProjectError) {
         log.debug("[handler] Caught Jaypie error");
+        throw error;
       } else {
         // otherwise, respond as unhandled
         log.fatal("[handler] Caught unhandled error");
         log.var({ unhandedError: error.message });
+        throw new UnhandledError();
       }
-      throw error;
     } finally {
       // Teardown
       if (Array.isArray(teardown) && teardown.length > 0) {
