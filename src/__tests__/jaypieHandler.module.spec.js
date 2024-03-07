@@ -70,11 +70,13 @@ describe("Jaypie Handler Module", () => {
       describe("Validate", () => {
         it.todo("Calls validate functions in order");
         it.todo("Handles any thrown errors");
+        it.todo("Will wrap unhandled validate errors in UnhandledError");
         it.todo("Will skip any validate functions that are not functions");
       });
       describe("Setup", () => {
         it.todo("Calls setup functions in order");
         it.todo("Handles any thrown errors");
+        it.todo("Will wrap unhandled setup errors in UnhandledError");
         it.todo("Will skip any setup functions that are not functions");
       });
       describe("Teardown", () => {
