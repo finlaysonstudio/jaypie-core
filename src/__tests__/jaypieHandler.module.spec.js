@@ -2,7 +2,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { spyLog, restoreLog } from "../../test/mockLog.js"; // test.mockLog
 
-import { HTTP, log, ProjectError, UnavailableError } from "../core.js";
+import { HTTP, log, ProjectError } from "../core.js";
 
 // Subject
 import jaypieHandler from "../jaypieHandler.module.js";
