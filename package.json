@@ -18,6 +18,7 @@
     "test:spec:jaypieHandler.module": "vitest run ./src//__tests__/jaypieHandler.module.spec.js"
   },
   "dependencies": {
+    "@knowdev/arguments": "^1.3.0",
     "@knowdev/errors": "^2.0.2",
     "@knowdev/functions": "^1.0.0",
     "@knowdev/http": "^1.4.0",
