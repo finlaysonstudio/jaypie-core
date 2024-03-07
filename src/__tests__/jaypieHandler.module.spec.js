@@ -2,7 +2,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { spyLog, restoreLog } from "../../test/mockLog.js"; // test.mockLog
 
-import { HTTP, ProjectError, log } from "../core.js";
+import { HTTP, log, ProjectError, UnavailableError } from "../core.js";
 
 // Subject
 import jaypieHandler from "../jaypieHandler.module.js";
@@ -162,15 +162,41 @@ describe("Jaypie Handler Module", () => {
   describe("Features", () => {
     describe("Lifecycle Functions", () => {
       describe("Unavailable mode", () => {
-        it.todo(
-          "Works as normal when process.env.PROJECT_UNAVAILABLE is set to false",
-        );
-        it.todo(
-          "Will respond with a 503 if process.env.PROJECT_UNAVAILABLE is set to true",
-        );
-        it.todo(
-          "Will respond with a 503 if unavailable=true is passed to the handler",
-        );
+        it("Works as normal when process.env.PROJECT_UNAVAILABLE is set to false", async () => {
+          // Arrange
+          const handler = jaypieHandler(() => {});
+          // Act
+          await handler();
+          // Assert
+          expect(log.warn).not.toHaveBeenCalled();
+        });
+        it("Will throw 503 UnavailableError if process.env.PROJECT_UNAVAILABLE is set to true", async () => {
+          // Arrange
+          process.env.PROJECT_UNAVAILABLE = "true";
+          const handler = jaypieHandler(() => {});
+          // Act
+          try {
+            await handler();
+          } catch (error) {
+            // Assert
+            expect(error.isProjectError).toBeTrue();
+            expect(error.status).toBe(HTTP.CODE.UNAVAILABLE);
+          }
+          expect.assertions(2);
+        });
+        it("Will throw 503 UnavailableError if unavailable=true is passed to the handler", async () => {
+          // Arrange
+          const handler = jaypieHandler(() => {}, { unavailable: true });
+          // Act
+          try {
+            await handler();
+          } catch (error) {
+            // Assert
+            expect(error.isProjectError).toBeTrue();
+            expect(error.status).toBe(HTTP.CODE.UNAVAILABLE);
+          }
+          expect.assertions(2);
+        });
       });
       describe("Validate", () => {
         it.todo("Calls validate functions in order");
