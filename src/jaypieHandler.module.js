@@ -49,6 +49,7 @@ const jaypieHandler = (
   // Setup
   //
 
+  moduleLogger.trace(`Setting up jaypie handler for ${name}...`);
   return async (...args) => {
     //
     //
