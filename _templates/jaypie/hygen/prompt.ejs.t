@@ -1,5 +1,5 @@
 ---
-to: <%= hygen %>/<%= generator %>/<%= action %>/prompt.js
+to: <%= hygen %>/<%= generator %>/<%= action %>/prompt.cjs
 ---
 // see types of prompts:
 // https://github.com/enquirer/enquirer/tree/master/examples
