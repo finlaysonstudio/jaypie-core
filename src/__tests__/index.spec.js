@@ -7,7 +7,7 @@ import {
   getHeaderFrom,
   HTTP,
   jaypieHandler,
-  LOG_LEVEL,
+  LOG,
   log,
   Logger,
   moduleLogger,
@@ -61,7 +61,7 @@ describe("Jaypie Core", () => {
     it("Exposes HTTP", () => {
       expect(CDK).toBeObject();
       expect(HTTP).toBeObject();
-      expect(LOG_LEVEL).toBeObject();
+      expect(LOG).toBeObject();
     });
   });
   describe("Errors", () => {

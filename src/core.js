@@ -25,7 +25,10 @@ const VALIDATE = validate.TYPE;
 
 export { CDK } from "./constants.js";
 export { HTTP, VALIDATE };
-export const LOG_LEVEL = log.LOG_LEVEL;
+export const LOG = {
+  FORMAT: log.LOG_FORMAT,
+  LEVEL: log.LOG_LEVEL,
+};
 
 // Functions
 const force = validate.force;

@@ -10,7 +10,7 @@ import {
   force,
   getHeaderFrom,
   HTTP,
-  LOG_LEVEL,
+  LOG,
   log,
   Logger,
   moduleLogger,
@@ -64,10 +64,10 @@ describe("Jaypie Core", () => {
     expect(core()).toBeTrue();
   });
   describe("Constants", () => {
-    it("Exposes HTTP", () => {
+    it("Exposes constants", () => {
       expect(CDK).toBeObject();
       expect(HTTP).toBeObject();
-      expect(LOG_LEVEL).toBeObject();
+      expect(LOG).toBeObject();
       expect(VALIDATE).toBeObject();
     });
   });
