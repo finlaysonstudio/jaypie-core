@@ -3,7 +3,8 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 // Subject
 import core from "../core.js";
-import { CDK, log } from "../core.js";
+// eslint-disable-next-line import/named
+import { CDK, exportedLog, log, moduleLogger } from "../core.js";
 
 //
 //
@@ -51,17 +52,32 @@ describe("Jaypie Core", () => {
     });
   });
   describe("Logger", () => {
-    it("Exposes the knowdev logger", () => {
-      expect(log.debug).toBeFunction();
-      expect(log.error).toBeFunction();
-      expect(log.fatal).toBeFunction();
-      expect(log.info).toBeFunction();
-      expect(log.tag).toBeFunction();
-      expect(log.trace).toBeFunction();
-      expect(log.untag).toBeFunction();
-      expect(log.var).toBeFunction();
-      expect(log.warn).toBeFunction();
-      expect(log.with).toBeFunction();
+    it("Exports a knowdev logger for internal use", () => {
+      expect(moduleLogger.debug).toBeFunction();
+      expect(moduleLogger.error).toBeFunction();
+      expect(moduleLogger.fatal).toBeFunction();
+      expect(moduleLogger.info).toBeFunction();
+      expect(moduleLogger.tag).toBeFunction();
+      expect(moduleLogger.trace).toBeFunction();
+      expect(moduleLogger.untag).toBeFunction();
+      expect(moduleLogger.var).toBeFunction();
+      expect(moduleLogger.warn).toBeFunction();
+      expect(moduleLogger.with).toBeFunction();
+    });
+    it("Exports a knowdev logger for external use", () => {
+      expect(exportedLog.debug).toBeFunction();
+      expect(exportedLog.error).toBeFunction();
+      expect(exportedLog.fatal).toBeFunction();
+      expect(exportedLog.info).toBeFunction();
+      expect(exportedLog.tag).toBeFunction();
+      expect(exportedLog.trace).toBeFunction();
+      expect(exportedLog.untag).toBeFunction();
+      expect(exportedLog.var).toBeFunction();
+      expect(exportedLog.warn).toBeFunction();
+      expect(exportedLog.with).toBeFunction();
+    });
+    it("Does NOT export log", () => {
+      expect(log).toBeUndefined();
     });
   });
 });

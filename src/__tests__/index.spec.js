@@ -4,6 +4,8 @@ import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import index from "../index.js";
 import {
   CDK,
+  // eslint-disable-next-line import/named
+  exportedLog,
   getHeaderFrom,
   HTTP,
   jaypieHandler,
@@ -92,6 +94,9 @@ describe("Jaypie Core", () => {
       expect(logger).toBeObject();
       expect(logger).toBeInstanceOf(Logger);
       expect(logger.trace).toBeFunction();
+    });
+    it("Does not expose exportedLog", () => {
+      expect(exportedLog).toBeUndefined();
     });
   });
   describe("Jaypie", () => {

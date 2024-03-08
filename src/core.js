@@ -25,7 +25,13 @@ export default init;
 const log = new Logger({
   format: LOG.FORMAT.JSON,
 });
-export { log };
+
+export const exportedLog = {
+  ...log,
+  tag: log.tag,
+  untag: log.untag,
+  with: log.with,
+};
 
 let moduleLogger;
 if (
