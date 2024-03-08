@@ -16,6 +16,7 @@
     "test:spec:core": "vitest run ./src/__tests__/core.spec.js",
     "test:spec:index": "vitest run ./src/__tests__/index.spec.js",
     "test:spec:jaypieHandler.module": "vitest run ./src//__tests__/jaypieHandler.module.spec.js",
+    "test:spec:knowdev.lib": "vitest run ./src/core/__tests__/knowdev.lib.spec.js",
     "test:spec:lambdaHandler.module": "vitest run ./src/__tests__/lambdaHandler.module.spec.js"
   },
   "dependencies": {
