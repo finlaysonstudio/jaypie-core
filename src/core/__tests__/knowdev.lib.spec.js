@@ -9,6 +9,7 @@ import {
   getHeaderFrom,
   HTTP,
   LOG,
+  // eslint-disable-next-line import/named
   log,
   Logger,
   moduleLogger,
@@ -85,11 +86,13 @@ describe("KnowDev Lib", () => {
     });
   });
   describe("Logging", () => {
-    it("Exposes log, Logger, moduleLogger, and silent", () => {
-      expect(log).toBeObject();
+    it("Exposes Logger, moduleLogger, and silent", () => {
       expect(Logger).toBeFunction();
       expect(moduleLogger).toBeObject();
       expect(silent).toBeObject();
+    });
+    it("Does NOT expose log", () => {
+      expect(log).toBeUndefined();
     });
     it("Logger can be instantiated", () => {
       const logger = new Logger();
