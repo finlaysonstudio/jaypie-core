@@ -1,7 +1,7 @@
 import {
   BadRequestError,
   envBoolean,
-  log,
+  moduleLogger,
   UnavailableError,
   UnhandledError,
 } from "./core.js";
@@ -25,6 +25,7 @@ const jaypieHandler = (
   handler,
   {
     name = undefined,
+    log = moduleLogger,
     setup = [],
     teardown = [],
     unavailable = envBoolean("PROJECT_UNAVAILABLE", { defaultValue: false }),
