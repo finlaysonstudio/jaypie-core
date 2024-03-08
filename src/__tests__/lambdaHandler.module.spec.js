@@ -95,9 +95,21 @@ describe("Lambda Handler Module", () => {
       // Assert
       expect(mockFunction).toHaveBeenCalledTimes(1);
       expect(jaypieHandler).toHaveBeenCalledTimes(1);
-      expect(jaypieHandler).toHaveBeenCalledWith(mockFunction, {
-        name: "test",
-      });
+      const [passedHandler, options] = jaypieHandler.mock.calls[0];
+      expect(passedHandler).toBe(mockFunction);
+      expect(options).toBeObject();
+      expect(options.name).toBe("test");
+      expect(options.log).toBeObject();
+    });
+    it("Passes logger jaypieHandler", async () => {
+      // Arrange
+      const mockFunction = vi.fn();
+      const handler = lambdaHandler(mockFunction);
+      // Act
+      await handler();
+      // eslint-disable-next-line no-unused-vars
+      const [passedHandler, options] = jaypieHandler.mock.calls[0];
+      expect(options.log).toBeObject();
     });
   });
 });

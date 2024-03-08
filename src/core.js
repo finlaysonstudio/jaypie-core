@@ -14,6 +14,10 @@ const init = () => {
   return true;
 };
 
+export const createLogWith = (tags) => {
+  return exportedLog.with(tags);
+};
+
 //
 //
 // Export
