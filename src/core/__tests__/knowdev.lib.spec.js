@@ -12,6 +12,7 @@ import {
   // eslint-disable-next-line import/named
   log,
   Logger,
+  // eslint-disable-next-line import/named
   moduleLogger,
   // eslint-disable-next-line import/named
   NAME,
@@ -88,11 +89,11 @@ describe("KnowDev Lib", () => {
   describe("Logging", () => {
     it("Exposes Logger, moduleLogger, and silent", () => {
       expect(Logger).toBeFunction();
-      expect(moduleLogger).toBeObject();
       expect(silent).toBeObject();
     });
-    it("Does NOT expose log", () => {
+    it("Does NOT expose log or moduleLogger", () => {
       expect(log).toBeUndefined();
+      expect(moduleLogger).toBeUndefined();
     });
     it("Logger can be instantiated", () => {
       const logger = new Logger();

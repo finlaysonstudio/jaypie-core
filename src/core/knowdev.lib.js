@@ -54,5 +54,5 @@ const Logger = log.Logger;
 const moduleLogger = log.moduleLogger;
 const silent = log.silent;
 
-// Intentionally not exporting `log`
-export { Logger, moduleLogger, silent };
+// Intentionally not exporting `log` or `moduleLogger`
+export { Logger, silent };
