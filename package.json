@@ -12,6 +12,7 @@
     "lint": "eslint .",
     "new": "hygen jaypie vite",
     "test": "vitest",
+    "test:spec:Client": "vitest run ./src/__tests__/Client.spec.js",
     "test:spec:constants": "vitest run ./src/__tests__/constants.spec.js",
     "test:spec:core": "vitest run ./src/__tests__/core.spec.js",
     "test:spec:index": "vitest run ./src/__tests__/index.spec.js",
