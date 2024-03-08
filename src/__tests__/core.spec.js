@@ -52,13 +52,15 @@ describe("Jaypie Core", () => {
   });
   describe("Logger", () => {
     it("Exposes the knowdev logger", () => {
-      expect(log.trace).toBeFunction();
       expect(log.debug).toBeFunction();
-      expect(log.info).toBeFunction();
-      expect(log.warn).toBeFunction();
       expect(log.error).toBeFunction();
       expect(log.fatal).toBeFunction();
+      expect(log.info).toBeFunction();
+      expect(log.tag).toBeFunction();
+      expect(log.trace).toBeFunction();
+      expect(log.untag).toBeFunction();
       expect(log.var).toBeFunction();
+      expect(log.warn).toBeFunction();
       expect(log.with).toBeFunction();
     });
   });
