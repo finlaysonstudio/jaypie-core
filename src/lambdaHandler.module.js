@@ -21,7 +21,7 @@ const lambdaHandler = (
   // We rely on jaypieHandler for all defaults
   { name, setup, teardown, unavailable, validate } = {},
 ) => {
-  moduleLogger.trace("Setting up lambda handler...");
+  moduleLogger.trace("[jaypie] Lambda handler init");
   const log = createLogWith({ module: "lambdaHandler" });
   return jaypieHandler(handler, {
     log,
