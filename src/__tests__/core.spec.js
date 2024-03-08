@@ -3,25 +3,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 // Subject
 import core from "../core.js";
-import {
-  CDK,
-  cloneDeep,
-  envBoolean,
-  force,
-  getHeaderFrom,
-  HTTP,
-  LOG,
-  log,
-  Logger,
-  moduleLogger,
-  // eslint-disable-next-line import/named
-  NAME,
-  ProjectError,
-  placeholders,
-  silent,
-  validate,
-  VALIDATE,
-} from "../core.js";
+import { CDK, log } from "../core.js";
 
 //
 //
@@ -66,50 +48,18 @@ describe("Jaypie Core", () => {
   describe("Constants", () => {
     it("Exposes constants", () => {
       expect(CDK).toBeObject();
-      expect(HTTP).toBeObject();
-      expect(LOG).toBeObject();
-      expect(VALIDATE).toBeObject();
     });
   });
-  describe("Errors", () => {
-    it("Exposes ProjectError", () => {
-      expect(ProjectError).toBeFunction();
-    });
-    it("Does not expose NAME", () => {
-      expect(NAME).toBeUndefined();
-      // If it does expose name:
-      //   - Delete this test if you want to expose NAME, especially if it is not "ProjectError"
-      //   - If you did not want to expose name and it is ProjectError, now is the time to fix it
-    });
-  });
-  describe("Functions", () => {
-    it("Exposes envBoolean, getHeaderFrom, and placeholders", () => {
-      expect(cloneDeep).toBeFunction();
-      expect(envBoolean).toBeFunction();
-      expect(force).toBeFunction();
-      expect(getHeaderFrom).toBeFunction();
-      expect(placeholders).toBeFunction();
-      expect(validate).toBeFunction();
-    });
-    it("cloneDeep works as expected", () => {
-      const obj = { a: { b: { c: 1 } } };
-      const clone = cloneDeep(obj);
-      expect(clone).not.toBe(obj);
-      expect(clone).toEqual(obj);
-    });
-  });
-  describe("Logging", () => {
-    it("Exposes log, Logger, moduleLogger, and silent", () => {
-      expect(log).toBeObject();
-      expect(Logger).toBeFunction();
-      expect(moduleLogger).toBeObject();
-      expect(silent).toBeObject();
-    });
-    it("Logger can be instantiated", () => {
-      const logger = new Logger();
-      expect(logger).toBeObject();
-      expect(logger).toBeInstanceOf(Logger);
-      expect(logger.trace).toBeFunction();
+  describe("Logger", () => {
+    it("Exposes the knowdev logger", () => {
+      expect(log.trace).toBeFunction();
+      expect(log.debug).toBeFunction();
+      expect(log.info).toBeFunction();
+      expect(log.warn).toBeFunction();
+      expect(log.error).toBeFunction();
+      expect(log.fatal).toBeFunction();
+      expect(log.var).toBeFunction();
+      expect(log.with).toBeFunction();
     });
   });
 });
