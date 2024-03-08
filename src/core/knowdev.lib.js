@@ -1,3 +1,9 @@
+// ! Heads up!
+// * Everything exported from this file is exported from the package
+// * Do _NOT ADD_ without consideration as to whether it should be public
+// * Do _NOT REMOVE_ without replacement in core and exporting that replacement in index
+// ====== END WARNING
+
 import validate from "@knowdev/arguments";
 import HTTP from "@knowdev/http";
 import log from "@knowdev/log";
