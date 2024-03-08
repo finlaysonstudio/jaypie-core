@@ -15,7 +15,8 @@
     "test:spec:constants": "vitest run ./src/__tests__/constants.spec.js",
     "test:spec:core": "vitest run ./src/__tests__/core.spec.js",
     "test:spec:index": "vitest run ./src/__tests__/index.spec.js",
-    "test:spec:jaypieHandler.module": "vitest run ./src//__tests__/jaypieHandler.module.spec.js"
+    "test:spec:jaypieHandler.module": "vitest run ./src//__tests__/jaypieHandler.module.spec.js",
+    "test:spec:lambdaHandler.module": "vitest run ./src/__tests__/lambdaHandler.module.spec.js"
   },
   "dependencies": {
     "@knowdev/arguments": "^1.3.0",
