@@ -6,6 +6,7 @@ export { default, moduleLogger } from "./core.js";
 
 // Jaypie
 export { default as jaypieHandler } from "./jaypieHandler.module.js";
+export { default as lambdaHandler } from "./lambdaHandler.module.js";
 
 // KnowDev
 export * from "./core/knowdev.lib.js";
