@@ -5,8 +5,8 @@ module.exports = [
   {
     type: "input",
     name: "pathInput",
-    initial: "src/util",
-    message: "Path (e.g., 'cdk/lib'):",
+    initial: "src",
+    message: "Path (e.g., 'src/util'):",
     onSubmit: (name, value, input) => {
       input.state.answers.path = value;
     },
