@@ -1,5 +1,5 @@
 /* eslint-env node */
-import { LOG, Logger } from "./core/knowdev.lib.js";
+import { envBoolean, LOG, Logger } from "./core/knowdev.lib.js";
 
 export * from "./core/knowdev.lib.js";
 export { CDK } from "./constants.js";
@@ -70,7 +70,8 @@ let moduleLogger;
 if (
   process &&
   process.env &&
-  (process.env.MODULE_LOGGER || process.env.MODULE_LOG_LEVEL)
+  (envBoolean("MODULE_LOGGER", { defaultValue: false }) ||
+    process.env.MODULE_LOG_LEVEL)
 ) {
   if (process.env.MODULE_LOG_LEVEL) {
     moduleLogger = new Logger({
