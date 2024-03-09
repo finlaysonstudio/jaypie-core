@@ -72,7 +72,7 @@ describe("Client", () => {
       await handler();
       // Assert
       expect(createLogWith).toHaveBeenCalledTimes(1);
-      expect(createLogWith).toHaveBeenCalledWith({ module: "lambdaHandler" });
+      expect(createLogWith).toHaveBeenCalledWith({ layer: "handler" });
     });
     it("Passes jaypieHandler its own log, not the one we pass it", async () => {
       // Arrange
