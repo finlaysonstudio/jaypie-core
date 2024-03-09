@@ -2,6 +2,7 @@ import {
   BadRequestError,
   envBoolean,
   JAYPIE,
+  logTags,
   moduleLogger as defaultLogger,
   redirectLogger,
   restoreLogger,
@@ -55,28 +56,26 @@ const jaypieHandler = (
   // Setup
   //
 
-  function logTags() {
-    return {
+  const moduleLogger = defaultLogger.with(
+    logTags({
       handler: name || handler.name || JAYPIE.UNKNOWN,
-      layer: JAYPIE.LAYER.HANDLER,
-    };
-  }
-
-  const moduleLogger = defaultLogger.with({
-    ...logTags(),
-    layer: JAYPIE.LAYER.JAYPIE,
-    lib: JAYPIE.LIB.CORE,
-  });
+      layer: JAYPIE.LAYER.JAYPIE,
+      lib: JAYPIE.LIB.CORE,
+    }),
+  );
   return async (...args) => {
     moduleLogger.trace(`[jaypie] Beginning execution`);
     // Send the public logger to the log that was passed in
     redirectLogger(log);
     // Local logger is a clone of the public logger with updated layer and lib
-    log = log.with({
-      ...logTags(),
-      layer: JAYPIE.LAYER.JAYPIE,
-      lib: JAYPIE.LIB.CORE,
-    });
+    log = log.with(
+      logTags({
+        handler: name || handler.name || JAYPIE.UNKNOWN,
+        layer: JAYPIE.LAYER.JAYPIE,
+        lib: JAYPIE.LIB.CORE,
+      }),
+    );
+
     log.trace(`[handler] Project logging in trace mode`);
 
     //

@@ -2,6 +2,7 @@ import jaypieHandler from "./jaypieHandler.module.js";
 import {
   createLogWith,
   JAYPIE,
+  logTags,
   moduleLogger as defaultLogger,
   ConfigurationError,
 } from "./core.js";
@@ -32,22 +33,23 @@ const lambdaHandler = (
   // Setup
   //
 
-  function logTags() {
-    return {
+  const moduleLogger = defaultLogger.with(
+    logTags({
       handler: name || handler.name || JAYPIE.UNKNOWN,
-      layer: JAYPIE.LAYER.HANDLER,
-    };
-  }
-
-  const moduleLogger = defaultLogger.with({
-    ...logTags(),
-    layer: JAYPIE.LAYER.LAMBDA,
-    lib: JAYPIE.LIB.CORE,
-  });
+      layer: JAYPIE.LAYER.LAMBDA,
+      lib: JAYPIE.LIB.CORE,
+    }),
+  );
   moduleLogger.trace("[jaypie] Lambda handler init");
 
   // This will be the public logger
-  const log = createLogWith(logTags());
+  const log = createLogWith(
+    logTags({
+      handler: name || handler.name || JAYPIE.UNKNOWN,
+      // invoke, // TODO: tag invoke (jaypie will handle the rest)
+      layer: JAYPIE.LAYER.HANDLER,
+    }),
+  );
 
   //
   //
