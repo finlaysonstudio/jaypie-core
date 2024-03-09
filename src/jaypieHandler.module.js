@@ -42,6 +42,9 @@ const jaypieHandler = (
     if (handler.name) {
       name = handler.name; // eslint-disable-line no-param-reassign
     }
+    if (!name) {
+      name = "unknown"; // eslint-disable-line no-param-reassign
+    }
   }
 
   //
