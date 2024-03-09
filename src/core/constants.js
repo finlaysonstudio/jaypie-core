@@ -110,4 +110,5 @@ export const JAYPIE = {
     LAMBDA: "lambda",
     MODULE: "module",
   },
+  UNKNOWN: "unknown",
 };
