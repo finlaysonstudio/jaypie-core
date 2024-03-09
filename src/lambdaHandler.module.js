@@ -32,12 +32,22 @@ const lambdaHandler = (
   // Setup
   //
 
+  function logTags() {
+    return {
+      handler: name || handler.name || JAYPIE.UNKNOWN,
+      layer: JAYPIE.LAYER.HANDLER,
+    };
+  }
+
   const moduleLogger = defaultLogger.with({
+    ...logTags(),
     layer: JAYPIE.LAYER.LAMBDA,
     lib: JAYPIE.LIB.CORE,
   });
   moduleLogger.trace("[jaypie] Lambda handler init");
-  const log = createLogWith({ layer: "handler" });
+
+  // This will be the public logger
+  const log = createLogWith(logTags());
 
   //
   //
