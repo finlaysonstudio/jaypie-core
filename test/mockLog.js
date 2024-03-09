@@ -4,7 +4,7 @@ const MOCK = {
   //
 };
 
-function mockLogFactory() {
+export function mockLogFactory() {
   // Create skeleton of mock objects, as much as possible
   const mock = {
     debug: vi.fn(),
