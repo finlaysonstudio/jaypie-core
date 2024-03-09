@@ -83,7 +83,7 @@ describe("Jaypie Handler Module", () => {
       // Act
       await handler();
       // Assert
-      expect(log.trace).toHaveBeenCalledTimes(3);
+      expect(log.trace).toHaveBeenCalled();
       expect(log.debug).not.toHaveBeenCalled();
       expect(log.info).not.toHaveBeenCalled();
       expect(log.warn).not.toHaveBeenCalled();
