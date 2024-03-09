@@ -1,0 +1,8 @@
+{
+  "name": "@jaypie/core-local-test-client",
+  "author": "Finlayson Studio",
+  "type": "module",
+  "dependencies": {
+    "@jaypie/core": "file:../.."
+  }
+}
