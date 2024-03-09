@@ -27,12 +27,23 @@ const lambdaHandler = (
     );
   }
 
+  //
+  //
+  // Setup
+  //
+
   const moduleLogger = defaultLogger.with({
     layer: JAYPIE.LAYER.LAMBDA,
     lib: JAYPIE.LIB.CORE,
   });
   moduleLogger.trace("[jaypie] Lambda handler init");
   const log = createLogWith({ layer: "handler" });
+
+  //
+  //
+  // Return
+  //
+
   return jaypieHandler(handler, {
     log,
     name,
