@@ -44,6 +44,20 @@ describe("Lambda Handler Module", () => {
       expect(lambdaHandler).toBeFunction();
     });
   });
+  describe("Errors", () => {
+    it("Throws if not passed a function", () => {
+      // Arrange
+      // Act
+      // Assert
+      expect(() => lambdaHandler()).toThrow();
+      expect(() => lambdaHandler(42)).toThrow();
+      expect(() => lambdaHandler("string")).toThrow();
+      expect(() => lambdaHandler({})).toThrow();
+      expect(() => lambdaHandler([])).toThrow();
+      expect(() => lambdaHandler(null)).toThrow();
+      expect(() => lambdaHandler(undefined)).toThrow();
+    });
+  });
   describe("Happy Paths", () => {
     it("Calls a function I pass it", async () => {
       // Arrange

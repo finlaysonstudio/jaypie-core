@@ -3,17 +3,8 @@ import {
   createLogWith,
   JAYPIE,
   moduleLogger as defaultLogger,
+  ConfigurationError,
 } from "./core.js";
-
-//
-//
-// Constants
-//
-
-//
-//
-// Helper Functions
-//
 
 //
 //
@@ -25,6 +16,17 @@ const lambdaHandler = (
   // We rely on jaypieHandler for all defaults... _except_ log
   { name, setup, teardown, unavailable, validate } = {},
 ) => {
+  //
+  //
+  // Validate
+  //
+
+  if (typeof handler !== "function") {
+    throw new ConfigurationError(
+      "The handler responding to the request encountered a configuration error",
+    );
+  }
+
   const moduleLogger = defaultLogger.with({
     layer: JAYPIE.LAYER.LAMBDA,
     lib: JAYPIE.LIB.CORE,
