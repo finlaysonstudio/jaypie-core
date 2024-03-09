@@ -2,6 +2,8 @@ import {
   BadRequestError,
   envBoolean,
   moduleLogger,
+  redirectLogger,
+  restoreLogger,
   UnavailableError,
   UnhandledError,
 } from "./core.js";
@@ -55,6 +57,7 @@ const jaypieHandler = (
   moduleLogger.trace(`[jaypie] Setting up handler for ${name}...`);
   return async (...args) => {
     moduleLogger.trace(`[jaypie] Beginning execution`);
+    redirectLogger(log);
     log.trace(`[handler] Project logging in trace mode`);
 
     //
@@ -153,6 +156,7 @@ const jaypieHandler = (
           }
         }
       }
+      restoreLogger();
     }
   };
 };

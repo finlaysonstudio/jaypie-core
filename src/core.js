@@ -18,6 +18,35 @@ export const createLogWith = (tags) => {
   return exportedLog.with(tags);
 };
 
+const logMethodNames = [
+  "debug",
+  "error",
+  "fatal",
+  "info",
+  "tag",
+  "trace",
+  "untag",
+  "var",
+  "warn",
+  "with",
+];
+
+/**
+ * Redirects the handler's runtime logging to the provided logger
+ */
+export const redirectLogger = (logger) => {
+  for (const method of logMethodNames) {
+    exportedLog[`_${method}`] = exportedLog[method];
+    exportedLog[method] = logger[method];
+  }
+};
+
+export const restoreLogger = () => {
+  for (const method of logMethodNames) {
+    exportedLog[method] = exportedLog[`_${method}`];
+  }
+};
+
 //
 //
 // Export

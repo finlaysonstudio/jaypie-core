@@ -18,7 +18,7 @@ import { createLogWith, moduleLogger } from "./core.js";
 
 const lambdaHandler = (
   handler,
-  // We rely on jaypieHandler for all defaults
+  // We rely on jaypieHandler for all defaults... _except_ log
   { name, setup, teardown, unavailable, validate } = {},
 ) => {
   moduleLogger.trace("[jaypie] Lambda handler init");
