@@ -1,7 +1,7 @@
 import {
   BadRequestError,
   envBoolean,
-  moduleLogger,
+  moduleLogger as defaultLogger,
   redirectLogger,
   restoreLogger,
   UnavailableError,
@@ -27,7 +27,7 @@ const jaypieHandler = (
   handler,
   {
     name = undefined,
-    log = moduleLogger,
+    log = defaultLogger,
     setup = [],
     teardown = [],
     unavailable = envBoolean("PROJECT_UNAVAILABLE", { defaultValue: false }),
@@ -54,10 +54,11 @@ const jaypieHandler = (
   // Setup
   //
 
-  moduleLogger.trace(`[jaypie] Setting up handler for ${name}...`);
+  const moduleLogger = defaultLogger.with({ layer: "jaypie", lib: "jaypie" });
   return async (...args) => {
     moduleLogger.trace(`[jaypie] Beginning execution`);
     redirectLogger(log);
+    log = log.with({ layer: "jaypie", lib: "jaypie" });
     log.trace(`[handler] Project logging in trace mode`);
 
     //

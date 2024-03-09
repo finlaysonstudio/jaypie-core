@@ -1,5 +1,5 @@
 import jaypieHandler from "./jaypieHandler.module.js";
-import { createLogWith, moduleLogger } from "./core.js";
+import { createLogWith, moduleLogger as defaultLogger } from "./core.js";
 
 //
 //
@@ -21,8 +21,9 @@ const lambdaHandler = (
   // We rely on jaypieHandler for all defaults... _except_ log
   { name, setup, teardown, unavailable, validate } = {},
 ) => {
+  const moduleLogger = defaultLogger.with({ layer: "lambda", lib: "jaypie" });
   moduleLogger.trace("[jaypie] Lambda handler init");
-  const log = createLogWith({ module: "lambdaHandler" });
+  const log = createLogWith({ layer: "handler" });
   return jaypieHandler(handler, {
     log,
     name,
