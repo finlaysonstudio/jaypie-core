@@ -8,7 +8,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 // Subject
 import { lambdaHandler, log } from "../index.js";
 import { createLogWith, moduleLogger } from "../core.js";
-import { restoreLog, spyLog } from "../../test/mockLog.js";
+import { mockLogFactory, restoreLog, spyLog } from "../../test/mockLog.js";
 
 //
 //
@@ -76,9 +76,14 @@ describe("Client", () => {
     });
     it("Passes jaypieHandler its own log, not the one we pass it", async () => {
       // Arrange
-      const handler = lambdaHandler(vi.fn());
+      const log = mockLogFactory();
+      const handler = lambdaHandler(vi.fn(), { log });
       // Act
       await handler();
+      // Assert
+      expect(createLogWith).toHaveBeenCalledTimes(1);
+      expect(log.trace).not.toHaveBeenCalled();
+      expect(moduleLogger.trace).toHaveBeenCalled();
     });
   });
 });
