@@ -115,7 +115,7 @@ const jaypieHandler = (
     try {
       // Lifecycle: Setup
       if (Array.isArray(setup) && setup.length > 0) {
-        log.trace(`[handler] Setup`);
+        log.trace("[handler] Setup");
         for (const setupFunction of setup) {
           if (typeof setupFunction === "function") {
             await setupFunction(...args);
@@ -145,7 +145,7 @@ const jaypieHandler = (
     } finally {
       // Teardown
       if (Array.isArray(teardown) && teardown.length > 0) {
-        log.trace(`[handler] Teardown`);
+        log.trace("[handler] Teardown");
         for (const teardownFunction of teardown) {
           if (typeof teardownFunction === "function") {
             try {
