@@ -2,6 +2,7 @@ module.exports = {
   root: true,
   env: {
     es6: true,
+    node: true,
   },
   extends: [
     "eslint:recommended",
@@ -10,18 +11,6 @@ module.exports = {
     "plugin:prettier/recommended",
   ],
   overrides: [
-    {
-      files: [
-        "__tests__/**",
-        "_templates/**",
-        ".eslintrc.cjs",
-        "*.spec.js",
-        "*.test.js",
-      ],
-      env: {
-        node: true,
-      },
-    },
     {
       files: ["__tests__/**", "**/*.spec.js", "**/*.test.js"],
       plugins: ["vitest"],
