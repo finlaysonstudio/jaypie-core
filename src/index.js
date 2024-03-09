@@ -1,8 +1,5 @@
-// Constants
-export { CDK } from "./constants.js";
-
-// Default (from core)
-export { default, moduleLogger } from "./core.js";
+// Core
+export { CDK, JAYPIE, default, moduleLogger } from "./core.js";
 
 // Jaypie
 export { default as jaypieHandler } from "./jaypieHandler.module.js";
