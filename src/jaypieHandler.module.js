@@ -1,6 +1,7 @@
 import {
   BadRequestError,
   envBoolean,
+  JAYPIE,
   moduleLogger as defaultLogger,
   redirectLogger,
   restoreLogger,
@@ -54,11 +55,17 @@ const jaypieHandler = (
   // Setup
   //
 
-  const moduleLogger = defaultLogger.with({ layer: "jaypie", lib: "jaypie" });
+  const moduleLogger = defaultLogger.with({
+    layer: JAYPIE.LAYER.JAYPIE,
+    lib: JAYPIE.LIB.CORE,
+  });
   return async (...args) => {
     moduleLogger.trace(`[jaypie] Beginning execution`);
     redirectLogger(log);
-    log = log.with({ layer: "jaypie", lib: "jaypie" });
+    log = log.with({
+      layer: JAYPIE.LAYER.JAYPIE,
+      lib: JAYPIE.LIB.CORE,
+    });
     log.trace(`[handler] Project logging in trace mode`);
 
     //

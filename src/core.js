@@ -1,6 +1,8 @@
 /* eslint-env node */
 import { envBoolean, LOG, Logger } from "./core/knowdev.lib.js";
 
+import { JAYPIE } from "./core/constants.js";
+
 export * from "./core/knowdev.lib.js";
 export { CDK, JAYPIE } from "./core/constants.js";
 
@@ -77,20 +79,20 @@ if (
     moduleLogger = new Logger({
       format: LOG.FORMAT.JSON,
       level: process.env.MODULE_LOG_LEVEL,
-      tags: { layer: "module" },
+      tags: { layer: JAYPIE.LAYER.MODULE },
     });
   } else {
     moduleLogger = new Logger({
       format: LOG.FORMAT.JSON,
       level: process.env.LOG_LEVEL,
-      tags: { layer: "module" },
+      tags: { layer: JAYPIE.LAYER.MODULE },
     });
   }
 } else {
   moduleLogger = new Logger({
     format: LOG.FORMAT.JSON,
     level: LOG.LEVEL.SILENT,
-    tags: { layer: "module" },
+    tags: { layer: JAYPIE.LAYER.MODULE },
   });
 }
 export { moduleLogger };
