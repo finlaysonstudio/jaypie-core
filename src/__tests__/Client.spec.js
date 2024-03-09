@@ -40,10 +40,7 @@ describe("Client", () => {
   describe("Lambda Handler", () => {
     it("Calls a function I provide it", () => {
       // Arrange
-      const mockFunction = vi.fn((...args) => {
-        log.info("Mock function called");
-        log.var({ args });
-      });
+      const mockFunction = vi.fn();
       const handler = lambdaHandler(mockFunction);
       const args = [1, 2, 3];
       // Act
