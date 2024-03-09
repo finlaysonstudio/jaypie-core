@@ -2,7 +2,7 @@
 import { envBoolean, LOG, Logger } from "./core/knowdev.lib.js";
 
 export * from "./core/knowdev.lib.js";
-export { CDK } from "./constants.js";
+export { CDK, JAYPIE } from "./constants.js";
 
 //
 //

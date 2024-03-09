@@ -99,3 +99,14 @@ export const CDK = {
     CDK_ENV_SUBDOMAIN: "CDK_ENV_SUBDOMAIN",
   },
 };
+
+export const JAYPIE = {
+  LIB: {
+    CORE: "@jaypie/core",
+  },
+  LAYER: {
+    HANDLER: "handler",
+    LAMBDA: "lambda",
+    JAYPIE: "jaypie",
+  },
+};
