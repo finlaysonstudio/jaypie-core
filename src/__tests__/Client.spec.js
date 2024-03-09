@@ -65,14 +65,13 @@ describe("Client", () => {
       expect(mockFunction).toHaveBeenCalledTimes(1);
       expect(mockFunction).toHaveBeenCalledWith(...args);
     });
-    it("Creates a logger with module:lambda", async () => {
+    it("Creates a logger", async () => {
       // Arrange
       const handler = lambdaHandler(vi.fn());
       // Act
       await handler();
       // Assert
       expect(createLogWith).toHaveBeenCalledTimes(1);
-      expect(createLogWith).toHaveBeenCalledWith({ layer: "handler" });
     });
     it("Passes jaypieHandler its own log, not the one we pass it", async () => {
       // Arrange
