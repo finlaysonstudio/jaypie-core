@@ -44,7 +44,7 @@ describe("Lambda Handler Module", () => {
       expect(lambdaHandler).toBeFunction();
     });
   });
-  describe("Errors", () => {
+  describe("Error Conditions", () => {
     it("Throws if not passed a function", () => {
       // Arrange
       // Act
