@@ -49,5 +49,5 @@ describe("Index", () => {
   // ~   - They don't!
   // ~ We expect the module log entries to not show up in actual logs
   // TODO: do they?
-  // ~ We 
+  // ~ We
 });
