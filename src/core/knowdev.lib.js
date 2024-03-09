@@ -26,7 +26,9 @@ export const LOG = {
 const force = validate.force;
 const getHeaderFrom = HTTP.getHeaderFrom;
 export { force, getHeaderFrom, validate };
-export { envBoolean, placeholders } from "@knowdev/functions";
+import functions from "@knowdev/functions";
+const { envBoolean, placeholders } = functions;
+export { envBoolean, placeholders };
 export { default as cloneDeep } from "lodash.clonedeep";
 
 // Errors
