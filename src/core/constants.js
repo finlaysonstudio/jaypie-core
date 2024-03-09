@@ -106,7 +106,8 @@ export const JAYPIE = {
   },
   LAYER: {
     HANDLER: "handler",
-    LAMBDA: "lambda",
     JAYPIE: "jaypie",
+    LAMBDA: "lambda",
+    MODULE: "module",
   },
 };
