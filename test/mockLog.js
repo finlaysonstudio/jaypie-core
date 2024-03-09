@@ -48,41 +48,46 @@ function mockLogFactory() {
 
 export default mockLogFactory();
 
-const originalPointers = {};
+const logMethodNames = [
+  "debug",
+  "error",
+  "fatal",
+  "info",
+  "trace",
+  "var",
+  "warn",
+  "with",
+];
+const originalLogMethods = new WeakMap();
+
 export function spyLog(log) {
-  const mockLog = mockLogFactory();
-  originalPointers.debug = log.debug;
-  originalPointers.error = log.error;
-  originalPointers.fatal = log.fatal;
-  originalPointers.info = log.info;
-  originalPointers.trace = log.trace;
-  originalPointers.var = log.var;
-  originalPointers.warn = log.warn;
-  originalPointers.with = log.with;
-  /* eslint-disable no-param-reassign */
-  log.debug = mockLog.debug;
-  log.error = mockLog.error;
-  log.fatal = mockLog.fatal;
-  log.info = mockLog.info;
-  log.trace = mockLog.trace;
-  log.var = mockLog.var;
-  log.warn = mockLog.warn;
-  log.with = mockLog.with;
-  log.mock = mockLog.mock;
-  log.MOCK = mockLog.MOCK;
-  /* eslint-enable no-param-reassign */
+  if (!originalLogMethods.has(log)) {
+    const mockLog = mockLogFactory();
+    const originalMethods = {};
+    logMethodNames.forEach((method) => {
+      originalMethods[method] = log[method];
+      log[method] = mockLog[method];
+    });
+    // Add custom properties
+    originalMethods.mock = log.mock;
+    originalMethods.MOCK = log.MOCK;
+    log.mock = mockLog.mock;
+    log.MOCK = mockLog.MOCK;
+
+    originalLogMethods.set(log, originalMethods);
+  }
 }
+
 export function restoreLog(log) {
-  /* eslint-disable no-param-reassign */
-  log.debug = originalPointers.debug;
-  log.error = originalPointers.error;
-  log.fatal = originalPointers.fatal;
-  log.info = originalPointers.info;
-  log.trace = originalPointers.trace;
-  log.var = originalPointers.var;
-  log.warn = originalPointers.warn;
-  log.with = originalPointers.with;
-  delete log.mock;
-  delete log.MOCK;
-  /* eslint-enable no-param-reassign */
+  const originalMethods = originalLogMethods.get(log);
+  if (originalMethods) {
+    logMethodNames.forEach((method) => {
+      log[method] = originalMethods[method];
+    });
+    // Restore custom properties
+    log.mock = originalMethods.mock;
+    log.MOCK = originalMethods.MOCK;
+
+    originalLogMethods.delete(log);
+  }
 }
