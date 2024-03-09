@@ -33,6 +33,8 @@ const lambdaHandler = (
   // Setup
   //
 
+  let response;
+
   const moduleLogger = defaultLogger.with(
     logTags({
       handler: name || handler.name || JAYPIE.UNKNOWN,
@@ -46,17 +48,16 @@ const lambdaHandler = (
   const log = createLogWith(
     logTags({
       handler: name || handler.name || JAYPIE.UNKNOWN,
-      // invoke, // TODO: tag invoke (jaypie will handle the rest)
       layer: JAYPIE.LAYER.HANDLER,
     }),
   );
 
   //
   //
-  // Return
+  // Process
   //
 
-  return jaypieHandler(handler, {
+  response = jaypieHandler(handler, {
     log,
     name,
     setup,
@@ -64,6 +65,23 @@ const lambdaHandler = (
     unavailable,
     validate,
   });
+
+  //
+  //
+  // Error Handling
+  //
+
+  //
+  //
+  // Postprocess
+  //
+
+  //
+  //
+  // Return
+  //
+
+  return response;
 };
 
 //
