@@ -91,12 +91,12 @@ const lambdaHandler = (
       if (error.isProjectError) {
         log.debug("Caught jaypie error");
         log.var({ jaypieError: error });
-        response = error;
+        response = error.json();
       } else {
         // Otherwise, flag unhandled errors as fatal
         log.fatal("Caught unhandled error");
         log.var({ unhandledError: error.message });
-        response = UnhandledError();
+        response = UnhandledError().json();
       }
     }
 

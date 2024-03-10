@@ -3,6 +3,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { createLogWith } from "../core.js";
 import jaypieHandler from "../jaypieHandler.module.js";
 import { mockLogFactory } from "../../test/mockLog.js";
+import { jsonApiErrorSchema } from "../../test/jsonApiSchema.js";
 
 // Subject
 import lambdaHandler from "../lambdaHandler.module.js";
@@ -78,8 +79,7 @@ describe("Lambda Handler Module", () => {
       const result = await handler();
       // Assert
       expect(result).toBeObject();
-      // TODO: Expect it to be a jaypie error
-      // TODO: Expect it to conform to the jaypie error shape
+      expect(result).toMatchSchema(jsonApiErrorSchema);
     });
   });
   describe("Observability", () => {
