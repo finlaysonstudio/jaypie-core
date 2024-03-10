@@ -96,6 +96,18 @@ describe("Lambda Handler Module", () => {
       expect(mockedLog.error).not.toHaveBeenCalled();
       expect(mockedLog.fatal).not.toHaveBeenCalled();
     });
+    it("Includes the invoke in the log", async () => {
+      // Arrange
+      const mockFunction = vi.fn();
+      const handler = lambdaHandler(mockFunction);
+      // Act
+      await handler({}, { awsRequestId: "MOCK_AWS_REQUEST_ID" });
+      // Assert
+      expect(mockedLog.tag).toHaveBeenCalledTimes(1);
+      expect(mockedLog.tag).toHaveBeenCalledWith({
+        invoke: "MOCK_AWS_REQUEST_ID",
+      });
+    });
   });
   describe("Happy Paths", () => {
     it("Calls a function I pass it", async () => {

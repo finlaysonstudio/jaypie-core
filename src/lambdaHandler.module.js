@@ -69,17 +69,18 @@ const lambdaHandler = (
   });
 
   return async (event = {}, context = {}, ...args) => {
-    moduleLogger.trace("[jaypie] Lambda execution");
-    log.info.var({ event });
-
-    //
-    //
-    // Process
-    //
-
     let response;
 
     try {
+      moduleLogger.trace("[jaypie] Lambda execution");
+      log.tag({ invoke: context.awsRequestId });
+      log.info.var({ event });
+
+      //
+      //
+      // Process
+      //
+
       response = await jaypieFunction(event, context, ...args);
 
       //
