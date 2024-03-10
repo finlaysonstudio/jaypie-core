@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
-import { createLogWith } from "../core.js";
+import { createLogWith, HTTP } from "../core.js";
 import { mockLogFactory } from "../../test/mockLog.js";
 import { jsonApiErrorSchema } from "../../test/jsonApiSchema.js";
 
@@ -77,6 +77,36 @@ describe("Lambda Handler Module", () => {
       // Assert
       expect(result).toBeObject();
       expect(result).toMatchSchema(jsonApiErrorSchema);
+    });
+    it("Returns an error if a lifecycle function throws", async () => {
+      // Arrange
+      const mockFunction = vi.fn();
+      const handler = lambdaHandler(mockFunction, {
+        validate: [
+          async () => {
+            throw new Error("Sorpresa!");
+          },
+        ],
+      });
+      // Act
+      const result = await handler();
+      // Assert
+      expect(result).toBeObject();
+      expect(result).toMatchSchema(jsonApiErrorSchema);
+      expect(result.errors[0].status).toBe(HTTP.CODE.INTERNAL_ERROR);
+    });
+    it("Returns unavailable if PROJECT_UNAVAILABLE is set", async () => {
+      // Arrange
+      const mockFunction = vi.fn();
+      const handler = lambdaHandler(mockFunction, {
+        unavailable: true,
+      });
+      // Act
+      const result = await handler();
+      // Assert
+      expect(result).toBeObject();
+      expect(result).toMatchSchema(jsonApiErrorSchema);
+      expect(result.errors[0].status).toBe(HTTP.CODE.UNAVAILABLE);
     });
   });
   describe("Observability", () => {
