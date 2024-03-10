@@ -24,7 +24,7 @@ vi.mock("../core.js", async () => {
   const actual = await vi.importActual("../core.js");
   const module = {
     ...actual,
-    createLogWith: vi.fn((tags) => actual.exportedLog.with(tags)),
+    createLogWith: vi.fn(),
   };
   return module;
 });
@@ -37,6 +37,7 @@ vi.mock("../core.js", async () => {
 const DEFAULT_ENV = process.env;
 beforeEach(() => {
   process.env = { ...process.env };
+  createLogWith.mockReturnValue(mockLogFactory());
   spyLog(log);
   spyLog(moduleLogger);
 });
@@ -75,13 +76,14 @@ describe("Client", () => {
     });
     it("Passes jaypieHandler its own log, not the one we pass it", async () => {
       // Arrange
-      const log = mockLogFactory();
-      const handler = lambdaHandler(vi.fn(), { log });
+      const honeypot = mockLogFactory();
+      const handler = lambdaHandler(vi.fn(), { log: honeypot });
       // Act
+      console.log("await handler log :>> ", typeof log);
       await handler();
       // Assert
       expect(createLogWith).toHaveBeenCalledTimes(1);
-      expect(log.trace).not.toHaveBeenCalled();
+      expect(honeypot.trace).not.toHaveBeenCalled();
       expect(moduleLogger.trace).toHaveBeenCalled();
     });
   });
