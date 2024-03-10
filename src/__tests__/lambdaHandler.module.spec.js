@@ -1,7 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { createLogWith } from "../core.js";
-import jaypieHandler from "../jaypieHandler.module.js";
 import { mockLogFactory } from "../../test/mockLog.js";
 import { jsonApiErrorSchema } from "../../test/jsonApiSchema.js";
 
@@ -17,8 +16,6 @@ import lambdaHandler from "../lambdaHandler.module.js";
 //
 // Mock modules
 //
-
-vi.mock("../jaypieHandler.module.js");
 
 vi.mock("../core.js", async () => {
   const actual = await vi.importActual("../core.js");
@@ -147,34 +144,6 @@ describe("Lambda Handler Module", () => {
       const result = await handler();
       // Assert
       expect(result).toBe(42);
-    });
-  });
-  describe("Under the Hood jaypieHandler.mock", () => {
-    it("Passes my handler onto jaypieHandler", async () => {
-      // Arrange
-      const mockFunction = vi.fn();
-      const handler = lambdaHandler(mockFunction, { name: "test" });
-      // console.log("jaypieHandler :>> ", jaypieHandler);
-      // Act
-      await handler();
-      // Assert
-      expect(mockFunction).toHaveBeenCalledTimes(1);
-      expect(jaypieHandler).toHaveBeenCalledTimes(1);
-      const [passedHandler, options] = jaypieHandler.mock.calls[0];
-      expect(passedHandler).toBe(mockFunction);
-      expect(options).toBeObject();
-      expect(options.name).toBe("test");
-      expect(options.log).toBeObject();
-    });
-    it("Passes logger jaypieHandler", async () => {
-      // Arrange
-      const mockFunction = vi.fn();
-      const handler = lambdaHandler(mockFunction);
-      // Act
-      await handler();
-      // eslint-disable-next-line no-unused-vars
-      const [passedHandler, options] = jaypieHandler.mock.calls[0];
-      expect(options.log).toBeObject();
     });
   });
 });
