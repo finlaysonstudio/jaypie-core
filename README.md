@@ -44,7 +44,14 @@ export default lambdaHandler(
 );
 ```
 
-Throw jaypie errors below to convey semantic meaning. Thrown errors will be caught and logged. Non-jaypie errors will be treated as unhandled exceptions.
+Throw jaypie errors below to convey semantic meaning. Thrown errors will be caught and logged. Non-jaypie errors will be treated as unhandled exceptions. Log your own errors with `log.error`.
+
+```javascript
+import { log, NotFoundError } from "@jaypie/core";
+
+log.error("Could not find resource");
+throw NotFoundError();
+```
 
 ##### Simple Logging
 
