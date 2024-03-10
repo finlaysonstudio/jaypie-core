@@ -29,7 +29,8 @@ const jaypieHandler = (
   handler,
   {
     name = undefined,
-    log = defaultLogger,
+    log = defaultLogger, // provided public logger or the default module logger
+    moduleLogger = defaultLogger, // provided module logger or the default module logger
     setup = [],
     teardown = [],
     unavailable = envBoolean("PROJECT_UNAVAILABLE", { defaultValue: false }),
@@ -56,7 +57,8 @@ const jaypieHandler = (
   // Setup
   //
 
-  const moduleLogger = defaultLogger.with(
+  // Ths inbound module logger will not conflict with any of these
+  moduleLogger = moduleLogger.with(
     logTags({
       handler: name || handler.name || JAYPIE.UNKNOWN,
       layer: JAYPIE.LAYER.JAYPIE,
@@ -64,7 +66,7 @@ const jaypieHandler = (
     }),
   );
   return async (...args) => {
-    moduleLogger.trace(`[jaypie] Beginning execution`);
+    moduleLogger.trace(`[jaypie] Handler execution`);
     // Send the public logger to the log that was passed in
     redirectLogger(log);
     // Local logger is a clone of the public logger with updated layer and lib
