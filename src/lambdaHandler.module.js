@@ -105,7 +105,7 @@ const lambdaHandler = (
     // Postprocess
     //
 
-    // TODO: convert response to JSON
+    // TODO: API Gateway proxy response
 
     //
     //
