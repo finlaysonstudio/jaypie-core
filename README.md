@@ -34,19 +34,6 @@ export default lambdaHandler(
     log.trace("\"Happy path\" events belong in trace");
 
     // "Your Code Here"
-
-    if(event.strangeCondition) {
-      log.debug("Slight deviation from the happy path");
-      // ...Helpful for someone debugging a real problem later
-    }
-    if(event.problemCondition) {
-      log.warn("Someone should look into this");
-      // ...It can at least be tracked to know how often it happens
-    }
-    if(event.errorCondition) {
-      log.error("Something is not right!");
-      // ...It might even be broken
-    }
     
     return "Hello, world!";
   },
@@ -57,13 +44,64 @@ export default lambdaHandler(
 );
 ```
 
+Throw jaypie errors below to convey semantic meaning. Thrown errors will be caught and logged. Non-jaypie errors will be treated as unhandled exceptions.
+
+##### Simple Logging
+
+```javascript
+log.trace("\"Happy path\" events belong in trace");
+
+// Important variables for debugging can be logged as "var"s
+log.var("message", "Hello, world");
+log.var({ message: "Hello, world" });
+log.var({ message });
+
+if(event.strangeCondition) {
+  log.debug("Slight deviation from the happy path");
+  // ...Helpful for someone debugging a real problem later
+}
+
+if(event.problemCondition) {
+  log.warn("Someone should look into this");
+  // ...It can at least be tracked to know how often it happens
+}
+
+if(event.errorCondition) {
+  log.error("Something is not right!");
+  // ...It might even be broken
+}
+```
+
 `log` functions should be used in your logic. Following the "trace-only happy path" will simplify debugging and log management.
 
-`log.info` for things that should be tracked external to debugging (e.g., transaction successes). By default the `event` and the `response` from the handler will be logged as info.
+`log.info` exists for things that should be tracked external to debugging (e.g., transaction successes). By default the `event` and the `response` from the handler will be logged as info. This should be the least-used log level by code references _(we hope error and warn are unused in runtime)_
 
 #### Complex Example Using Express
 
-TODO: One thorough example of using the library
+```javascript
+import { expressHandler, log } from "@jaypie/core";
+
+export default expressHandler(
+  // Handler function
+  async (req, res) => {
+    log.trace("\"Happy path\" events belong in trace");
+
+    // "Your Code Here"
+    
+    return json;
+  },
+  // Configuration (optional)
+  {
+    name: "expressApi",
+    validate: [], // Array of validation functions
+    setup: [], // Array of setup functions
+    local: [], // Array of local values and getters
+    teardown: [], // Array of teardown functions
+  },
+);
+```
+
+TODO: This example needs specifics on `validate`, `setup`, `local`, and `teardown`
 
 ## 📖 Reference
 
