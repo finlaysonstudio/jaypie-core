@@ -24,13 +24,21 @@ TODO: Example should include one trivial and possibly one thorough example of us
 
 ## 📖 Reference
 
-TODO: Reference should be a complete list of everything in the package
-
 ### Constants
+
+TODO: Complete list of constants in the package
 
 ### Errors
 
+TODO: Complete list of errors in the package
+
 ### Functions
+
+TODO: Complete list of utility functions in the package
+
+### Handlers
+
+TODO: Complete list of utility functions in the package
 
 ### Logging
 
@@ -121,6 +129,7 @@ function myHello(log=silent) {
 ## 🛣 Roadmap
 
 * 0.3.0 - `expressHandler`
+* ? - Complete documentation
 * 1.0.0 - Allow bug fixes, stable release
 
 ## 📝 Changelog
