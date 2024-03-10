@@ -67,8 +67,9 @@ const lambdaHandler = (
   // Process
   //
 
-  return async (event, context, ...args) => {
+  return async (event = {}, context = {}, ...args) => {
     moduleLogger.trace("[jaypie] Lambda execution");
+    log.info.var({ event });
 
     let response = await jaypieFunction(event, context, ...args);
 
@@ -87,6 +88,7 @@ const lambdaHandler = (
     // Return
     //
 
+    log.info.var({ response });
     return response;
   };
 };
