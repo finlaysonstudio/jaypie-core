@@ -41,34 +41,34 @@ const lambdaHandler = (
       lib: JAYPIE.LIB.CORE,
     }),
   );
-  moduleLogger.trace("[jaypie] Lambda handler init");
+  moduleLogger.trace("[jaypie] Lambda init");
+
+  // This will be the public logger
+  const log = createLogWith(
+    logTags({
+      handler: name || handler.name || JAYPIE.UNKNOWN,
+      // invoke, // TODO
+      layer: JAYPIE.LAYER.HANDLER,
+    }),
+  );
+
+  const jaypieFunction = jaypieHandler(handler, {
+    log,
+    moduleLogger,
+    name,
+    setup,
+    teardown,
+    unavailable,
+    validate,
+  });
+
+  //
+  //
+  // Process
+  //
 
   return async (event, context, ...args) => {
     moduleLogger.trace("[jaypie] Lambda execution");
-
-    // This will be the public logger
-    const log = createLogWith(
-      logTags({
-        handler: name || handler.name || JAYPIE.UNKNOWN,
-        // invoke, // TODO
-        layer: JAYPIE.LAYER.HANDLER,
-      }),
-    );
-
-    const jaypieFunction = jaypieHandler(handler, {
-      log,
-      moduleLogger,
-      name,
-      setup,
-      teardown,
-      unavailable,
-      validate,
-    });
-
-    //
-    //
-    // Process
-    //
 
     let response = await jaypieFunction(event, context, ...args);
 

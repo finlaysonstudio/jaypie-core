@@ -65,6 +65,7 @@ const jaypieHandler = (
       lib: JAYPIE.LIB.CORE,
     }),
   );
+  moduleLogger.trace("[jaypie] Handler init");
   return async (...args) => {
     moduleLogger.trace(`[jaypie] Handler execution`);
     // Send the public logger to the log that was passed in
