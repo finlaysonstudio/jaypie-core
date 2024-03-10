@@ -20,7 +20,50 @@ npm install @jaypie/core
 
 ### Example
 
-TODO: Example should include one trivial and possibly one thorough example of using the library
+#### Simple Example Using Lambda
+
+`event` is passed to the handler when the event is triggered.
+It will include details about the event (e.g., type, parameters).
+
+```javascript
+import { lambdaHandler, log } from "@jaypie/core";
+
+export default lambdaHandler(
+  // Handler function
+  async (event) => {
+    log.trace("\"Happy path\" events belong in trace");
+
+    // "Your Code Here"
+
+    if(event.strangeCondition) {
+      log.debug("Slight deviation from the happy path");
+      // ...Helpful for someone debugging a real problem later
+    }
+    if(event.problemCondition) {
+      log.warn("Someone should look into this");
+      // ...It can at least be tracked to know how often it happens
+    }
+    if(event.errorCondition) {
+      log.error("Something is not right!");
+      // ...It might even be broken
+    }
+    
+    return "Hello, world!";
+  },
+  // Configuration (optional)
+  {
+    name: "helloWorld",
+  },
+);
+```
+
+`log` functions should be used in your logic. Following the "trace-only happy path" will simplify debugging and log management.
+
+`log.info` for things that should be tracked external to debugging (e.g., transaction successes). By default the `event` and the `response` from the handler will be logged as info.
+
+#### Complex Example Using Express
+
+TODO: One thorough example of using the library
 
 ## 📖 Reference
 
