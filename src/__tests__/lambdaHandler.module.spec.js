@@ -69,6 +69,18 @@ describe("Lambda Handler Module", () => {
       expect(() => lambdaHandler(null)).toThrow();
       expect(() => lambdaHandler(undefined)).toThrow();
     });
+    it("Returns a jaypie error if function throws", async () => {
+      // Arrange
+      const mockFunction = vi.fn();
+      mockFunction.mockRejectedValue(new Error("This error should be caught"));
+      const handler = lambdaHandler(mockFunction);
+      // Act
+      const result = await handler();
+      // Assert
+      expect(result).toBeObject();
+      // TODO: Expect it to be a jaypie error
+      // TODO: Expect it to conform to the jaypie error shape
+    });
   });
   describe("Observability", () => {
     it("Does not log above trace", async () => {

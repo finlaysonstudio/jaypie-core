@@ -5,6 +5,7 @@ import {
   logTags,
   moduleLogger as defaultLogger,
   ConfigurationError,
+  UnhandledError,
 } from "./core.js";
 
 //
@@ -52,6 +53,11 @@ const lambdaHandler = (
     }),
   );
 
+  //
+  //
+  // Preprocess
+  //
+
   const jaypieFunction = jaypieHandler(handler, {
     log,
     moduleLogger,
@@ -62,26 +68,44 @@ const lambdaHandler = (
     validate,
   });
 
-  //
-  //
-  // Process
-  //
-
   return async (event = {}, context = {}, ...args) => {
     moduleLogger.trace("[jaypie] Lambda execution");
     log.info.var({ event });
 
-    let response = await jaypieFunction(event, context, ...args);
+    //
+    //
+    // Process
+    //
 
-    //
-    //
-    // Error Handling
-    //
+    let response;
+
+    try {
+      response = await jaypieFunction(event, context, ...args);
+
+      //
+      //
+      // Error Handling
+      //
+    } catch (error) {
+      // Jaypie or "project" errors are intentional and should be handled like expected cases
+      if (error.isProjectError) {
+        log.debug("Caught jaypie error");
+        log.var({ jaypieError: error });
+        response = error;
+      } else {
+        // Otherwise, flag unhandled errors as fatal
+        log.fatal("Caught unhandled error");
+        log.var({ unhandledError: error.message });
+        response = UnhandledError();
+      }
+    }
 
     //
     //
     // Postprocess
     //
+
+    // TODO: convert response to JSON
 
     //
     //
