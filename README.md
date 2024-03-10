@@ -118,10 +118,16 @@ function myHello(log=silent) {
 }
 ```
 
+## 🛣 Roadmap
+
+* 0.3.0 - `expressHandler`
+* 1.0.0 - Allow bug fixes, stable release
+
 ## 📝 Changelog
 
 | Date       | Version | Summary        |
 | ---------- | ------- | -------------- |
+|  3/10/2024 |   0.2.0 | Export `lambdaHandler` |
 |   3/5/2024 |   0.1.0 | Export all the core helpers |
 |   3/5/2024 |   0.0.1 | Initial commit |
 
