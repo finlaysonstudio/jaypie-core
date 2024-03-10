@@ -35,5 +35,6 @@ module.exports = {
   rules: {
     "import/extensions": ["error", "ignorePackages"],
     "import/no-commonjs": "error",
+    "no-console": "warn",
   },
 };
