@@ -79,7 +79,6 @@ describe("Client", () => {
       const honeypot = mockLogFactory();
       const handler = lambdaHandler(vi.fn(), { log: honeypot });
       // Act
-      console.log("await handler log :>> ", typeof log);
       await handler();
       // Assert
       expect(createLogWith).toHaveBeenCalledTimes(1);
