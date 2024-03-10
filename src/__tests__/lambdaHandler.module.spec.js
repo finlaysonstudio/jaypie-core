@@ -1,7 +1,8 @@
-// eslint-disable-next-line no-unused-vars
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
+import { createLogWith } from "../core.js";
 import jaypieHandler from "../jaypieHandler.module.js";
+import { mockLogFactory } from "../../test/mockLog.js";
 
 // Subject
 import lambdaHandler from "../lambdaHandler.module.js";
@@ -18,14 +19,25 @@ import lambdaHandler from "../lambdaHandler.module.js";
 
 vi.mock("../jaypieHandler.module.js");
 
+vi.mock("../core.js", async () => {
+  const actual = await vi.importActual("../core.js");
+  const module = {
+    ...actual,
+    createLogWith: vi.fn(),
+  };
+  return module;
+});
+
 //
 //
 // Mock environment
 //
 
 const DEFAULT_ENV = process.env;
+let mockedLog;
 beforeEach(() => {
   process.env = { ...process.env };
+  createLogWith.mockReturnValue((mockedLog = mockLogFactory()));
 });
 afterEach(() => {
   process.env = DEFAULT_ENV;
@@ -56,6 +68,21 @@ describe("Lambda Handler Module", () => {
       expect(() => lambdaHandler([])).toThrow();
       expect(() => lambdaHandler(null)).toThrow();
       expect(() => lambdaHandler(undefined)).toThrow();
+    });
+  });
+  describe("Observability", () => {
+    it("Does not log above trace", async () => {
+      // Arrange
+      const mockFunction = vi.fn();
+      const handler = lambdaHandler(mockFunction);
+      // Act
+      await handler();
+      // Assert
+      expect(mockedLog.debug).not.toHaveBeenCalled();
+      expect(mockedLog.info).not.toHaveBeenCalled();
+      expect(mockedLog.warn).not.toHaveBeenCalled();
+      expect(mockedLog.error).not.toHaveBeenCalled();
+      expect(mockedLog.fatal).not.toHaveBeenCalled();
     });
   });
   describe("Happy Paths", () => {
