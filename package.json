@@ -24,6 +24,7 @@
     "test:spec:logTags.function": "vitest run ./src/core/__tests__/logTags.function.spec.js"
   },
   "dependencies": {
+    "@codegenie/serverless-express": "^4.13.0",
     "@knowdev/arguments": "^1.3.0",
     "@knowdev/errors": "^2.0.3",
     "@knowdev/functions": "^1.0.0",
