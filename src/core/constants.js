@@ -105,6 +105,7 @@ export const JAYPIE = {
     CORE: "@jaypie/core",
   },
   LAYER: {
+    EXPRESS: "express",
     HANDLER: "handler",
     JAYPIE: "jaypie",
     LAMBDA: "lambda",
