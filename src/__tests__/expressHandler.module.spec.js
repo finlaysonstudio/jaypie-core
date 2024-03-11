@@ -5,6 +5,8 @@ import { mockLogFactory } from "../../test/mockLog.js";
 import { jsonApiErrorSchema } from "../../test/jsonApiSchema.js";
 
 import getCurrentInvokeUuid from "../express/getCurrentInvokeUuid.adapter.js";
+import summarizeRequest from "../express/summarizeRequest.function.js";
+import summarizeResponse from "../express/summarizeResponse.function.js";
 
 // Subject
 import expressHandler from "../expressHandler.module.js";
@@ -29,6 +31,8 @@ vi.mock("../core.js", async () => {
 });
 
 vi.mock("../express/getCurrentInvokeUuid.adapter.js");
+vi.mock("../express/summarizeRequest.function.js");
+vi.mock("../express/summarizeResponse.function.js");
 
 //
 //
@@ -41,6 +45,8 @@ beforeEach(() => {
   process.env = { ...process.env };
   createLogWith.mockReturnValue((mockedLog = mockLogFactory()));
   getCurrentInvokeUuid.mockReturnValue("MOCK_AWS_REQUEST_ID");
+  summarizeRequest.mockReturnValue("MOCK_SUMMARIZED_REQUEST");
+  summarizeResponse.mockReturnValue("MOCK_SUMMARIZED_RESPONSE");
 });
 afterEach(() => {
   process.env = DEFAULT_ENV;
@@ -113,6 +119,7 @@ describe("Express Handler Module", () => {
       expect(result).toMatchSchema(jsonApiErrorSchema);
       expect(result.errors[0].status).toBe(HTTP.CODE.UNAVAILABLE);
     });
+    it.todo("Returns an error if a local throws");
   });
   describe("Observability", () => {
     it("Does not log above trace", async () => {
@@ -141,8 +148,17 @@ describe("Express Handler Module", () => {
         invoke: "MOCK_AWS_REQUEST_ID",
       });
     });
-    it.todo("Logs the request");
-    it.todo("Logs the response");
+    it("Logs the request and response as info", async () => {
+      // Arrange
+      const mockFunction = vi.fn();
+      const handler = expressHandler(mockFunction);
+      // Act
+      await handler();
+      // Assert
+      expect(summarizeRequest).toHaveBeenCalled();
+      expect(summarizeResponse).toHaveBeenCalled();
+      expect(mockedLog.info.var).toHaveBeenCalledTimes(2);
+    });
   });
   describe("Happy Paths", () => {
     it("Calls a function I pass it", async () => {

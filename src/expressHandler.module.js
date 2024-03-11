@@ -9,6 +9,8 @@ import {
 } from "./core.js";
 // Express
 import getCurrentInvokeUuid from "./express/getCurrentInvokeUuid.adapter.js";
+import summarizeRequest from "./express/summarizeRequest.function.js";
+import summarizeResponse from "./express/summarizeResponse.function.js";
 // Jaypie
 import jaypieHandler from "./jaypieHandler.module.js";
 
@@ -78,8 +80,7 @@ const expressHandler = (
       moduleLogger.trace("[jaypie] Express execution");
       const invoke = getCurrentInvokeUuid();
       if (invoke) log.tag({ invoke });
-      // TODO: Log the request
-      // log.info.var({ req: summarizeRequest(req) });
+      log.info.var({ req: summarizeRequest(req) });
 
       //
       //
@@ -111,8 +112,7 @@ const expressHandler = (
     // Return
     //
 
-    // TODO: Log the response
-    // log.info.var({ res: summarizeResponse(res) });
+    log.info.var({ res: summarizeResponse(res) });
 
     // TODO: send the response with res.send
     return response;
