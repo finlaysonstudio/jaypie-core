@@ -9,6 +9,7 @@ import {
   UnhandledError,
 } from "./core.js";
 // Express
+import decorateResponse from "./express/decorateResponse.function.js";
 import getCurrentInvokeUuid from "./express/getCurrentInvokeUuid.adapter.js";
 import summarizeRequest from "./express/summarizeRequest.function.js";
 import summarizeResponse from "./express/summarizeResponse.function.js";
@@ -126,6 +127,11 @@ const expressHandler = (
     //
     // Postprocess
     //
+
+    decorateResponse(res, {
+      handler: name,
+      version: process.env.npm_package_version || process.env.PROJECT_VERSION,
+    });
 
     if (response === undefined || response === null) {
       res.status(HTTP.CODE.NO_CONTENT).send();

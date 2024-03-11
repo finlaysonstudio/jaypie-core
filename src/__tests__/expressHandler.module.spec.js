@@ -10,6 +10,7 @@ import {
 import { mockLogFactory } from "../../test/mockLog.js";
 import { jsonApiErrorSchema } from "../../test/jsonApiSchema.js";
 
+import decorateResponse from "../express/decorateResponse.function.js";
 import getCurrentInvokeUuid from "../express/getCurrentInvokeUuid.adapter.js";
 import summarizeRequest from "../express/summarizeRequest.function.js";
 import summarizeResponse from "../express/summarizeResponse.function.js";
@@ -36,6 +37,7 @@ vi.mock("../core.js", async () => {
   return module;
 });
 
+vi.mock("../express/decorateResponse.function.js");
 vi.mock("../express/getCurrentInvokeUuid.adapter.js");
 vi.mock("../express/summarizeRequest.function.js");
 vi.mock("../express/summarizeResponse.function.js");
@@ -316,7 +318,21 @@ describe("Express Handler Module", () => {
         expect(res.send).not.toHaveBeenCalled();
         expect(res.status).not.toHaveBeenCalled();
       });
-      it.todo("Decorates response headers");
+      it("Decorates response headers", async () => {
+        // Arrange
+        const mockFunction = vi.fn();
+        const handler = expressHandler(mockFunction, {
+          name: "MOCK_HANDLER",
+        });
+        // Act
+        await handler(req, res);
+        // Assert
+        expect(decorateResponse).toHaveBeenCalled();
+        const call = decorateResponse.mock.calls[0];
+        expect(call[0]).toBe(res);
+        expect(call[1]).toBeObject();
+        expect(call[1].handler).toBe("MOCK_HANDLER");
+      });
       it.todo("Populates locals");
     });
   });
