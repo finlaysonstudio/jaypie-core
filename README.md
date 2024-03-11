@@ -90,7 +90,7 @@ import { expressHandler, log } from "@jaypie/core";
 
 export default expressHandler(
   // Handler function
-  async (req, res) => {
+  async ({ req }) => {
     log.trace("\"Happy path\" events belong in trace");
 
     // "Your Code Here"
@@ -107,6 +107,13 @@ export default expressHandler(
   },
 );
 ```
+
+The function:
+
+* Only receives `req` and it must be destructured
+* Should return a JSON object, ideally JSON:API-compliant 🤩
+* May return a scalar which will be treated as text/html
+* Should throw a `jaypie` error if there is a problem
 
 TODO: This example needs specifics on `validate`, `setup`, `local`, and `teardown`
 
