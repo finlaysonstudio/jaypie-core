@@ -37,7 +37,6 @@ const lambdaHandler = (
   const moduleLogger = defaultLogger.with(
     logTags({
       handler: name || handler.name || JAYPIE.UNKNOWN,
-      // invoke, // TODO
       layer: JAYPIE.LAYER.LAMBDA,
       lib: JAYPIE.LIB.CORE,
     }),
@@ -48,7 +47,6 @@ const lambdaHandler = (
   const log = createLogWith(
     logTags({
       handler: name || handler.name || JAYPIE.UNKNOWN,
-      // invoke, // TODO
       layer: JAYPIE.LAYER.HANDLER,
     }),
   );
