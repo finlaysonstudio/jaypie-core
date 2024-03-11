@@ -7,6 +7,7 @@ import {
   ConfigurationError,
   UnhandledError,
 } from "./core.js";
+import getCurrentInvokeUuid from "./express/getCurrentInvokeUuid.adapter.js";
 
 //
 //
@@ -71,8 +72,8 @@ const expressHandler = (
 
     try {
       moduleLogger.trace("[jaypie] Express execution");
-      // TODO: Tag log with invoke
-      // log.tag({ invoke: context.awsRequestId });
+      const invoke = getCurrentInvokeUuid();
+      if (invoke) log.tag({ invoke });
       // TODO: Log the request
       // log.info.var({ req: summarizeRequest(req) });
 

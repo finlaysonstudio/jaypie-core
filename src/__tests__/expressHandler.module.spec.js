@@ -4,6 +4,8 @@ import { createLogWith, HTTP } from "../core.js";
 import { mockLogFactory } from "../../test/mockLog.js";
 import { jsonApiErrorSchema } from "../../test/jsonApiSchema.js";
 
+import getCurrentInvokeUuid from "../express/getCurrentInvokeUuid.adapter.js";
+
 // Subject
 import expressHandler from "../expressHandler.module.js";
 
@@ -26,6 +28,8 @@ vi.mock("../core.js", async () => {
   return module;
 });
 
+vi.mock("../express/getCurrentInvokeUuid.adapter.js");
+
 //
 //
 // Mock environment
@@ -36,6 +40,7 @@ let mockedLog;
 beforeEach(() => {
   process.env = { ...process.env };
   createLogWith.mockReturnValue((mockedLog = mockLogFactory()));
+  getCurrentInvokeUuid.mockReturnValue("MOCK_AWS_REQUEST_ID");
 });
 afterEach(() => {
   process.env = DEFAULT_ENV;
@@ -123,14 +128,14 @@ describe("Express Handler Module", () => {
       expect(mockedLog.error).not.toHaveBeenCalled();
       expect(mockedLog.fatal).not.toHaveBeenCalled();
     });
-    it.todo("Includes the invoke in the log", async () => {
-      // TODO: mock the serverless function
+    it("Includes the invoke in the log", async () => {
       // Arrange
       const mockFunction = vi.fn();
       const handler = expressHandler(mockFunction);
       // Act
       await handler();
       // Assert
+      expect(getCurrentInvokeUuid).toHaveBeenCalled();
       expect(mockedLog.tag).toHaveBeenCalledTimes(1);
       expect(mockedLog.tag).toHaveBeenCalledWith({
         invoke: "MOCK_AWS_REQUEST_ID",
