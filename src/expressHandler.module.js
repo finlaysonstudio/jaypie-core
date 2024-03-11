@@ -67,7 +67,8 @@ const expressHandler = (
     validate,
   });
 
-  return async (req, res, ...args) => {
+  // eslint-disable-next-line no-unused-vars
+  return async (req, res, ...unused) => {
     let response;
 
     try {
@@ -82,7 +83,7 @@ const expressHandler = (
       // Process
       //
 
-      response = await jaypieFunction(req, res, ...args);
+      response = await jaypieFunction({ req });
 
       //
       //

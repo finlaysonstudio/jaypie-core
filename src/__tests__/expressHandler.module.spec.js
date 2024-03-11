@@ -149,12 +149,12 @@ describe("Express Handler Module", () => {
       // Arrange
       const mockFunction = vi.fn();
       const handler = expressHandler(mockFunction);
-      const args = [1, 2, 3];
+      const args = ["one", "two", "three"];
       // Act
       await handler(...args);
       // Assert
       expect(mockFunction).toHaveBeenCalledTimes(1);
-      expect(mockFunction).toHaveBeenCalledWith(...args);
+      expect(mockFunction).toHaveBeenCalledWith({ req: "one" });
     });
     it("Awaits a function I pass it", async () => {
       // Arrange
