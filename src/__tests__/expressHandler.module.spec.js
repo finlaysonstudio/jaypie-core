@@ -1,6 +1,12 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
-import { createLogWith, HTTP } from "../core.js";
+import {
+  createLogWith,
+  ForbiddenError,
+  HTTP,
+  NotFoundError,
+  MultiError,
+} from "../core.js";
 import { mockLogFactory } from "../../test/mockLog.js";
 import { jsonApiErrorSchema } from "../../test/jsonApiSchema.js";
 
@@ -110,6 +116,9 @@ describe("Express Handler Module", () => {
       // Assert
       expect(result).toBeFalse();
       expect(res.json).toHaveBeenCalled();
+      expect(res.json).toHaveBeenCalled();
+      expect(res.status).toHaveBeenCalled();
+      expect(res.status).toHaveBeenCalledWith(HTTP.CODE.INTERNAL_ERROR);
       const body = res.json.mock.calls[0][0];
       expect(body).toMatchSchema(jsonApiErrorSchema);
     });
@@ -128,6 +137,8 @@ describe("Express Handler Module", () => {
       // Assert
       expect(result).toBeFalse();
       expect(res.json).toHaveBeenCalled();
+      expect(res.status).toHaveBeenCalled();
+      expect(res.status).toHaveBeenCalledWith(HTTP.CODE.INTERNAL_ERROR);
       const body = res.json.mock.calls[0][0];
       expect(body).toMatchSchema(jsonApiErrorSchema);
       expect(body.errors[0].status).toBe(HTTP.CODE.INTERNAL_ERROR);
@@ -144,9 +155,38 @@ describe("Express Handler Module", () => {
       expect(result).toBeFalse();
       expect(result).toBeFalse();
       expect(res.json).toHaveBeenCalled();
+      expect(res.status).toHaveBeenCalled();
+      expect(res.status).toHaveBeenCalledWith(HTTP.CODE.UNAVAILABLE);
       const body = res.json.mock.calls[0][0];
       expect(body).toMatchSchema(jsonApiErrorSchema);
       expect(body.errors[0].status).toBe(HTTP.CODE.UNAVAILABLE);
+    });
+    it("Calls status with the error status thrown", async () => {
+      // Arrange
+      const mockFunction = vi.fn(() => {
+        throw new NotFoundError("This error should be caught");
+      });
+      const handler = expressHandler(mockFunction);
+      // Act
+      await handler(req, res);
+      // Assert
+      expect(res.status).toHaveBeenCalled();
+      expect(res.status).toHaveBeenCalledWith(HTTP.CODE.NOT_FOUND);
+    });
+    it("Observes multi-error merging", async () => {
+      // Arrange
+      const mockFunction = vi.fn(() => {
+        throw new MultiError([
+          new NotFoundError("This error should be caught"),
+          new ForbiddenError("This error should be caught"),
+        ]);
+      });
+      const handler = expressHandler(mockFunction);
+      // Act
+      await handler(req, res);
+      // Assert
+      expect(res.status).toHaveBeenCalled();
+      expect(res.status).toHaveBeenCalledWith(HTTP.CODE.BAD_REQUEST);
     });
     it.todo("Returns an error if a local throws");
   });
