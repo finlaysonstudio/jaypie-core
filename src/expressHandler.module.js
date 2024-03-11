@@ -1,13 +1,16 @@
-import jaypieHandler from "./jaypieHandler.module.js";
+// Core
 import {
+  ConfigurationError,
   createLogWith,
   JAYPIE,
   logTags,
   moduleLogger as defaultLogger,
-  ConfigurationError,
   UnhandledError,
 } from "./core.js";
+// Express
 import getCurrentInvokeUuid from "./express/getCurrentInvokeUuid.adapter.js";
+// Jaypie
+import jaypieHandler from "./jaypieHandler.module.js";
 
 //
 //
