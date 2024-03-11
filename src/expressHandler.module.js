@@ -110,6 +110,8 @@ const expressHandler = (
 
     // TODO: Log the response
     // log.info.var({ res: summarizeResponse(res) });
+
+    // TODO: send the response with res.send
     return response;
   };
 };

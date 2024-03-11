@@ -183,5 +183,14 @@ describe("Express Handler Module", () => {
       // Assert
       expect(result).toBe(42);
     });
+    describe("Features", () => {
+      it.todo("Decorates response headers");
+      it.todo("Takes returned JSON and sends it as a response");
+      it.todo("Populates locals");
+      it.todo("Responds no content if the function returns undefined");
+      it.todo("Responds no content if the function returns null");
+      it.todo("Responds text/html if the function returns a non-object");
+      it.todo("Response JSON when the function returns an object");
+    });
   });
 });
