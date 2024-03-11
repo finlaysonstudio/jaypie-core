@@ -141,6 +141,8 @@ describe("Express Handler Module", () => {
         invoke: "MOCK_AWS_REQUEST_ID",
       });
     });
+    it.todo("Logs the request");
+    it.todo("Logs the response");
   });
   describe("Happy Paths", () => {
     it("Calls a function I pass it", async () => {
