@@ -41,10 +41,14 @@ vi.mock("../express/summarizeResponse.function.js");
 
 const DEFAULT_ENV = process.env;
 let mockedLog;
+let req;
+let res;
 beforeEach(() => {
   process.env = { ...process.env };
   createLogWith.mockReturnValue((mockedLog = mockLogFactory()));
   getCurrentInvokeUuid.mockReturnValue("MOCK_AWS_REQUEST_ID");
+  req = { MOCK: "REQUEST" };
+  res = mockRes();
   summarizeRequest.mockReturnValue("MOCK_SUMMARIZED_REQUEST");
   summarizeResponse.mockReturnValue("MOCK_SUMMARIZED_RESPONSE");
 });
@@ -52,6 +56,24 @@ afterEach(() => {
   process.env = DEFAULT_ENV;
   vi.clearAllMocks();
 });
+
+//
+//
+// Mock factory
+//
+
+function mockRes() {
+  const res = {
+    json: vi.fn(),
+    send: vi.fn(),
+    status: vi.fn(),
+  };
+  // Loop over the methods and make them all return the res
+  for (const method of Object.keys(res)) {
+    res[method].mockReturnValue(res);
+  }
+  return res;
+}
 
 //
 //
@@ -84,10 +106,12 @@ describe("Express Handler Module", () => {
       mockFunction.mockRejectedValue(new Error("This error should be caught"));
       const handler = expressHandler(mockFunction);
       // Act
-      const result = await handler();
+      const result = await handler(req, res);
       // Assert
-      expect(result).toBeObject();
-      expect(result).toMatchSchema(jsonApiErrorSchema);
+      expect(result).toBeFalse();
+      expect(res.json).toHaveBeenCalled();
+      const body = res.json.mock.calls[0][0];
+      expect(body).toMatchSchema(jsonApiErrorSchema);
     });
     it("Returns an error if a lifecycle function throws", async () => {
       // Arrange
@@ -100,11 +124,13 @@ describe("Express Handler Module", () => {
         ],
       });
       // Act
-      const result = await handler();
+      const result = await handler(req, res);
       // Assert
-      expect(result).toBeObject();
-      expect(result).toMatchSchema(jsonApiErrorSchema);
-      expect(result.errors[0].status).toBe(HTTP.CODE.INTERNAL_ERROR);
+      expect(result).toBeFalse();
+      expect(res.json).toHaveBeenCalled();
+      const body = res.json.mock.calls[0][0];
+      expect(body).toMatchSchema(jsonApiErrorSchema);
+      expect(body.errors[0].status).toBe(HTTP.CODE.INTERNAL_ERROR);
     });
     it("Returns unavailable if PROJECT_UNAVAILABLE is set", async () => {
       // Arrange
@@ -113,11 +139,14 @@ describe("Express Handler Module", () => {
         unavailable: true,
       });
       // Act
-      const result = await handler();
+      const result = await handler(req, res);
       // Assert
-      expect(result).toBeObject();
-      expect(result).toMatchSchema(jsonApiErrorSchema);
-      expect(result.errors[0].status).toBe(HTTP.CODE.UNAVAILABLE);
+      expect(result).toBeFalse();
+      expect(result).toBeFalse();
+      expect(res.json).toHaveBeenCalled();
+      const body = res.json.mock.calls[0][0];
+      expect(body).toMatchSchema(jsonApiErrorSchema);
+      expect(body.errors[0].status).toBe(HTTP.CODE.UNAVAILABLE);
     });
     it.todo("Returns an error if a local throws");
   });
@@ -127,7 +156,7 @@ describe("Express Handler Module", () => {
       const mockFunction = vi.fn();
       const handler = expressHandler(mockFunction);
       // Act
-      await handler();
+      await handler(req, res);
       // Assert
       expect(mockedLog.debug).not.toHaveBeenCalled();
       expect(mockedLog.info).not.toHaveBeenCalled();
@@ -140,7 +169,7 @@ describe("Express Handler Module", () => {
       const mockFunction = vi.fn();
       const handler = expressHandler(mockFunction);
       // Act
-      await handler();
+      await handler(req, res);
       // Assert
       expect(getCurrentInvokeUuid).toHaveBeenCalled();
       expect(mockedLog.tag).toHaveBeenCalledTimes(1);
@@ -153,7 +182,7 @@ describe("Express Handler Module", () => {
       const mockFunction = vi.fn();
       const handler = expressHandler(mockFunction);
       // Act
-      await handler();
+      await handler(req, res);
       // Assert
       expect(summarizeRequest).toHaveBeenCalled();
       expect(summarizeResponse).toHaveBeenCalled();
@@ -165,7 +194,7 @@ describe("Express Handler Module", () => {
       // Arrange
       const mockFunction = vi.fn();
       const handler = expressHandler(mockFunction);
-      const args = ["one", "two", "three"];
+      const args = ["one", res, "three"];
       // Act
       await handler(...args);
       // Assert
@@ -177,36 +206,78 @@ describe("Express Handler Module", () => {
       const mockFunction = vi.fn(async () => {});
       const handler = expressHandler(mockFunction);
       // Act
-      await handler();
+      await handler(req, res);
       // Assert
       expect(mockFunction).toHaveBeenCalledTimes(1);
     });
-    it("Returns what the function returns", async () => {
-      // Arrange
-      const mockFunction = vi.fn(() => 42);
-      const handler = expressHandler(mockFunction);
-      // Act
-      const result = await handler();
-      // Assert
-      expect(result).toBe(42);
-    });
-    it("Returns what async functions resolve", async () => {
-      // Arrange
-      const mockFunction = vi.fn(async () => 42);
-      const handler = expressHandler(mockFunction);
-      // Act
-      const result = await handler();
-      // Assert
-      expect(result).toBe(42);
-    });
     describe("Features", () => {
+      it("Responds no content if the function returns undefined", async () => {
+        // Arrange
+        const mockFunction = vi.fn(() => undefined);
+        const handler = expressHandler(mockFunction);
+        // Act
+        const result = await handler({}, res);
+        // Assert
+        expect(result).toBeTrue();
+        expect(res.json).not.toHaveBeenCalled();
+        expect(res.send).toHaveBeenCalled();
+        expect(res.send).toHaveBeenCalledWith();
+        expect(res.status).toHaveBeenCalledWith(HTTP.CODE.NO_CONTENT);
+      });
+      it("Responds no content if the function returns null", async () => {
+        // Arrange
+        const mockFunction = vi.fn(() => null);
+        const handler = expressHandler(mockFunction);
+        // Act
+        const result = await handler({}, res);
+        // Assert
+        expect(result).toBeTrue();
+        expect(res.json).not.toHaveBeenCalled();
+        expect(res.send).toHaveBeenCalled();
+        expect(res.send).toHaveBeenCalledWith();
+        expect(res.status).toHaveBeenCalledWith(HTTP.CODE.NO_CONTENT);
+      });
+      it("Responds text/html if the function returns a non-object", async () => {
+        // Arrange
+        const mockFunction = vi.fn(() => "Hello, world!");
+        const handler = expressHandler(mockFunction);
+        // Act
+        const result = await handler({}, res);
+        // Assert
+        expect(result).toBeTrue();
+        expect(res.json).not.toHaveBeenCalled();
+        expect(res.send).toHaveBeenCalled();
+        expect(res.send).toHaveBeenCalledWith("Hello, world!");
+        expect(res.status).not.toHaveBeenCalled();
+      });
+      it("Response JSON when the function returns an object", async () => {
+        // Arrange
+        const mockFunction = vi.fn(() => ({ hello: "world" }));
+        const handler = expressHandler(mockFunction);
+        // Act
+        const result = await handler({}, res);
+        // Assert
+        expect(result).toBeTrue();
+        expect(res.json).toHaveBeenCalled();
+        expect(res.json).toHaveBeenCalledWith({ hello: "world" });
+        expect(res.send).not.toHaveBeenCalled();
+        expect(res.status).not.toHaveBeenCalled();
+      });
+      it("Response JSON when the function returns an array", async () => {
+        // Arrange
+        const mockFunction = vi.fn(() => ["hello", "world"]);
+        const handler = expressHandler(mockFunction);
+        // Act
+        const result = await handler({}, res);
+        // Assert
+        expect(result).toBeTrue();
+        expect(res.json).toHaveBeenCalled();
+        expect(res.json).toHaveBeenCalledWith(["hello", "world"]);
+        expect(res.send).not.toHaveBeenCalled();
+        expect(res.status).not.toHaveBeenCalled();
+      });
       it.todo("Decorates response headers");
-      it.todo("Takes returned JSON and sends it as a response");
       it.todo("Populates locals");
-      it.todo("Responds no content if the function returns undefined");
-      it.todo("Responds no content if the function returns null");
-      it.todo("Responds text/html if the function returns a non-object");
-      it.todo("Response JSON when the function returns an object");
     });
   });
 });

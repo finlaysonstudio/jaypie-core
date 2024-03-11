@@ -2,6 +2,7 @@
 import {
   ConfigurationError,
   createLogWith,
+  HTTP,
   JAYPIE,
   logTags,
   moduleLogger as defaultLogger,
@@ -74,6 +75,12 @@ const expressHandler = (
 
   // eslint-disable-next-line no-unused-vars
   return async (req, res, ...unused) => {
+    if (typeof res !== "object") {
+      throw new ConfigurationError(
+        "The handler encountered a response configuration error",
+      );
+    }
+    let success = false;
     let response;
 
     try {
@@ -88,12 +95,14 @@ const expressHandler = (
       //
 
       response = await jaypieFunction({ req });
+      success = true;
 
       //
       //
       // Error Handling
       //
     } catch (error) {
+      success = false;
       // Jaypie or "project" errors are intentional and should be handled like expected cases
       if (error.isProjectError) {
         log.debug("Caught jaypie error");
@@ -109,13 +118,27 @@ const expressHandler = (
 
     //
     //
+    // Postprocess
+    //
+
+    if (response === undefined || response === null) {
+      res.status(HTTP.CODE.NO_CONTENT).send();
+    } else {
+      if (typeof response === "object") {
+        res.json(response);
+      } else {
+        res.send(response);
+      }
+    }
+
+    //
+    //
     // Return
     //
 
     log.info.var({ res: summarizeResponse(res) });
 
-    // TODO: send the response with res.send
-    return response;
+    return success; // `true` on success, `false` on errors
   };
 };
 
