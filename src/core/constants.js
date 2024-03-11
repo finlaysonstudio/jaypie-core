@@ -113,3 +113,11 @@ export const JAYPIE = {
   },
   UNKNOWN: "unknown",
 };
+
+// TODO: move applicable CDK constants here before 1.0! (account, env, sponsor)
+export const PROJECT = {
+  SPONSOR: {
+    JAYPIE: "jaypie",
+    KNOWDEV: "knowdev.studio",
+  },
+};
