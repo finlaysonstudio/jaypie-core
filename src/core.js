@@ -55,7 +55,7 @@ export const restoreLogger = () => {
 export default init;
 
 // Core
-export { CDK, JAYPIE } from "./core/constants.js";
+export { CDK, JAYPIE, PROJECT } from "./core/constants.js";
 export * from "./core/knowdev.lib.js";
 export { default as logTags } from "./core/logTags.function.js";
 

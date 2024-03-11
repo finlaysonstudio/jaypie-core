@@ -1,5 +1,5 @@
 // Core
-export { CDK, JAYPIE, default, moduleLogger } from "./core.js";
+export { CDK, JAYPIE, default, moduleLogger, PROJECT } from "./core.js";
 
 // Jaypie
 export { default as jaypieHandler } from "./jaypieHandler.module.js";
