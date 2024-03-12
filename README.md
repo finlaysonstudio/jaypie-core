@@ -34,7 +34,7 @@ export default lambdaHandler(
     log.trace("\"Happy path\" events belong in trace");
 
     // "Your Code Here"
-    
+
     return "Hello, world!";
   },
   // Configuration (optional)
@@ -94,7 +94,7 @@ export default expressHandler(
     log.trace("\"Happy path\" events belong in trace");
 
     // "Your Code Here"
-    
+
     return json;
   },
   // Configuration (optional)
@@ -144,13 +144,13 @@ import {
   Logger,
   moduleLogger,
   silent,
-} from "@jaypie/core"
+} from "@jaypie/core";
 ```
 
 #### log
 
 ```javascript
-import { log } from "@jaypie/core"
+import { log } from "@jaypie/core";
 
 log.trace();
 log.debug();
@@ -165,7 +165,7 @@ log.fatal();
 Log a key-value pair. In the `json` format, the key will be tagged as `var` and the value will be the value. Logging marker variables this way can be useful for debugging.
 
 ```javascript
-import { log } from "@jaypie/core"
+import { log } from "@jaypie/core";
 
 log.var("message", "Hello, world");
 log.var({ message: "Hello, world" });
@@ -179,7 +179,7 @@ log.var({ message });
 Create a new log object with additional tags
 
 ```javascript
-import { log } from "@jaypie/core"
+import { log } from "@jaypie/core";
 
 const libLogger = log.with({ lib: "myLib" });
 ```
@@ -187,7 +187,7 @@ const libLogger = log.with({ lib: "myLib" });
 #### Logger \<Class>
 
 ```javascript
-import { LOG, Logger } from "@jaypie/core"
+import { LOG, Logger } from "@jaypie/core";
 
 const log = new Logger({
   format: LOG.FORMAT.JSON, // default="color"; also "json", "text"
@@ -202,7 +202,7 @@ const log = new Logger({
 Uses `silent` by default.  if `process.env.MODULE_LOG_LEVEL` is `true`, follows `process.env.LOG_LEVEL`.  If `process.env.MODULE_LOG_LEVEL` is also set, uses that log level.
 
 ```javascript
-import { moduleLogger } from "@jaypie/core"
+import { moduleLogger } from "@jaypie/core";
 
 moduleLogger.trace();
 ```
@@ -212,7 +212,7 @@ moduleLogger.trace();
 Useful to support logging in code but only if an instantiated log object is passed in. This way the caller only gets logging if they want it. Module logger will use `silent` if `process.env.MODULE_LOG_LEVEL` is not set.
 
 ```javascript
-import { silent } from "@jaypie/core"
+import { silent } from "@jaypie/core";
 
 silent.fatal(); // Doesn't log
 
