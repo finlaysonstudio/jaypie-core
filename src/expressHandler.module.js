@@ -23,8 +23,8 @@ import jaypieHandler from "./jaypieHandler.module.js";
 
 const expressHandler = (
   handler,
-  // We rely on jaypieHandler for all defaults... _except_ log
-  { name, setup, teardown, unavailable, validate } = {},
+  // We rely on jaypieHandler for _most_ defaults (not log, not setup; locals is our own)
+  { locals = {}, name, setup = [], teardown, unavailable, validate } = {},
 ) => {
   //
   //
@@ -33,7 +33,19 @@ const expressHandler = (
 
   if (typeof handler !== "function") {
     throw new ConfigurationError(
-      "The handler responding to the request encountered a configuration error",
+      "The handler encountered a handler configuration error",
+    );
+  }
+
+  if (!Array.isArray(setup)) {
+    throw new ConfigurationError(
+      "The handler encountered a setup configuration error",
+    );
+  }
+
+  if (typeof locals !== "object") {
+    throw new ConfigurationError(
+      "The handler encountered a local configuration error",
     );
   }
 
@@ -64,6 +76,22 @@ const expressHandler = (
   // Preprocess
   //
 
+  // If there are locals, add them to the setup
+  if (Object.keys(locals).length > 0) {
+    const setupLocals = async ({ req }) => {
+      log.trace("[handler] Locals");
+      req.locals = locals;
+      // Resolve all the functions
+      for (const key in req.locals) {
+        if (typeof req.locals[key] === "function") {
+          req.locals[key] = await req.locals[key]({ req });
+        }
+      }
+    };
+    setup.push(setupLocals);
+  }
+
+  // Initialize the jaypie function
   const jaypieFunction = jaypieHandler(handler, {
     log,
     moduleLogger,

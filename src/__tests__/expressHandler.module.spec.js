@@ -333,7 +333,34 @@ describe("Express Handler Module", () => {
         expect(call[1]).toBeObject();
         expect(call[1].handler).toBe("MOCK_HANDLER");
       });
-      it.todo("Populates locals");
+      it("Populates locals", async () => {
+        // Arrange
+        const mockFunction = vi.fn();
+        const mockLocalValue = "MOCK_LOCAL_VALUE";
+        const mockLocalCall = vi.fn(() => "MOCK_LOCAL_CALL");
+        const mockLocalAsync = vi.fn(async () => {
+          await new Promise((r) => setTimeout(r, 200));
+          return "MOCK_LOCAL_ASYNC";
+        });
+        const handler = expressHandler(mockFunction, {
+          locals: {
+            call: mockLocalCall,
+            value: mockLocalValue,
+            wait: mockLocalAsync,
+          },
+        });
+        // Act
+        await handler(req, res);
+        // Assert
+        expect(mockLocalCall).toHaveBeenCalled();
+        expect(mockLocalCall).toHaveBeenCalledWith({ req });
+        expect(mockLocalAsync).toHaveBeenCalled();
+        expect(mockLocalAsync).toHaveBeenCalledWith({ req });
+        expect(req.locals).toBeObject();
+        expect(req.locals.call).toBe("MOCK_LOCAL_CALL");
+        expect(req.locals.value).toBe("MOCK_LOCAL_VALUE");
+        expect(req.locals.wait).toBe("MOCK_LOCAL_ASYNC");
+      });
     });
   });
 });
