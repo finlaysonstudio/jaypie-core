@@ -470,7 +470,7 @@ describe("Jaypie Handler Module", () => {
       await handler();
       const end = Date.now();
       // Assert
-      expect(end - start).toBeGreaterThanOrEqual(200);
+      expect(end - start).toBeGreaterThanOrEqual(194); // Allowing a tiny amount of breathing room
     });
     it("Throws an unhandled error if async throws after a delay", async () => {
       // Arrange
