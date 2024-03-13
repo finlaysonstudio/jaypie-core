@@ -1,3 +1,5 @@
+import { moduleLogger } from "../core.js";
+
 //
 //
 // Main
@@ -8,8 +10,14 @@ export default function summarizeResponse(res, extras) {
     return {};
   }
 
+  let headers;
   const { getHeaders, statusCode, statusMessage } = res;
-  const headers = getHeaders ? getHeaders() : undefined;
+  try {
+    headers = getHeaders ? getHeaders() : undefined;
+  } catch (error) {
+    moduleLogger.warn("[jaypie] Failed to get headers from Express response");
+    moduleLogger.var({ managedError: error.message });
+  }
 
   return {
     headers,
