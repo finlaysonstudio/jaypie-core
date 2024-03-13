@@ -93,16 +93,16 @@ export const CDK = {
     VENDOR: "vendor",
     VERSION: "version",
   },
-  VARS: {
-    CDK_ENV_HOSTED_ZONE: "CDK_ENV_HOSTED_ZONE",
-    CDK_ENV_STACK_NAME: "CDK_ENV_STACK_NAME",
-    CDK_ENV_SUBDOMAIN: "CDK_ENV_SUBDOMAIN",
-  },
 };
 
 export const JAYPIE = {
   LIB: {
+    AWS: "@jaypie/aws",
+    CDK: "@jaypie/cdk",
     CORE: "@jaypie/core",
+    EXPRESS: "@jaypie/express",
+    LAMBDA: "@jaypie/lambda",
+    MONGOOSE: "@jaypie/mongoose",
   },
   LAYER: {
     EXPRESS: "express",
@@ -117,6 +117,7 @@ export const JAYPIE = {
 // TODO: move applicable CDK constants here before 1.0! (account, env, sponsor)
 export const PROJECT = {
   SPONSOR: {
+    FINLAYSON: "finlaysonstudio",
     JAYPIE: "jaypie",
     KNOWDEV: "knowdev.studio",
   },
