@@ -230,6 +230,7 @@ function myHello(log=silent) {
 
 | Date       | Version | Summary        |
 | ---------- | ------- | -------------- |
+|  3/16/2024 |   0.4.0 | 💥 Breaking: `lambdaHandler` migrated to @jaypie/lambda |
 |  3/11/2024 |   0.3.0 | Export `expressHandler` |
 |  3/10/2024 |   0.2.0 | Export `lambdaHandler` |
 |   3/5/2024 |   0.1.0 | Export all the core helpers |
