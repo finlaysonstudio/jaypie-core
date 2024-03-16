@@ -69,11 +69,6 @@ export const CDK = {
     NONE: "none",
     TRACE: "trace",
   },
-  SPONSOR: {
-    FINLAYSON: "finlaysonstudio",
-    INITZERO: "initzero",
-    KNOWDEV: "knowdev",
-  },
   TAG: {
     BUILD_DATE: "buildDate",
     BUILD_HEX: "buildHex",
@@ -117,7 +112,6 @@ export const JAYPIE = {
   UNKNOWN: "unknown",
 };
 
-// TODO: move applicable CDK constants here before 1.0! (account, env, sponsor)
 export const PROJECT = {
   SPONSOR: {
     FINLAYSON: "finlaysonstudio",
