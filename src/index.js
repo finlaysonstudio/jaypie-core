@@ -12,3 +12,4 @@ export * from "./core/knowdev.lib.js";
 // Logging
 import { exportedLog } from "./core.js";
 export { exportedLog as log };
+export { logTags } from "./core.js";
