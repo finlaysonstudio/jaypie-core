@@ -3,6 +3,8 @@ import { envBoolean, LOG, Logger } from "./core/knowdev.lib.js";
 
 import { JAYPIE } from "./core/constants.js";
 
+import logTags from "./core/logTags.function.js";
+
 //
 //
 // Functions
@@ -57,13 +59,13 @@ export default init;
 // Core
 export { CDK, JAYPIE, PROJECT } from "./core/constants.js";
 export * from "./core/knowdev.lib.js";
-export { default as logTags } from "./core/logTags.function.js";
+export { logTags };
 
 // Logging
 
 const log = new Logger({
   format: LOG.FORMAT.JSON,
-});
+}).with(logTags());
 
 export const exportedLog = {
   ...log,
