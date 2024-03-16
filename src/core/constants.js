@@ -101,8 +101,11 @@ export const JAYPIE = {
     CDK: "@jaypie/cdk",
     CORE: "@jaypie/core",
     EXPRESS: "@jaypie/express",
+    JAYPIE: "jaypie",
     LAMBDA: "@jaypie/lambda",
     MONGOOSE: "@jaypie/mongoose",
+    TESTKIT: "@jaypie/testkit",
+    VUEKIT: "@jaypie/vuekit",
   },
   LAYER: {
     EXPRESS: "express",
