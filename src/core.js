@@ -85,20 +85,32 @@ if (
     moduleLogger = new Logger({
       format: LOG.FORMAT.JSON,
       level: process.env.MODULE_LOG_LEVEL,
-      tags: { ...logTags(), layer: JAYPIE.LAYER.MODULE },
+      tags: {
+        ...logTags(),
+        layer: JAYPIE.LAYER.MODULE,
+        logger: JAYPIE.LAYER.MODULE,
+      },
     });
   } else {
     moduleLogger = new Logger({
       format: LOG.FORMAT.JSON,
       level: process.env.LOG_LEVEL,
-      tags: { ...logTags(), layer: JAYPIE.LAYER.MODULE },
+      tags: {
+        ...logTags(),
+        layer: JAYPIE.LAYER.MODULE,
+        logger: JAYPIE.LAYER.MODULE,
+      },
     });
   }
 } else {
   moduleLogger = new Logger({
     format: LOG.FORMAT.JSON,
     level: LOG.LEVEL.SILENT,
-    tags: { ...logTags(), layer: JAYPIE.LAYER.MODULE },
+    tags: {
+      ...logTags(),
+      layer: JAYPIE.LAYER.MODULE,
+      logger: JAYPIE.LAYER.MODULE,
+    },
   });
 }
 export { moduleLogger };
