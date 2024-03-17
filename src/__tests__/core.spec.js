@@ -2,7 +2,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 // Subject
-import core from "../core.js";
 // eslint-disable-next-line import/named
 import { CDK, exportedLog, log, moduleLogger } from "../core.js";
 
@@ -35,17 +34,6 @@ afterEach(() => {
 //
 
 describe("Jaypie Core", () => {
-  it("Exposes a function", () => {
-    expect(core).toBeFunction();
-  });
-  it("Function returns boolean", () => {
-    const result = core();
-    expect(result).not.toBeUndefined();
-    expect(result).toBeBoolean();
-  });
-  it("Right now it is true 🙃", () => {
-    expect(core()).toBeTrue();
-  });
   describe("Constants", () => {
     it("Exposes constants", () => {
       expect(CDK).toBeObject();

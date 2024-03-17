@@ -1,6 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 
 // Subject
+// eslint-disable-next-line import/default
 import index from "../index.js";
 import {
   CDK,
@@ -48,16 +49,8 @@ afterEach(() => {
 //
 
 describe("Jaypie Core", () => {
-  it("Exposes a function", () => {
-    expect(index).toBeFunction();
-  });
-  it("Function returns boolean", () => {
-    const result = index();
-    expect(result).not.toBeUndefined();
-    expect(result).toBeBoolean();
-  });
-  it("Right now it is true 🙃", () => {
-    expect(index()).toBeTrue();
+  it("Exports no default", () => {
+    expect(index).toBeUndefined();
   });
   describe("Constants", () => {
     it("Exposes HTTP", () => {

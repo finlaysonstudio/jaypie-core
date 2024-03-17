@@ -1,5 +1,3 @@
-import { JAYPIE } from "./constants.js";
-
 //
 //
 // Main
@@ -25,13 +23,9 @@ const logTags = (withTags) => {
     PROJECT_SPONSOR,
     PROJECT_VERSION,
   } = process.env;
-  const tags = {
-    handler: JAYPIE.UNKNOWN,
-    layer: JAYPIE.UNKNOWN,
-    logger: JAYPIE.UNKNOWN,
-  };
 
   // Process
+  const tags = {};
 
   // Commit
   if (PROJECT_COMMIT) {

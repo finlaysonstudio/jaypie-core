@@ -109,6 +109,10 @@ export const JAYPIE = {
     LAMBDA: "lambda",
     MODULE: "module",
   },
+  LOGGER: {
+    DEFAULT: "default",
+    MODULE: "module",
+  },
   UNKNOWN: "unknown",
 };
 

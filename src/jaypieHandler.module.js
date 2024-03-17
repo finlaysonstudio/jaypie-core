@@ -2,7 +2,6 @@ import {
   BadRequestError,
   envBoolean,
   JAYPIE,
-  logTags,
   moduleLogger as defaultLogger,
   redirectLogger,
   restoreLogger,
@@ -30,7 +29,7 @@ const jaypieHandler = (
   {
     name = undefined,
     log = defaultLogger, // provided public logger or the default module logger
-    moduleLogger = defaultLogger, // provided module logger or the default module logger
+    moduleLogger, // provided module logger or the default module logger
     setup = [],
     teardown = [],
     unavailable = envBoolean("PROJECT_UNAVAILABLE", { defaultValue: false }),
@@ -43,12 +42,10 @@ const jaypieHandler = (
   //
 
   if (!name) {
+    name = "unknown"; // eslint-disable-line no-param-reassign
     // If handler has a name, use it
     if (handler.name) {
       name = handler.name; // eslint-disable-line no-param-reassign
-    }
-    if (!name) {
-      name = "unknown"; // eslint-disable-line no-param-reassign
     }
   }
 
@@ -57,27 +54,30 @@ const jaypieHandler = (
   // Setup
   //
 
-  // Ths inbound module logger will not conflict with any of these
-  moduleLogger = moduleLogger.with(
-    logTags({
-      handler: name || handler.name || JAYPIE.UNKNOWN,
-      layer: JAYPIE.LAYER.JAYPIE,
-      lib: JAYPIE.LIB.CORE,
-    }),
-  );
+  // If there is no module logger, create one
+  if (!moduleLogger) {
+    moduleLogger = defaultLogger.with({
+      handler: name,
+    });
+  }
+
+  // The inbound module logger should be "our own" (though the parent might update it)
+  moduleLogger.tag({
+    handler: name,
+    layer: JAYPIE.LAYER.JAYPIE,
+    logger: JAYPIE.LAYER.JAYPIE, // "own" the logger
+    lib: JAYPIE.LIB.CORE,
+  });
   moduleLogger.trace("[jaypie] Handler init");
   return async (...args) => {
-    moduleLogger.trace(`[jaypie] Handler execution`);
+    moduleLogger.trace(`[jaypie] Handler execution`); // May have been updated by parent
     // Send the public logger to the log that was passed in
     redirectLogger(log);
     // Local logger is a clone of the public logger with updated layer and lib
-    log = log.with(
-      logTags({
-        handler: name || handler.name || JAYPIE.UNKNOWN,
-        layer: JAYPIE.LAYER.JAYPIE,
-        lib: JAYPIE.LIB.CORE,
-      }),
-    );
+    log = log.with({
+      layer: JAYPIE.LAYER.JAYPIE,
+      lib: JAYPIE.LIB.CORE,
+    });
 
     log.trace(`[handler] Project logging in trace mode`);
 

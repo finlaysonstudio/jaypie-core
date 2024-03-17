@@ -4,7 +4,6 @@ import {
   createLogWith,
   HTTP,
   JAYPIE,
-  logTags,
   moduleLogger as defaultLogger,
   UnhandledError,
 } from "./core.js";
@@ -54,22 +53,18 @@ const expressHandler = (
   // Setup
   //
 
-  const moduleLogger = defaultLogger.with(
-    logTags({
-      handler: name || handler.name || JAYPIE.UNKNOWN,
-      layer: JAYPIE.LAYER.EXPRESS,
-      lib: JAYPIE.LIB.CORE,
-    }),
-  );
+  const moduleLogger = defaultLogger.with({
+    handler: name || handler.name || JAYPIE.UNKNOWN,
+    layer: JAYPIE.LAYER.EXPRESS,
+    lib: JAYPIE.LIB.CORE,
+  });
   moduleLogger.trace("[jaypie] Express init");
 
   // This will be the public logger
-  const log = createLogWith(
-    logTags({
-      handler: name || handler.name || JAYPIE.UNKNOWN,
-      layer: JAYPIE.LAYER.HANDLER,
-    }),
-  );
+  const log = createLogWith({
+    handler: name || handler.name || JAYPIE.UNKNOWN,
+    layer: JAYPIE.LAYER.HANDLER,
+  });
 
   //
   //

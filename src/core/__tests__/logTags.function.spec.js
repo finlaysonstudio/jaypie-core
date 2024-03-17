@@ -59,16 +59,6 @@ describe("LogTags Function", () => {
       const response = logTags();
       expect(response.env).toBeString();
     });
-    // Handler
-    it("Includes a handler tag", () => {
-      const response = logTags();
-      expect(response.handler).toBeString();
-    });
-    // Layer
-    it("Includes a layer tag", () => {
-      const response = logTags();
-      expect(response.layer).toBeString();
-    });
     // Project
     it("Includes a project tag", () => {
       process.env.PROJECT_KEY = "the-project";

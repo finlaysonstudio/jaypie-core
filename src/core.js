@@ -10,11 +10,7 @@ import logTags from "./core/logTags.function.js";
 // Functions
 //
 
-const init = () => {
-  // Placeholder
-  return true;
-};
-
+// TODO: Deprecated. Delete after Express is removed
 export const createLogWith = (tags) => {
   return exportedLog.with(tags);
 };
@@ -53,19 +49,21 @@ export const restoreLogger = () => {
 // Export
 //
 
-// Default
-export default init;
-
 // Core
 export { CDK, JAYPIE, PROJECT } from "./core/constants.js";
 export * from "./core/knowdev.lib.js";
-export { logTags };
 
 // Logging
 
 const log = new Logger({
   format: LOG.FORMAT.JSON,
-}).with(logTags({ logger: "default" }));
+  tags: {
+    ...logTags(),
+    handler: JAYPIE.UNKNOWN,
+    layer: JAYPIE.UNKNOWN,
+    logger: JAYPIE.LOGGER.DEFAULT,
+  },
+});
 
 export const exportedLog = {
   ...log,
@@ -87,8 +85,9 @@ if (
       level: process.env.MODULE_LOG_LEVEL,
       tags: {
         ...logTags(),
+        handler: JAYPIE.UNKNOWN,
         layer: JAYPIE.LAYER.MODULE,
-        logger: JAYPIE.LAYER.MODULE,
+        logger: JAYPIE.LOGGER.MODULE,
       },
     });
   } else {
@@ -97,8 +96,9 @@ if (
       level: process.env.LOG_LEVEL,
       tags: {
         ...logTags(),
+        handler: JAYPIE.UNKNOWN,
         layer: JAYPIE.LAYER.MODULE,
-        logger: JAYPIE.LAYER.MODULE,
+        logger: JAYPIE.LOGGER.MODULE,
       },
     });
   }
@@ -108,8 +108,9 @@ if (
     level: LOG.LEVEL.SILENT,
     tags: {
       ...logTags(),
+      handler: JAYPIE.UNKNOWN,
       layer: JAYPIE.LAYER.MODULE,
-      logger: JAYPIE.LAYER.MODULE,
+      logger: JAYPIE.LOGGER.MODULE,
     },
   });
 }
