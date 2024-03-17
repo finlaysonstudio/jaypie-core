@@ -65,7 +65,7 @@ export { logTags };
 
 const log = new Logger({
   format: LOG.FORMAT.JSON,
-}).with(logTags());
+}).with(logTags({ logger: "default" }));
 
 export const exportedLog = {
   ...log,

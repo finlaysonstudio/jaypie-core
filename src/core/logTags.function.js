@@ -28,6 +28,7 @@ const logTags = (withTags) => {
   const tags = {
     handler: JAYPIE.UNKNOWN,
     layer: JAYPIE.UNKNOWN,
+    logger: JAYPIE.UNKNOWN,
   };
 
   // Process
