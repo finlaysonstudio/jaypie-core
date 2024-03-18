@@ -19,13 +19,48 @@ import logger from "../logger.module.js";
 // Mock environment
 //
 
-const DEFAULT_ENV = process.env;
-beforeEach(() => {
-  process.env = { ...process.env };
-});
 afterEach(() => {
-  process.env = DEFAULT_ENV;
   vi.clearAllMocks();
+});
+
+//
+//
+// Custom Matchers
+//
+
+const LOG_METHOD_NAMES = [
+  "debug",
+  "error",
+  "fatal",
+  "info",
+  "tag",
+  "trace",
+  "untag",
+  "var",
+  "warn",
+  "with",
+];
+
+expect.extend({
+  toBeJaypieLogger(received) {
+    const isObject = typeof received === "object" && received !== null;
+    const hasLoggerMethods = LOG_METHOD_NAMES.every(
+      (method) => typeof received[method] === "function",
+    );
+
+    if (isObject && hasLoggerMethods) {
+      return {
+        message: () => `expected ${received} to be a JaypieLogger`,
+        pass: true,
+      };
+    } else {
+      return {
+        message: () =>
+          `expected ${received} to be a JaypieLogger with all required logger methods`,
+        pass: false,
+      };
+    }
+  },
 });
 
 //
@@ -45,16 +80,57 @@ describe("Logger Module", () => {
     it("Returns a logger", () => {
       const response = logger();
       expect(response).toBeObject();
-      expect(response.debug).toBeFunction();
-      expect(response.error).toBeFunction();
-      expect(response.fatal).toBeFunction();
-      expect(response.info).toBeFunction();
-      expect(response.tag).toBeFunction();
-      expect(response.trace).toBeFunction();
-      expect(response.untag).toBeFunction();
-      expect(response.var).toBeFunction();
-      expect(response.warn).toBeFunction();
-      expect(response.with).toBeFunction();
+      expect(response).toBeJaypieLogger();
+    });
+    it("The logger logs", () => {
+      const log = logger();
+      const nothing = log.debug("Hello, world!");
+      expect(nothing).toBeUndefined();
+    });
+    it("Can be forked with `with`", () => {
+      // Arrange
+      const log = logger();
+      // Act
+      const fork = log.with({ project: "mayhem" });
+      // Assert
+      expect(fork).toBeJaypieLogger();
+      expect(fork).not.toBe(log);
+    });
+    it("Calls to `tag` push down to children", () => {
+      // Arrange
+      const log = logger();
+      const fork = log.with({ project: "mayhem" });
+      vi.spyOn(log, "tag");
+      vi.spyOn(fork, "tag");
+      // Assure
+      expect(log.tag).not.toHaveBeenCalled();
+      expect(fork.tag).not.toHaveBeenCalled();
+      // Act
+      log.tag({ street: "paper" });
+      // Assert
+      expect(log.tag).toHaveBeenCalled();
+      expect(fork.tag).toHaveBeenCalled();
+    });
+    it("Calls to `untag` push down to children", () => {
+      // Arrange
+      const log = logger();
+      const fork = log.with({ project: "mayhem" });
+      vi.spyOn(log, "untag");
+      vi.spyOn(fork, "untag");
+      // Assure
+      expect(log.untag).not.toHaveBeenCalled();
+      expect(fork.untag).not.toHaveBeenCalled();
+      // Act
+      log.untag("street");
+      // Assert
+      expect(log.untag).toHaveBeenCalled();
+      expect(fork.untag).toHaveBeenCalled();
+    });
+    it.todo(
+      "Create log, use `with` to fork log, tag on parent cascades to child, untag on child does not affect parent",
+    );
+    it.todo("Calling log.module({...tags}) presents the module logger", () => {
+      // ...the module logger logs at the level set or inherited
     });
   });
 });

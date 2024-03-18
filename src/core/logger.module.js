@@ -1,26 +1,6 @@
-import { envBoolean, LOG, Logger } from "./knowdev.lib.js";
-
 import { JAYPIE } from "./constants.js";
-
+import { LOG, Logger } from "./knowdev.lib.js";
 import logTags from "./logTags.function.js";
-
-//
-//
-// Constants
-//
-
-const LOG_METHOD_NAMES = [
-  "debug",
-  "error",
-  "fatal",
-  "info",
-  "tag",
-  "trace",
-  "untag",
-  "var",
-  "warn",
-  "with",
-];
 
 //
 //
@@ -56,7 +36,8 @@ class JaypieLogger {
       logger,
       ...tags,
     });
-    this._initialLogger = this._logger;
+    this._loggers = [];
+    this._loggers.push(this._logger);
   }
   debug(...args) {
     return this._logger.debug(...args);
@@ -71,13 +52,17 @@ class JaypieLogger {
     return this._logger.info(...args);
   }
   tag(...args) {
-    return this._logger.tag(...args);
+    for (const logger of this._loggers) {
+      logger.tag(...args);
+    }
   }
   trace(...args) {
     return this._logger.trace(...args);
   }
   untag(...args) {
-    return this._logger.untag(...args);
+    for (const logger of this._loggers) {
+      logger.untag(...args);
+    }
   }
   var(...args) {
     return this._logger.var(...args);
@@ -86,7 +71,9 @@ class JaypieLogger {
     return this._logger.warn(...args);
   }
   with(...args) {
-    return this._logger.with(...args);
+    const logger = this._logger.with(...args);
+    this._loggers.push(logger);
+    return logger;
   }
 }
 
