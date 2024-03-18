@@ -41,4 +41,20 @@ describe("Logger Module", () => {
     const response = logger();
     expect(response).not.toBeUndefined();
   });
+  describe("Features", () => {
+    it("Returns a logger", () => {
+      const response = logger();
+      expect(response).toBeObject();
+      expect(response.debug).toBeFunction();
+      expect(response.error).toBeFunction();
+      expect(response.fatal).toBeFunction();
+      expect(response.info).toBeFunction();
+      expect(response.tag).toBeFunction();
+      expect(response.trace).toBeFunction();
+      expect(response.untag).toBeFunction();
+      expect(response.var).toBeFunction();
+      expect(response.warn).toBeFunction();
+      expect(response.with).toBeFunction();
+    });
+  });
 });
