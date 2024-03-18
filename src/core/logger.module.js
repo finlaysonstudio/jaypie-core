@@ -4,22 +4,6 @@ import logTags from "./logTags.function.js";
 
 //
 //
-// Helpers
-//
-
-function logFactory({ ...tags } = {}) {
-  const log = new Logger({
-    format: LOG.FORMAT.JSON,
-    tags: {
-      ...logTags(),
-      ...tags,
-    },
-  });
-  return log;
-}
-
-//
-//
 // Jaypie Logger Chassis
 //
 
@@ -30,11 +14,16 @@ class JaypieLogger {
     logger = JAYPIE.UNKNOWN,
     ...tags
   } = {}) {
-    this._logger = logFactory({
-      handler,
-      layer,
-      logger,
-      ...tags,
+    this._logger = new Logger({
+      format: LOG.FORMAT.JSON,
+      level: LOG.LEVEL.SILENT,
+      tags: {
+        ...logTags(),
+        handler,
+        layer,
+        logger,
+        ...tags,
+      },
     });
     this._loggers = [];
     this._loggers.push(this._logger);
