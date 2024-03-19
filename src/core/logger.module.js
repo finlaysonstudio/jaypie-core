@@ -99,6 +99,16 @@ class JaypieLogger {
     this._loggers.push(logger);
     return logger;
   }
+
+  silent({ ...tags } = {}) {
+    const logger = new JaypieLogger({
+      ...this._tags,
+      ...tags,
+      level: LOG.LEVEL.SILENT,
+    });
+    this._loggers.push(logger);
+    return logger;
+  }
 }
 
 //

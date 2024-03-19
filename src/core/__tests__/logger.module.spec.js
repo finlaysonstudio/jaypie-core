@@ -176,6 +176,13 @@ describe("Logger Module", () => {
       // Assert
       expect(libLogger.tag).toHaveBeenCalled();
     });
-    it.todo("Calling log.silent() returns a logger that does not log");
+    it("Calling log.silent() returns a logger", () => {
+      // Arrange
+      const log = logger();
+      // Act
+      const silentLogger = log.silent();
+      // Assert
+      expect(silentLogger).toBeJaypieLogger();
+    });
   });
 });
