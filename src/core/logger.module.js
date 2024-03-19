@@ -27,6 +27,13 @@ class JaypieLogger {
     });
     this._loggers = [];
     this._loggers.push(this._logger);
+    // Make sure `var()` is available under each level
+    const levels = ["debug", "error", "fatal", "info", "trace", "warn"];
+    for (const level of levels) {
+      this[level].var = (...args) => {
+        this._logger[level].var(...args);
+      };
+    }
   }
 
   // @knowdev/log "classic" methods
