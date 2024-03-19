@@ -88,11 +88,25 @@ describe("Logger Module", () => {
       const nothing = log.debug("Hello, world!");
       expect(nothing).toBeUndefined();
     });
-    it("Can be forked with `with`", () => {
+    it("Cannot be forked with `with`", () => {
       // Arrange
       const log = logger();
       // Act
       const fork = log.with({ project: "mayhem" });
+      // Assert
+      expect(fork).not.toBeJaypieLogger();
+      expect(fork).not.toBe(log);
+    });
+    it.todo("Warns deprecated if you try to chain off with()");
+    it("Can be forked with `lib`", () => {
+      // Arrange
+      const log = logger();
+      // Act
+      const fork = log.lib({
+        layer: "MOCK_LAYER",
+        lib: "MOCK_LIB",
+        tags: { project: "mayhem" },
+      });
       // Assert
       expect(fork).toBeJaypieLogger();
       expect(fork).not.toBe(log);
@@ -100,14 +114,14 @@ describe("Logger Module", () => {
     it("Calls to `tag` push down to children", () => {
       // Arrange
       const log = logger();
-      const fork = log.with({ project: "mayhem" });
+      const fork = log.lib({ lib: "babel" });
       vi.spyOn(log, "tag");
       vi.spyOn(fork, "tag");
       // Assure
       expect(log.tag).not.toHaveBeenCalled();
       expect(fork.tag).not.toHaveBeenCalled();
       // Act
-      log.tag({ street: "paper" });
+      log.tag({ project: "mayhem" });
       // Assert
       expect(log.tag).toHaveBeenCalled();
       expect(fork.tag).toHaveBeenCalled();
@@ -115,14 +129,14 @@ describe("Logger Module", () => {
     it("Calls to `untag` push down to children", () => {
       // Arrange
       const log = logger();
-      const fork = log.with({ project: "mayhem" });
+      const fork = log.lib({ lib: "babel" });
       vi.spyOn(log, "untag");
       vi.spyOn(fork, "untag");
       // Assure
       expect(log.untag).not.toHaveBeenCalled();
       expect(fork.untag).not.toHaveBeenCalled();
       // Act
-      log.untag("street");
+      log.untag("project");
       // Assert
       expect(log.untag).toHaveBeenCalled();
       expect(fork.untag).toHaveBeenCalled();
@@ -130,14 +144,14 @@ describe("Logger Module", () => {
     it("Tagging a child logger does not affect the parent", () => {
       // Arrange
       const log = logger();
-      const fork = log.with({ project: "mayhem" });
+      const fork = log.lib({ lib: "babel" });
       vi.spyOn(log, "tag");
       vi.spyOn(fork, "tag");
       // Assure
       expect(log.tag).not.toHaveBeenCalled();
       expect(fork.tag).not.toHaveBeenCalled();
       // Act
-      fork.tag({ street: "paper" });
+      fork.tag({ project: "mayhem" });
       // Assert
       expect(log.tag).not.toHaveBeenCalled();
       expect(fork.tag).toHaveBeenCalled();
@@ -145,24 +159,23 @@ describe("Logger Module", () => {
     it("Untagging a child logger does not affect the parent", () => {
       // Arrange
       const log = logger();
-      const fork = log.with({ project: "mayhem" });
+      const fork = log.lib({ lib: "babel" });
       vi.spyOn(log, "untag");
       vi.spyOn(fork, "untag");
       // Assure
       expect(log.untag).not.toHaveBeenCalled();
       expect(fork.untag).not.toHaveBeenCalled();
       // Act
-      fork.untag("street");
+      fork.untag("project");
       // Assert
       expect(log.untag).not.toHaveBeenCalled();
       expect(fork.untag).toHaveBeenCalled();
     });
-    it("Calling log.lib({...tags}) presents the lib logger", () => {
+    it("Calling log.lib({tags}) presents the lib logger", () => {
       // Arrange
       const log = logger();
-      vi.spyOn(log, "with");
       // Act
-      const libLogger = log.lib({ project: "mayhem" });
+      const libLogger = log.lib({ tags: { project: "mayhem" } });
       // Assert
       expect(libLogger).toBeJaypieLogger();
     });

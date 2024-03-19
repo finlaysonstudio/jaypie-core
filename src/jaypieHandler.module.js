@@ -51,18 +51,18 @@ const jaypieHandler = (
   //
 
   // The public logger
-  publicLogger.tag({ handler: name });
+  publicLogger.tag({ handler: name, layer: JAYPIE.LAYER.HANDLER });
 
   // Internal convention
   const log = publicLogger.with({
     layer: JAYPIE.LAYER.JAYPIE,
     lib: JAYPIE.LIB.CORE,
   });
-  const moduleLogger = log.lib();
+  const libLogger = log.lib();
 
-  moduleLogger.trace("[jaypie] Handler init");
+  libLogger.trace("[jaypie] Handler init");
   return async (...args) => {
-    moduleLogger.trace("[jaypie] Handler execution");
+    libLogger.trace("[jaypie] Handler execution");
     log.trace("[handler] Project logging in trace mode");
 
     //

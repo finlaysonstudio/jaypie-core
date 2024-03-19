@@ -11,15 +11,14 @@ import logTags from "./logTags.function.js";
 
 class JaypieLogger {
   constructor({
-    handler = JAYPIE.UNKNOWN,
     layer = JAYPIE.UNKNOWN,
     level = process.env.LOG_LEVEL, // DEFAULT.LEVEL provided by Logger is debug
-    logger = JAYPIE.UNKNOWN,
-    ...tags
+    tags = {},
   } = {}) {
     this.level = level;
+    this.layer = layer;
     // _NOT_ tagging `level`
-    this._tags = { ...logTags(), handler, layer, logger, ...tags };
+    this._tags = { ...logTags(), layer, ...tags };
     this._logger = new Logger.Logger({
       format: LOG.FORMAT.JSON,
       level,
@@ -75,24 +74,18 @@ class JaypieLogger {
   warn(...args) {
     return this._logger.warn(...args);
   }
+  /**
+   * Apply temporary tags in a chain. Do not persist the result
+   */
   with(...args) {
-    const logger = new JaypieLogger({
-      ...this._tags,
-      level: this.level,
-      ...args,
-    });
-    this._loggers.push(logger);
-    return logger;
+    return this._logger.with(...args);
   }
 
   // Jaypie-specifics
 
-  lib({ layer, lib, ...tags } = {}) {
+  lib({ layer, lib, tags = {} } = {}) {
     const logger = new JaypieLogger({
-      ...this._tags,
       layer,
-      lib,
-      ...tags,
       level: () => {
         if (process.env.MODULE_LOG_LEVEL) {
           return process.env.MODULE_LOG_LEVEL;
@@ -102,16 +95,17 @@ class JaypieLogger {
         }
         return LOG.LEVEL.SILENT;
       },
+      tags: { ...this._tags, lib, ...tags },
     });
     this._loggers.push(logger);
     return logger;
   }
 
-  silent({ ...tags } = {}) {
+  silent({ layer, lib, tags = {} } = {}) {
     const logger = new JaypieLogger({
-      ...this._tags,
-      ...tags,
+      layer,
       level: LOG.LEVEL.SILENT,
+      tags: { ...this._tags, lib, ...tags },
     });
     this._loggers.push(logger);
     return logger;
@@ -123,17 +117,10 @@ class JaypieLogger {
 // Main
 //
 
-const init = ({
-  handler = JAYPIE.UNKNOWN,
-  layer = JAYPIE.UNKNOWN,
-  logger = JAYPIE.UNKNOWN,
-  ...tags
-} = {}) => {
+const init = ({ layer = JAYPIE.UNKNOWN, tags = {} } = {}) => {
   const jaypieLogger = new JaypieLogger({
-    handler,
     layer,
-    logger,
-    ...tags,
+    tags,
   });
   return jaypieLogger;
 };
