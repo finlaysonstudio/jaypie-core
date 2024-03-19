@@ -126,11 +126,26 @@ describe("Logger Module", () => {
       expect(log.untag).toHaveBeenCalled();
       expect(fork.untag).toHaveBeenCalled();
     });
-    it.todo(
-      "Create log, use `with` to fork log, tag on parent cascades to child, untag on child does not affect parent",
-    );
-    it.todo("Calling log.module({...tags}) presents the module logger", () => {
-      // ...the module logger logs at the level set or inherited
+    it.todo("Tagging a child logger does not affect the parent");
+    it.todo("Untagging a child logger does not affect the parent");
+    it("Calling log.module({...tags}) presents the module logger", () => {
+      // Arrange
+      const log = logger();
+      vi.spyOn(log, "with");
+      // Act
+      const moduleLogger = log.module({ project: "mayhem" });
+      // Assert
+      expect(moduleLogger).toBeJaypieLogger();
+    });
+    it("module logger responds to tags of the original logger", () => {
+      // Arrange
+      const log = logger();
+      const moduleLogger = log.module({ project: "mayhem" });
+      vi.spyOn(moduleLogger, "tag");
+      // Act
+      log.tag({ street: "paper" });
+      // Assert
+      expect(moduleLogger.tag).toHaveBeenCalled();
     });
   });
 });
