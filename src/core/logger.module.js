@@ -47,12 +47,12 @@ class JaypieLogger {
   info(...args) {
     return this._logger.info(...args);
   }
-  tag(...args) {
+  tag(tags) {
     for (const logger of this._loggers) {
-      logger.tag(...args);
+      logger.tag(tags);
     }
     // Add args to this._tags
-    this._tags = { ...this._tags, ...args };
+    Object.assign(this._tags, tags);
   }
   trace(...args) {
     return this._logger.trace(...args);
@@ -94,6 +94,11 @@ class JaypieLogger {
   // Jaypie-specifics
 
   lib({ level, lib, tags = {} } = {}) {
+    const newTags = Object.assign({}, this._tags, tags);
+    if (lib) {
+      newTags.lib = lib;
+    }
+
     const logger = new JaypieLogger({
       level: (() => {
         if (level) {
@@ -107,7 +112,7 @@ class JaypieLogger {
         }
         return LOG.LEVEL.SILENT;
       })(),
-      tags: { ...this._tags, lib, ...tags },
+      tags: newTags,
     });
     this._loggers.push(logger);
     return logger;
