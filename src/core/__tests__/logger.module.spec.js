@@ -126,8 +126,36 @@ describe("Logger Module", () => {
       expect(log.untag).toHaveBeenCalled();
       expect(fork.untag).toHaveBeenCalled();
     });
-    it.todo("Tagging a child logger does not affect the parent");
-    it.todo("Untagging a child logger does not affect the parent");
+    it("Tagging a child logger does not affect the parent", () => {
+      // Arrange
+      const log = logger();
+      const fork = log.with({ project: "mayhem" });
+      vi.spyOn(log, "tag");
+      vi.spyOn(fork, "tag");
+      // Assure
+      expect(log.tag).not.toHaveBeenCalled();
+      expect(fork.tag).not.toHaveBeenCalled();
+      // Act
+      fork.tag({ street: "paper" });
+      // Assert
+      expect(log.tag).not.toHaveBeenCalled();
+      expect(fork.tag).toHaveBeenCalled();
+    });
+    it("Untagging a child logger does not affect the parent", () => {
+      // Arrange
+      const log = logger();
+      const fork = log.with({ project: "mayhem" });
+      vi.spyOn(log, "untag");
+      vi.spyOn(fork, "untag");
+      // Assure
+      expect(log.untag).not.toHaveBeenCalled();
+      expect(fork.untag).not.toHaveBeenCalled();
+      // Act
+      fork.untag("street");
+      // Assert
+      expect(log.untag).not.toHaveBeenCalled();
+      expect(fork.untag).toHaveBeenCalled();
+    });
     it("Calling log.module({...tags}) presents the module logger", () => {
       // Arrange
       const log = logger();
