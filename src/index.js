@@ -1,13 +1,23 @@
-// Core
-export { CDK, JAYPIE, moduleLogger, PROJECT } from "./core.js";
+import { JAYPIE } from "./core/constants.js";
+import logger from "./core/logger.module.js";
 
-// Jaypie
-export { default as expressHandler } from "./expressHandler.module.js";
+//
+//
+// Export
+//
+
+// Constants
+export { CDK, JAYPIE, PROJECT } from "./core/constants.js";
+
+// Handler
 export { default as jaypieHandler } from "./jaypieHandler.module.js";
 
-// KnowDev
+// KnowDev Libs
 export * from "./core/knowdev.lib.js";
 
-// Logging
-import { exportedLog } from "./core.js";
-export { exportedLog as log };
+// Logger
+export const log = logger({
+  handler: JAYPIE.UNKNOWN,
+  layer: JAYPIE.UNKNOWN,
+  logger: JAYPIE.LOGGER.DEFAULT,
+});
