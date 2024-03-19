@@ -13,6 +13,4 @@ export * from "./core/knowdev.lib.js";
 // Logger
 export const log = logger({
   handler: JAYPIE.UNKNOWN,
-  layer: JAYPIE.UNKNOWN,
-  logger: JAYPIE.LOGGER.DEFAULT,
 });

@@ -51,11 +51,10 @@ const jaypieHandler = (
   //
 
   // The public logger
-  publicLogger.tag({ handler: name, layer: JAYPIE.LAYER.HANDLER });
+  publicLogger.tag({ handler: name });
 
   // Internal convention
   const log = publicLogger.with({
-    layer: JAYPIE.LAYER.JAYPIE,
     lib: JAYPIE.LIB.CORE,
   });
   const libLogger = log.lib();

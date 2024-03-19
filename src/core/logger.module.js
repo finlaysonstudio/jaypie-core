@@ -1,6 +1,5 @@
 import Logger from "@knowdev/log";
 
-import { JAYPIE } from "./constants.js";
 import { ConfigurationError, envBoolean, LOG } from "./knowdev.lib.js";
 import logTags from "./logTags.function.js";
 
@@ -11,14 +10,12 @@ import logTags from "./logTags.function.js";
 
 class JaypieLogger {
   constructor({
-    layer = JAYPIE.UNKNOWN,
     level = process.env.LOG_LEVEL, // DEFAULT.LEVEL provided by Logger is debug
     tags = {},
   } = {}) {
     this.level = level;
-    this.layer = layer;
     // _NOT_ tagging `level`
-    this._tags = { ...logTags(), layer, ...tags };
+    this._tags = { ...logTags(), ...tags };
     this._logger = new Logger.Logger({
       format: LOG.FORMAT.JSON,
       level,
@@ -84,7 +81,6 @@ class JaypieLogger {
       return this._withLoggers[loggerKey];
     }
     const logger = new JaypieLogger({
-      layer: this.layer,
       level: this.level,
       tags: { ...this._tags },
     });
@@ -97,10 +93,12 @@ class JaypieLogger {
 
   // Jaypie-specifics
 
-  lib({ layer, lib, tags = {} } = {}) {
+  lib({ level, lib, tags = {} } = {}) {
     const logger = new JaypieLogger({
-      layer,
-      level: () => {
+      level: (() => {
+        if (level) {
+          return level;
+        }
         if (process.env.MODULE_LOG_LEVEL) {
           return process.env.MODULE_LOG_LEVEL;
         }
@@ -108,16 +106,15 @@ class JaypieLogger {
           return process.env.LOG_LEVEL;
         }
         return LOG.LEVEL.SILENT;
-      },
+      })(),
       tags: { ...this._tags, lib, ...tags },
     });
     this._loggers.push(logger);
     return logger;
   }
 
-  silent({ layer, lib, tags = {} } = {}) {
+  silent({ lib, tags = {} } = {}) {
     const logger = new JaypieLogger({
-      layer,
       level: LOG.LEVEL.SILENT,
       tags: { ...this._tags, lib, ...tags },
     });
@@ -131,9 +128,8 @@ class JaypieLogger {
 // Main
 //
 
-const init = ({ layer = JAYPIE.UNKNOWN, tags = {} } = {}) => {
+const init = (tags = {}) => {
   const jaypieLogger = new JaypieLogger({
-    layer,
     tags,
   });
   return jaypieLogger;
