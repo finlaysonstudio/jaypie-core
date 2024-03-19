@@ -1,4 +1,3 @@
-import { JAYPIE } from "./core/constants.js";
 import logger from "./core/logger.module.js";
 
 //
@@ -11,6 +10,4 @@ export { CDK, JAYPIE, PROJECT } from "./core/constants.js";
 export * from "./core/knowdev.lib.js";
 
 // Logger
-export const log = logger({
-  handler: JAYPIE.UNKNOWN,
-});
+export const log = logger();
