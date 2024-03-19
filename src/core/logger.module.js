@@ -1,7 +1,7 @@
 import Logger from "@knowdev/log";
 
 import { JAYPIE } from "./constants.js";
-import { envBoolean, LOG } from "./knowdev.lib.js";
+import { ConfigurationError, envBoolean, LOG } from "./knowdev.lib.js";
 import logTags from "./logTags.function.js";
 
 //
@@ -26,6 +26,7 @@ class JaypieLogger {
     });
     this._loggers = [];
     this._loggers.push(this._logger);
+    this._withLoggers = {};
     // Make sure `var()` is available under each level
     const levels = ["debug", "error", "fatal", "info", "trace", "warn"];
     for (const level of levels) {
@@ -74,11 +75,24 @@ class JaypieLogger {
   warn(...args) {
     return this._logger.warn(...args);
   }
-  /**
-   * Apply temporary tags in a chain. Do not persist the result
-   */
   with(...args) {
-    return this._logger.with(...args);
+    if (!args || typeof args !== "object") {
+      throw new ConfigurationError();
+    }
+    const loggerKey = JSON.stringify(args);
+    if (Object.keys(this._withLoggers).includes(loggerKey)) {
+      return this._withLoggers[loggerKey];
+    }
+    const logger = new JaypieLogger({
+      layer: this.layer,
+      level: this.level,
+      tags: { ...this._tags },
+    });
+    logger._logger = this._logger.with(...args);
+    logger._loggers = [logger._logger];
+    this._withLoggers[loggerKey] = logger;
+    this._loggers.push(logger._logger);
+    return logger;
   }
 
   // Jaypie-specifics

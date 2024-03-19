@@ -88,16 +88,6 @@ describe("Logger Module", () => {
       const nothing = log.debug("Hello, world!");
       expect(nothing).toBeUndefined();
     });
-    it("Cannot be forked with `with`", () => {
-      // Arrange
-      const log = logger();
-      // Act
-      const fork = log.with({ project: "mayhem" });
-      // Assert
-      expect(fork).not.toBeJaypieLogger();
-      expect(fork).not.toBe(log);
-    });
-    it.todo("Warns deprecated if you try to chain off with()");
     it("Can be forked with `lib`", () => {
       // Arrange
       const log = logger();
@@ -196,6 +186,42 @@ describe("Logger Module", () => {
       const silentLogger = log.silent();
       // Assert
       expect(silentLogger).toBeJaypieLogger();
+    });
+    describe("log.with", () => {
+      it("Can be forked with `with`", () => {
+        // Arrange
+        const log = logger();
+        // Act
+        const fork = log.with({ project: "mayhem" });
+        // Assert
+        expect(fork).toBeJaypieLogger();
+        expect(fork).not.toBe(log);
+      });
+      describe("Under the hood", () => {
+        // These are Bad Tests (tm)
+        it("Forks from with are kept in the with loggers", () => {
+          // Arrange
+          const log = logger();
+          // Act
+          log.with({ project: "mayhem" });
+          // Assert
+          expect(log._withLoggers).toBeObject();
+          expect(log._withLoggers).toHaveProperty(`[{"project":"mayhem"}]`);
+        });
+        it("Forks from with are kept with the main loggers", () => {
+          // Arrange
+          const log = logger();
+          // Assure
+          expect(log._loggers).toBeArrayOfSize(1);
+          expect(log._loggers[0]).toBe(log._logger);
+          // Act
+          const fork = log.with({ project: "mayhem" });
+          // Assert
+          expect(log._loggers).toBeArrayOfSize(2);
+          expect(log._loggers[0]).toBe(log._logger);
+          expect(log._loggers[1]).toBe(fork._logger);
+        });
+      });
     });
   });
 });
