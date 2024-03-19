@@ -12,12 +12,9 @@ import {
   jaypieHandler,
   LOG,
   log,
-  Logger,
-  moduleLogger,
   // eslint-disable-next-line import/named
   NAME,
   ProjectError,
-  silent,
 } from "../index.js";
 
 //
@@ -76,17 +73,8 @@ describe("Jaypie Core", () => {
     });
   });
   describe("Logging", () => {
-    it("Exposes log, Logger, moduleLogger, and silent", () => {
+    it("Exposes log", () => {
       expect(log).toBeObject();
-      expect(Logger).toBeFunction();
-      expect(moduleLogger).toBeObject();
-      expect(silent).toBeObject();
-    });
-    it("Logger can be instantiated", () => {
-      const logger = new Logger();
-      expect(logger).toBeObject();
-      expect(logger).toBeInstanceOf(Logger);
-      expect(logger.trace).toBeFunction();
     });
     it("Does not expose exportedLog", () => {
       expect(exportedLog).toBeUndefined();

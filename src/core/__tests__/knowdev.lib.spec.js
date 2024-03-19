@@ -10,15 +10,9 @@ import {
   HTTP,
   LOG,
   // eslint-disable-next-line import/named
-  log,
-  Logger,
-  // eslint-disable-next-line import/named
-  moduleLogger,
-  // eslint-disable-next-line import/named
   NAME,
   ProjectError,
   placeholders,
-  silent,
   validate,
   VALIDATE,
 } from "../knowdev.lib.js";
@@ -84,22 +78,6 @@ describe("KnowDev Lib", () => {
       const clone = cloneDeep(obj);
       expect(clone).not.toBe(obj);
       expect(clone).toEqual(obj);
-    });
-  });
-  describe("Logging", () => {
-    it("Exposes Logger, moduleLogger, and silent", () => {
-      expect(Logger).toBeFunction();
-      expect(silent).toBeObject();
-    });
-    it("Does NOT expose log or moduleLogger", () => {
-      expect(log).toBeUndefined();
-      expect(moduleLogger).toBeUndefined();
-    });
-    it("Logger can be instantiated", () => {
-      const logger = new Logger();
-      expect(logger).toBeObject();
-      expect(logger).toBeInstanceOf(Logger);
-      expect(logger.trace).toBeFunction();
     });
   });
 });

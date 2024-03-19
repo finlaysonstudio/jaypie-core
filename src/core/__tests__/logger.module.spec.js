@@ -33,6 +33,7 @@ const LOG_METHOD_NAMES = [
   "error",
   "fatal",
   "info",
+  "lib",
   "tag",
   "trace",
   "untag",
@@ -156,24 +157,32 @@ describe("Logger Module", () => {
       expect(log.untag).not.toHaveBeenCalled();
       expect(fork.untag).toHaveBeenCalled();
     });
-    it("Calling log.module({...tags}) presents the module logger", () => {
+    it("Calling log.lib({...tags}) presents the lib logger", () => {
       // Arrange
       const log = logger();
       vi.spyOn(log, "with");
       // Act
-      const moduleLogger = log.module({ project: "mayhem" });
+      const libLogger = log.lib({ project: "mayhem" });
       // Assert
-      expect(moduleLogger).toBeJaypieLogger();
+      expect(libLogger).toBeJaypieLogger();
     });
-    it("module logger responds to tags of the original logger", () => {
+    it("lib logger responds to tags of the original logger", () => {
       // Arrange
       const log = logger();
-      const moduleLogger = log.module({ project: "mayhem" });
-      vi.spyOn(moduleLogger, "tag");
+      const libLogger = log.lib({ project: "mayhem" });
+      vi.spyOn(libLogger, "tag");
       // Act
       log.tag({ street: "paper" });
       // Assert
-      expect(moduleLogger.tag).toHaveBeenCalled();
+      expect(libLogger.tag).toHaveBeenCalled();
+    });
+    it("Calling log.silent() returns a logger", () => {
+      // Arrange
+      const log = logger();
+      // Act
+      const silentLogger = log.silent();
+      // Assert
+      expect(silentLogger).toBeJaypieLogger();
     });
   });
 });

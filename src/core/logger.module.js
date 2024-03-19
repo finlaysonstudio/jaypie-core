@@ -1,5 +1,7 @@
+import { Logger } from "@knowdev/log";
+
 import { JAYPIE } from "./constants.js";
-import { envBoolean, LOG, Logger } from "./knowdev.lib.js";
+import { envBoolean, LOG } from "./knowdev.lib.js";
 import logTags from "./logTags.function.js";
 
 //
@@ -11,14 +13,17 @@ class JaypieLogger {
   constructor({
     handler = JAYPIE.UNKNOWN,
     layer = JAYPIE.UNKNOWN,
+    level = process.env.LOG_LEVEL, // DEFAULT.LEVEL provided by Logger is debug
     logger = JAYPIE.UNKNOWN,
     ...tags
   } = {}) {
+    this.level = level;
+    // _NOT_ tagging `level`
     this._tags = { ...logTags(), handler, layer, logger, ...tags };
     this._logger = new Logger({
       format: LOG.FORMAT.JSON,
-      // level: process.env.LOG_LEVEL || DEFAULT.LEVEL, // Default provided by Logger
-      tags: this.tags,
+      level,
+      tags: this._tags,
     });
     this._loggers = [];
     this._loggers.push(this._logger);
@@ -64,16 +69,23 @@ class JaypieLogger {
     return this._logger.warn(...args);
   }
   with(...args) {
-    const logger = this._logger.with(...args);
+    const logger = new JaypieLogger({
+      ...this._tags,
+      level: this.level,
+      ...args,
+    });
     this._loggers.push(logger);
     return logger;
   }
 
   // Jaypie-specifics
 
-  module({ layer, lib, ...tags } = {}) {
-    const logger = new Logger({
-      format: LOG.FORMAT.JSON,
+  lib({ layer, lib, ...tags } = {}) {
+    const logger = new JaypieLogger({
+      ...this._tags,
+      layer,
+      lib,
+      ...tags,
       level: () => {
         if (process.env.MODULE_LOG_LEVEL) {
           return process.env.MODULE_LOG_LEVEL;
@@ -83,12 +95,16 @@ class JaypieLogger {
         }
         return LOG.LEVEL.SILENT;
       },
-      tags: {
-        ...this._tags,
-        layer,
-        lib,
-        ...tags,
-      },
+    });
+    this._loggers.push(logger);
+    return logger;
+  }
+
+  silent({ ...tags } = {}) {
+    const logger = new JaypieLogger({
+      ...this._tags,
+      ...tags,
+      level: LOG.LEVEL.SILENT,
     });
     this._loggers.push(logger);
     return logger;

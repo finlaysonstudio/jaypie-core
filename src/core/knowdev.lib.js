@@ -56,10 +56,3 @@ export {
   UnhandledError,
   UnreachableCodeError,
 } from "@knowdev/errors";
-
-// Logging
-const Logger = log.Logger;
-const silent = log.silent;
-
-// Intentionally not exporting `log` or `moduleLogger`
-export { Logger, silent };
