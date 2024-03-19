@@ -1,4 +1,4 @@
-import { Logger } from "@knowdev/log";
+import Logger from "@knowdev/log";
 
 import { JAYPIE } from "./constants.js";
 import { envBoolean, LOG } from "./knowdev.lib.js";
@@ -20,7 +20,7 @@ class JaypieLogger {
     this.level = level;
     // _NOT_ tagging `level`
     this._tags = { ...logTags(), handler, layer, logger, ...tags };
-    this._logger = new Logger({
+    this._logger = new Logger.Logger({
       format: LOG.FORMAT.JSON,
       level,
       tags: this._tags,
