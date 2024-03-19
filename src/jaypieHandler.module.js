@@ -57,7 +57,9 @@ const jaypieHandler = (
   const log = publicLogger.with({
     lib: JAYPIE.LIB.CORE,
   });
-  const libLogger = log.lib();
+  const libLogger = log.lib({
+    lib: JAYPIE.LIB.CORE,
+  });
 
   libLogger.trace("[jaypie] Handler init");
   return async (...args) => {
