@@ -179,14 +179,6 @@ describe("Logger Module", () => {
       // Assert
       expect(libLogger.tag).toHaveBeenCalled();
     });
-    it("Calling log.silent() returns a logger", () => {
-      // Arrange
-      const log = logger();
-      // Act
-      const silentLogger = log.silent();
-      // Assert
-      expect(silentLogger).toBeJaypieLogger();
-    });
     describe("log.with", () => {
       it("Can be forked with `with`", () => {
         // Arrange

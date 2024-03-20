@@ -117,15 +117,6 @@ class JaypieLogger {
     this._loggers.push(logger);
     return logger;
   }
-
-  silent({ lib, tags = {} } = {}) {
-    const logger = new JaypieLogger({
-      level: LOG.LEVEL.SILENT,
-      tags: { ...this._tags, lib, ...tags },
-    });
-    this._loggers.push(logger);
-    return logger;
-  }
 }
 
 //
