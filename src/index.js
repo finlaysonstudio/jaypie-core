@@ -5,6 +5,7 @@
 
 // Constants
 export { CDK, JAYPIE, PROJECT } from "./core.js";
+// * `LOG` will be provided by knowdev.lib.js
 
 // Handler
 export { default as jaypieHandler } from "./jaypieHandler.module.js";
