@@ -141,9 +141,6 @@ TODO: Complete list of utility functions in the package
 import { 
   log,
   LOG, // LOG.FORMAT, LOG.LEVEL
-  Logger,
-  moduleLogger,
-  silent,
 } from "@jaypie/core";
 ```
 
@@ -158,6 +155,17 @@ log.info();
 log.warn();
 log.error();
 log.fatal();
+```
+
+##### log.lib({ lib: "myLib" })
+
+Uses `silent` by default.  if `process.env.MODULE_LOG_LEVEL` is `true`, follows `process.env.LOG_LEVEL`.  If `process.env.MODULE_LOG_LEVEL` is also set, uses that log level.
+
+```javascript
+import { log } from "@jaypie/core";
+
+log.lib().trace();
+log.lib({ lib: "myLib" }).trace();
 ```
 
 ##### log.var(key, value) or log.var({ key: value })
@@ -179,57 +187,22 @@ log.var({ message });
 Create a new log object with additional tags
 
 ```javascript
-import { log } from "@jaypie/core";
+import { log as defaultLogger } from "@jaypie/core";
 
-const libLogger = log.with({ lib: "myLib" });
+const log = defaultLogger.with({ customProperty: "customValue" });
 ```
 
-#### Logger \<Class>
+## 🌠 Wishlist
 
-```javascript
-import { LOG, Logger } from "@jaypie/core";
-
-const log = new Logger({
-  format: LOG.FORMAT.JSON, // default="color"; also "json", "text"
-  level: LOG.LEVEL.TRACE, // default=debug
-  tags: {}, // default={}, will be included on every log
-  varLevel, // default="debug"
-});
-```
-
-#### moduleLogger
-
-Uses `silent` by default.  if `process.env.MODULE_LOG_LEVEL` is `true`, follows `process.env.LOG_LEVEL`.  If `process.env.MODULE_LOG_LEVEL` is also set, uses that log level.
-
-```javascript
-import { moduleLogger } from "@jaypie/core";
-
-moduleLogger.trace();
-```
-
-#### silent
-
-Useful to support logging in code but only if an instantiated log object is passed in. This way the caller only gets logging if they want it. Module logger will use `silent` if `process.env.MODULE_LOG_LEVEL` is not set.
-
-```javascript
-import { silent } from "@jaypie/core";
-
-silent.fatal(); // Doesn't log
-
-function myHello(log=silent) {
-  log.debug("Hello"); // Will not log if no log is passed
-}
-```
-
-## 🛣 Roadmap
-
-* ? - Complete documentation
-* 1.0.0 - Allow bug fixes, stable release
+* Complete documentation
 
 ## 📝 Changelog
 
 | Date       | Version | Summary        |
 | ---------- | ------- | -------------- |
+|  3/19/2024 |   1.0.0 | First stable API |
+|  3/18/2024 |   0.5.8 | 💥 Last version to support `silent` |
+|  3/18/2024 |   0.5.0 | 💥 Removes `expressHandler`, changes logging APIs |
 |  3/16/2024 |   0.4.0 | 💥 Breaking: `lambdaHandler` migrated to @jaypie/lambda |
 |  3/11/2024 |   0.3.0 | Export `expressHandler` |
 |  3/10/2024 |   0.2.0 | Export `lambdaHandler` |
