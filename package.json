@@ -30,7 +30,8 @@
     "@knowdev/functions": "^1.0.0",
     "@knowdev/http": "^1.4.0",
     "@knowdev/log": "^1.0.2",
-    "lodash.clonedeep": "^4.5.0"
+    "lodash.clonedeep": "^4.5.0",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
     "@jaypie/testkit": "^1.0.1",
