@@ -15,3 +15,6 @@ export * from "./core/knowdev.lib.js";
 
 // Log
 export { log } from "./core.js";
+
+// Utilities
+export { v4 as uuid } from "uuid";
