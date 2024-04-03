@@ -4,7 +4,7 @@
 //
 
 // Constants
-export { CDK, JAYPIE, PROJECT } from "./core.js";
+export { JAYPIE, PROJECT } from "./core.js";
 // * `LOG` will be provided by knowdev.lib.js
 
 // Handler
