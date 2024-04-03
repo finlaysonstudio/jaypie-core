@@ -14,6 +14,7 @@ import {
   // eslint-disable-next-line import/named
   NAME,
   ProjectError,
+  uuid,
 } from "../index.js";
 
 //
@@ -66,8 +67,9 @@ describe("Jaypie Core", () => {
     });
   });
   describe("Functions", () => {
-    it("Exposes getHeaderFrom", () => {
+    it("Exposes convenience functions", () => {
       expect(getHeaderFrom).toBeFunction();
+      expect(uuid).toBeFunction();
     });
   });
   describe("Logging", () => {
