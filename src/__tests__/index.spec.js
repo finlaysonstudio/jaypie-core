@@ -4,7 +4,6 @@ import { afterEach, beforeEach, describe, expect, it } from "vitest";
 // eslint-disable-next-line import/default
 import index from "../index.js";
 import {
-  CDK,
   // eslint-disable-next-line import/named
   exportedLog,
   getHeaderFrom,
@@ -51,7 +50,6 @@ describe("Jaypie Core", () => {
   });
   describe("Constants", () => {
     it("Exposes HTTP", () => {
-      expect(CDK).toBeObject();
       expect(HTTP).toBeObject();
       expect(LOG).toBeObject();
     });

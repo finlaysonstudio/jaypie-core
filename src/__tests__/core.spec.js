@@ -2,8 +2,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 // Subject
-// eslint-disable-next-line import/named
-import { CDK } from "../core.js";
+import { JAYPIE, log, PROJECT } from "../core.js";
 
 //
 //
@@ -34,9 +33,8 @@ afterEach(() => {
 //
 
 describe("Jaypie Core", () => {
-  describe("Constants", () => {
-    it("Exposes constants", () => {
-      expect(CDK).toBeObject();
-    });
+  it("Exposes constants", () => {
+    expect(JAYPIE).toBeObject();
+    expect(PROJECT.SPONSOR.FINLAYSON).toBe("finlaysonstudio");
   });
 });

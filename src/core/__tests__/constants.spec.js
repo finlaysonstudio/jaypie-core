@@ -2,7 +2,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 // Subject
-import { CDK, PROJECT } from "../constants.js";
+import { JAYPIE, PROJECT } from "../constants.js";
 
 //
 //
@@ -34,7 +34,7 @@ afterEach(() => {
 
 describe("Constants", () => {
   it("Exports constants", () => {
-    expect(CDK).toBeObject();
+    expect(JAYPIE).toBeObject();
     expect(PROJECT.SPONSOR.FINLAYSON).toBe("finlaysonstudio");
   });
 });
