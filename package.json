@@ -24,12 +24,12 @@
     "test:spec:Client": "vitest run ./src/__tests__/Client.spec.js",
     "test:spec:constants": "vitest run ./src/core/__tests__/constants.spec.js",
     "test:spec:core": "vitest run ./src/__tests__/core.spec.js",
+    "test:spec:http.lib": "vitest run ./src/lib/__tests__/http.lib.spec.js",
     "test:spec:index": "vitest run ./src/__tests__/index.spec.js",
     "test:spec:jaypieHandler.module": "vitest run ./src//__tests__/jaypieHandler.module.spec.js",
     "test:spec:knowdev.lib": "vitest run ./src/core/__tests__/knowdev.lib.spec.js",
     "test:spec:lambdaHandler.module": "vitest run ./src/__tests__/lambdaHandler.module.spec.js",
     "test:spec:lib:client:index": "vitest run ./test/client/__tests__/index.spec.js",
-    "test:spec:lib:http:http.lib": "vitest run ./src/lib/__tests__/http.lib.spec.js",
     "test:spec:logTags.function": "vitest run ./src/core/__tests__/logTags.function.spec.js",
     "test:spec:logger.module": "vitest run ./src/core/__tests__/logger.module.spec.js"
   },
