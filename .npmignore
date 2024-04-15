@@ -4,6 +4,7 @@ _templates
 .github
 .jaypie
 .vscode
+src
 test
 testSetup.js
 vite.config.js
