@@ -7,7 +7,6 @@ import {
   envBoolean,
   force,
   getHeaderFrom,
-  HTTP,
   LOG,
   // eslint-disable-next-line import/named
   NAME,
@@ -48,7 +47,6 @@ afterEach(() => {
 describe("KnowDev Lib", () => {
   describe("Constants", () => {
     it("Exposes constants", () => {
-      expect(HTTP).toBeObject();
       expect(LOG).toBeObject();
       expect(VALIDATE).toBeObject();
     });

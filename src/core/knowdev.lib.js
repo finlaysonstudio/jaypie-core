@@ -16,7 +16,7 @@ import log from "@knowdev/log";
 // Constants
 const VALIDATE = validate.TYPE;
 
-export { HTTP, VALIDATE };
+export { VALIDATE };
 export const LOG = {
   FORMAT: log.LOG_FORMAT,
   LEVEL: log.LOG_LEVEL,
