@@ -5,8 +5,9 @@
 // ====== END WARNING
 
 import validate from "@knowdev/arguments";
-import HTTP from "@knowdev/http";
 import log from "@knowdev/log";
+
+import { getHeaderFrom } from "../lib/functions.lib.js";
 
 //
 //
@@ -24,7 +25,6 @@ export const LOG = {
 
 // Functions
 const force = validate.force;
-const getHeaderFrom = HTTP.getHeaderFrom;
 export { force, getHeaderFrom, validate };
 import functions from "@knowdev/functions";
 const { envBoolean, placeholders } = functions;
