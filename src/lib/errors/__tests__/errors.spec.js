@@ -1,4 +1,4 @@
-import { afterEach, beforeEach, describe, expect, it } from "vitest";
+import { describe, expect, it } from "vitest";
 
 import HTTP from "../../http.lib.js";
 import JsonApiSerializer from "jsonapi-serializer";
@@ -23,24 +23,6 @@ const MOCK = {
   TITLE: "mockTitle",
   STATUS: 600,
 };
-
-//
-//
-// Mock modules
-//
-
-//
-//
-// Mock environment
-//
-
-const DEFAULT_ENV = process.env;
-beforeEach(() => {
-  process.env = { ...process.env };
-});
-afterEach(() => {
-  process.env = DEFAULT_ENV;
-});
 
 //
 //
