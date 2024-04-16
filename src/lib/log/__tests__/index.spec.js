@@ -34,10 +34,6 @@ describe("Index", () => {
     expect(log.log).toBeFunction();
   });
 
-  it("Includes a silent instance", async () => {
-    expect(log.silent).toBeObject();
-  });
-
   it("Includes LOG_LEVEL", async () => {
     expect(log.LOG_LEVEL).toBeObject();
     expect(log.LOG_LEVEL.ALL).toBeString();

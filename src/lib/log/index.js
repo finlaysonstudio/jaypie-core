@@ -22,7 +22,6 @@ log.log = log.debug;
 log.LOG_FORMAT = FORMAT;
 log.LOG_LEVEL = LEVEL;
 log.Logger = Logger;
-log.silent = new Logger({ level: LEVEL.SILENT });
 
 //
 //
