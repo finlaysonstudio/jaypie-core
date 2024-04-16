@@ -6,7 +6,7 @@
 
 import validate from "../lib/arguments.lib.js";
 import { force, TYPE as VALIDATE } from "../lib/arguments.lib.js";
-import log from "@knowdev/log";
+import log from "../lib/log.lib.js";
 
 import { getHeaderFrom } from "../lib/functions.lib.js";
 
@@ -40,7 +40,6 @@ export {
   InternalError,
   MethodNotAllowedError,
   MultiError,
-  // NAME, // Do not export NAME
   NotFoundError,
   NotImplementedError,
   ProjectError,
@@ -51,4 +50,4 @@ export {
   UnavailableError,
   UnhandledError,
   UnreachableCodeError,
-} from "@knowdev/errors";
+} from "../lib/errors.lib.js";
