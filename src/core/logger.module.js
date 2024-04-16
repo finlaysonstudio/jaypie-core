@@ -1,4 +1,4 @@
-import Logger from "@knowdev/log";
+import Logger from "../lib/log.lib.js";
 
 import { ConfigurationError, envBoolean, LOG } from "./knowdev.lib.js";
 import logTags from "./logTags.function.js";

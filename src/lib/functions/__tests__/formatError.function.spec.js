@@ -1,10 +1,8 @@
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 
-import knowdevErrors from "@knowdev/errors";
+import { InternalError } from "../../errors.lib.js";
 import { matchers } from "jest-json-schema";
 import formatError from "../formatError.function.js";
-
-const { InternalError } = knowdevErrors;
 
 //
 //

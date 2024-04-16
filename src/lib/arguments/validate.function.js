@@ -1,8 +1,6 @@
-import knowdevErrors from "@knowdev/errors";
+import { BadRequestError, ConfigurationError } from "../errors.lib.js";
 
 import { TYPE } from "./constants.js";
-
-const { BadRequestError, ConfigurationError } = knowdevErrors;
 
 //
 //
