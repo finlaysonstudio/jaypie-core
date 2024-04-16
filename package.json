@@ -34,7 +34,10 @@
     "test:spec:lambdaHandler.module": "vitest run ./src/__tests__/lambdaHandler.module.spec.js",
     "test:spec:lib:client:index": "vitest run ./test/client/__tests__/index.spec.js",
     "test:spec:logTags.function": "vitest run ./src/core/__tests__/logTags.function.spec.js",
-    "test:spec:logger.module": "vitest run ./src/core/__tests__/logger.module.spec.js"
+    "test:spec:logger.module": "vitest run ./src/core/__tests__/logger.module.spec.js",
+    "test:spec:logger:Logger.class": "vitest run ./src/lib/log/__tests__/Logger.spec.js",
+    "test:spec:logger:json": "vitest run ./src/lib/log/__tests__/json-logger.spec.js",
+    "test:spec:logger:var": "vitest run ./src/lib/log/__tests__/var.spec.js"
   },
   "dependencies": {
     "@knowdev/errors": "^2.0.4",
