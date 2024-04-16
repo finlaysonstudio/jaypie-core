@@ -4,7 +4,8 @@
 // * Do _NOT REMOVE_ without replacement in core and exporting that replacement in index
 // ====== END WARNING
 
-import validate from "@knowdev/arguments";
+import validate from "../lib/arguments.lib.js";
+import { force, TYPE as VALIDATE } from "../lib/arguments.lib.js";
 import log from "@knowdev/log";
 
 import { getHeaderFrom } from "../lib/functions.lib.js";
@@ -15,8 +16,6 @@ import { getHeaderFrom } from "../lib/functions.lib.js";
 //
 
 // Constants
-const VALIDATE = validate.TYPE;
-
 export { VALIDATE };
 export const LOG = {
   FORMAT: log.LOG_FORMAT,
@@ -24,11 +23,8 @@ export const LOG = {
 };
 
 // Functions
-const force = validate.force;
 export { force, getHeaderFrom, validate };
-import functions from "@knowdev/functions";
-const { envBoolean, placeholders } = functions;
-export { envBoolean, placeholders };
+export { envBoolean, placeholders } from "../lib/functions.lib.js";
 export { default as cloneDeep } from "lodash.clonedeep";
 
 // Errors
