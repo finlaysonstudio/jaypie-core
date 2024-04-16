@@ -25,6 +25,7 @@
     "test:spec:arguments.lib": "vitest run ./src/lib/__tests__/arguments.lib.spec.js",
     "test:spec:constants": "vitest run ./src/core/__tests__/constants.spec.js",
     "test:spec:core": "vitest run ./src/__tests__/core.spec.js",
+    "test:spec:errors.lib": "vitest run ./src/lib/__tests__/errors.lib.spec.js",
     "test:spec:functions.lib": "vitest run ./src/lib/__tests__/functions.lib.spec.js",
     "test:spec:http.lib": "vitest run ./src/lib/__tests__/http.lib.spec.js",
     "test:spec:index": "vitest run ./src/__tests__/index.spec.js",
