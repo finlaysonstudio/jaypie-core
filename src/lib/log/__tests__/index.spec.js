@@ -4,16 +4,6 @@ import log from "../index.js";
 
 //
 //
-// Mock constants
-//
-
-//
-//
-// Mock modules
-//
-
-//
-//
 // Mock environment
 //
 
@@ -58,17 +48,5 @@ describe("Index", () => {
     expect(log.LOG_LEVEL.ERROR).toBeString();
     expect(log.LOG_LEVEL.FATAL).toBeString();
     expect(log.LOG_LEVEL.SILENT).toBeString();
-  });
-
-  it.skip("Sets MODULE_LOGGER `false` by default", () => {
-    // eslint-disable-next-line global-require
-    require("../index.js");
-    expect(process.env.MODULE_LOGGER).toBeFalse();
-  });
-  it.skip("Allows MODULE_LOGGER to be `true`", () => {
-    process.env.MODULE_LOGGER = "true";
-    // eslint-disable-next-line global-require
-    require("../index.js");
-    expect(process.env.MODULE_LOGGER).toBeTrue();
   });
 });
