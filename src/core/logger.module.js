@@ -1,7 +1,18 @@
 import Logger from "../lib/log.lib.js";
 
-import { ConfigurationError, envBoolean, LOG } from "./knowdev.lib.js";
+import { ConfigurationError } from "../lib/errors.lib.js";
+import { envBoolean } from "../lib/functions.lib.js";
 import logTags from "./logTags.function.js";
+
+//
+//
+// Constants
+//
+
+const LOG = {
+  FORMAT: Logger.LOG_FORMAT,
+  LEVEL: Logger.LOG_LEVEL,
+};
 
 //
 //

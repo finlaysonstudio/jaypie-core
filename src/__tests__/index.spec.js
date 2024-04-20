@@ -1,44 +1,42 @@
-import { afterEach, beforeEach, describe, expect, it } from "vitest";
+import { describe, expect, it } from "vitest";
 
 // Subject
 // eslint-disable-next-line import/default
 import index from "../index.js";
 import {
-  // eslint-disable-next-line import/named
-  exportedLog,
+  BadGatewayError,
+  BadRequestError,
+  cloneDeep,
+  ConfigurationError,
+  envBoolean,
+  ERROR,
+  ForbiddenError,
+  force,
+  GatewayTimeoutError,
   getHeaderFrom,
+  GoneError,
   HTTP,
+  IllogicalError,
+  InternalError,
   jaypieHandler,
-  LOG,
   log,
-  // eslint-disable-next-line import/named
-  NAME,
+  MethodNotAllowedError,
+  MultiError,
+  NotFoundError,
+  NotImplementedError,
+  placeholders,
   ProjectError,
+  ProjectMultiError,
+  RejectedError,
+  TeapotError,
+  UnauthorizedError,
+  UnavailableError,
+  UnhandledError,
+  UnreachableCodeError,
   uuid,
+  validate,
+  VALIDATE,
 } from "../index.js";
-
-//
-//
-// Mock constants
-//
-
-//
-//
-// Mock modules
-//
-
-//
-//
-// Mock environment
-//
-
-const DEFAULT_ENV = process.env;
-beforeEach(() => {
-  process.env = { ...process.env };
-});
-afterEach(() => {
-  process.env = DEFAULT_ENV;
-});
 
 //
 //
@@ -50,34 +48,52 @@ describe("Jaypie Core", () => {
     expect(index).toBeUndefined();
   });
   describe("Constants", () => {
-    it("Exposes HTTP", () => {
+    it("Exports expected constants", () => {
+      expect(ERROR).toBeObject();
       expect(HTTP).toBeObject();
-      expect(LOG).toBeObject();
+      expect(VALIDATE).toBeObject();
     });
   });
   describe("Errors", () => {
     it("Exposes ProjectError", () => {
+      expect(BadGatewayError).toBeFunction();
+      expect(BadRequestError).toBeFunction();
+      expect(ConfigurationError).toBeFunction();
+      expect(ForbiddenError).toBeFunction();
+      expect(GatewayTimeoutError).toBeFunction();
+      expect(GoneError).toBeFunction();
+      expect(IllogicalError).toBeFunction();
+      expect(InternalError).toBeFunction();
+      expect(MethodNotAllowedError).toBeFunction();
+      expect(MultiError).toBeFunction();
+      expect(NotFoundError).toBeFunction();
+      expect(NotImplementedError).toBeFunction();
       expect(ProjectError).toBeFunction();
-    });
-    it("Does not expose NAME", () => {
-      expect(NAME).toBeUndefined();
-      // If it does expose name:
-      //   - Delete this test if you want to expose NAME, especially if it is not "ProjectError"
-      //   - If you did not want to expose name and it is ProjectError, now is the time to fix it
+      expect(ProjectMultiError).toBeFunction();
+      expect(RejectedError).toBeFunction();
+      expect(TeapotError).toBeFunction();
+      expect(UnauthorizedError).toBeFunction();
+      expect(UnavailableError).toBeFunction();
+      expect(UnhandledError).toBeFunction();
+      expect(UnreachableCodeError).toBeFunction();
     });
   });
   describe("Functions", () => {
-    it("Exposes convenience functions", () => {
-      expect(getHeaderFrom).toBeFunction();
+    it("Exports functions from third parties", () => {
+      expect(cloneDeep).toBeFunction();
       expect(uuid).toBeFunction();
+    });
+    it("Exports Jaypie convenience functions", () => {
+      expect(envBoolean).toBeFunction();
+      expect(force).toBeFunction();
+      expect(getHeaderFrom).toBeFunction();
+      expect(placeholders).toBeFunction();
+      expect(validate).toBeFunction();
     });
   });
   describe("Logging", () => {
     it("Exposes log", () => {
       expect(log).toBeObject();
-    });
-    it("Does not expose exportedLog", () => {
-      expect(exportedLog).toBeUndefined();
     });
   });
   describe("Jaypie", () => {
