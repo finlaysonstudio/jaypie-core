@@ -20,7 +20,6 @@ import {
   InternalError,
   jaypieHandler,
   log,
-  LOG,
   MethodNotAllowedError,
   MultiError,
   NotFoundError,
@@ -52,7 +51,6 @@ describe("Jaypie Core", () => {
     it("Exports expected constants", () => {
       expect(ERROR).toBeObject();
       expect(HTTP).toBeObject();
-      expect(LOG).toBeObject();
       expect(VALIDATE).toBeObject();
     });
   });
