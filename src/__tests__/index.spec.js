@@ -1,4 +1,4 @@
-import { afterEach, beforeEach, describe, expect, it } from "vitest";
+import { describe, expect, it } from "vitest";
 
 // Subject
 // eslint-disable-next-line import/default
@@ -12,29 +12,6 @@ import {
   ProjectError,
   uuid,
 } from "../index.js";
-
-//
-//
-// Mock constants
-//
-
-//
-//
-// Mock modules
-//
-
-//
-//
-// Mock environment
-//
-
-const DEFAULT_ENV = process.env;
-beforeEach(() => {
-  process.env = { ...process.env };
-});
-afterEach(() => {
-  process.env = DEFAULT_ENV;
-});
 
 //
 //
