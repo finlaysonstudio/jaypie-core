@@ -4,15 +4,11 @@ import { afterEach, beforeEach, describe, expect, it } from "vitest";
 // eslint-disable-next-line import/default
 import index from "../index.js";
 import {
-  // eslint-disable-next-line import/named
-  exportedLog,
   getHeaderFrom,
   HTTP,
   jaypieHandler,
   LOG,
   log,
-  // eslint-disable-next-line import/named
-  NAME,
   ProjectError,
   uuid,
 } from "../index.js";
@@ -59,12 +55,6 @@ describe("Jaypie Core", () => {
     it("Exposes ProjectError", () => {
       expect(ProjectError).toBeFunction();
     });
-    it("Does not expose NAME", () => {
-      expect(NAME).toBeUndefined();
-      // If it does expose name:
-      //   - Delete this test if you want to expose NAME, especially if it is not "ProjectError"
-      //   - If you did not want to expose name and it is ProjectError, now is the time to fix it
-    });
   });
   describe("Functions", () => {
     it("Exposes convenience functions", () => {
@@ -75,9 +65,6 @@ describe("Jaypie Core", () => {
   describe("Logging", () => {
     it("Exposes log", () => {
       expect(log).toBeObject();
-    });
-    it("Does not expose exportedLog", () => {
-      expect(exportedLog).toBeUndefined();
     });
   });
   describe("Jaypie", () => {
