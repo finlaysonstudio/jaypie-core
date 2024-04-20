@@ -1,7 +1,8 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { spyLog, restoreLog } from "@jaypie/testkit";
 
-import { log, ProjectError } from "../core.js";
+import { log } from "../core.js";
+import { ProjectError } from "../lib/errors.lib.js";
 import HTTP from "../lib/http.lib.js";
 
 // Subject

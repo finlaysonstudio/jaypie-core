@@ -1,11 +1,12 @@
+import { JAYPIE, log as publicLogger } from "./core.js";
+
 import {
   BadRequestError,
-  envBoolean,
-  JAYPIE,
-  log as publicLogger,
   UnavailableError,
   UnhandledError,
-} from "./core.js";
+} from "./lib/errors.lib.js";
+
+import { envBoolean } from "./lib/functions.lib.js";
 
 //
 //
