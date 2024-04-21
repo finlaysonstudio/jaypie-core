@@ -11,7 +11,7 @@
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
   "scripts": {
-    "build": "babel src --out-dir dist/esm --extensions \".js\" --config-file ./babel.esm.config.json && babel src --out-dir dist/cjs --extensions \".js\" --config-file ./babel.cjs.config.json",
+    "build": "rollup --config",
     "format": "npm run format:package && npm run format:lint",
     "format:lint": "eslint --fix .",
     "format:package": "sort-package-json ./package.json",
@@ -51,6 +51,8 @@
     "@babel/plugin-transform-modules-commonjs": "^7.24.1",
     "@babel/preset-env": "^7.24.4",
     "@jaypie/testkit": "^1.0.11",
+    "@rollup/plugin-commonjs": "^25.0.7",
+    "@rollup/plugin-node-resolve": "^15.2.3",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-import": "^2.29.1",
@@ -61,6 +63,7 @@
     "jest-json-schema": "^6.1.0",
     "mock-express-response": "^0.3.0",
     "prettier": "^3.2.5",
+    "rollup": "^4.16.1",
     "sort-package-json": "^2.8.0",
     "vitest": "^1.5.0"
   }
