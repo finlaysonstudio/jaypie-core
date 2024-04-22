@@ -27,6 +27,8 @@ const force = (value, type, key = "") => {
         }
       }
       return Boolean(value);
+    case TYPE.NUMBER:
+      return Number(value);
     case TYPE.OBJECT:
       if (!key) key = "value"; // eslint-disable-line no-param-reassign
       // If it is a string, try parsing as JSON but catch errors

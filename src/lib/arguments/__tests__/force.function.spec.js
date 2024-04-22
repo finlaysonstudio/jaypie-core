@@ -87,6 +87,32 @@ describe("Force function", () => {
       expect(response).toBeTrue();
     });
   });
+  describe("Numbers", () => {
+    it("Forces numbers", () => {
+      const response = force("12", Number);
+      expect(response).toBeNumber();
+      expect(response).toBe(12);
+    });
+    it("Returns numbers untouched", () => {
+      const response = force(12, Number);
+      expect(response).toBeNumber();
+      expect(response).toBe(12);
+    });
+    it("Forces NaN", () => {
+      const response = force("mayhem", Number);
+      expect(response).toBeNaN();
+    });
+    it("Forces negatives", () => {
+      const response = force("-12", Number);
+      expect(response).toBeNumber();
+      expect(response).toBe(-12);
+    });
+    it("Forces decimals", () => {
+      const response = force("12.5", Number);
+      expect(response).toBeNumber();
+      expect(response).toBe(12.5);
+    });
+  });
   describe("Objects", () => {
     it("Forces objects", () => {
       const response = force("taco", Object);
