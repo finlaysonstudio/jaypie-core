@@ -1,6 +1,6 @@
 {
   "name": "@jaypie/core",
-  "version": "1.0.19",
+  "version": "1.0.20",
   "author": "Finlayson Studio",
   "main": "dist/jaypie-core.cjs.js",
   "module": "dist/jaypie-core.esm.js",
