@@ -158,15 +158,15 @@ describe("Validate function", () => {
       });
       it("String 'true' => false", () => {
         const value = "true";
-        const response = validate(value, { type: Boolean });
+        const response = validate(value, { type: Boolean, throws: false });
         expect(response).toBeFalse();
       });
       it("False => false", () => {
-        const response = validate(null, { type: Boolean });
+        const response = validate(null, { type: Boolean, throws: false });
         expect(response).toBeFalse();
       });
       it("Truthy => false", () => {
-        const response = validate(1, { type: Boolean });
+        const response = validate(1, { type: Boolean, throws: false });
         expect(response).toBeFalse();
       });
     });

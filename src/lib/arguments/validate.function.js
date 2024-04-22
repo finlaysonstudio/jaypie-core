@@ -30,6 +30,9 @@ const validate = (
     case TYPE.ARRAY:
       if (Array.isArray(argument)) matchesType = true;
       break;
+    case TYPE.BOOLEAN:
+      matchesType = typeof argument === "boolean";
+      break;
     case TYPE.CLASS:
       if (typeof argument === "function") {
         try {
