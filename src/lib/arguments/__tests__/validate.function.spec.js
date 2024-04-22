@@ -32,6 +32,11 @@ describe("Validate function", () => {
       const response = validate(value, { type: Array });
       expect(response).toBeTrue();
     });
+    it("Checks boolean", () => {
+      const value = true;
+      const response = validate(value, { type: Boolean });
+      expect(response).toBeTrue();
+    });
     it("Checks class", () => {
       const response = validate(TEST.CLASS, { type: TYPE.CLASS });
       expect(response).toBeTrue();
@@ -139,6 +144,31 @@ describe("Validate function", () => {
     it("Accepts when not required", () => {
       const response = validate(undefined, { type: String, required: false });
       expect(response).toBeTrue();
+    });
+    describe("Validating booleans", () => {
+      it("Boolean true => true", () => {
+        const value = true;
+        const response = validate(value, { type: Boolean });
+        expect(response).toBeTrue();
+      });
+      it("Boolean false => true", () => {
+        const value = false;
+        const response = validate(value, { type: Boolean });
+        expect(response).toBeTrue();
+      });
+      it("String 'true' => false", () => {
+        const value = "true";
+        const response = validate(value, { type: Boolean });
+        expect(response).toBeFalse();
+      });
+      it("False => false", () => {
+        const response = validate(null, { type: Boolean });
+        expect(response).toBeFalse();
+      });
+      it("Truthy => false", () => {
+        const response = validate(1, { type: Boolean });
+        expect(response).toBeFalse();
+      });
     });
     describe("Falsy cases", () => {
       describe("Number", () => {
