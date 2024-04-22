@@ -10,6 +10,23 @@ const force = (value, type, key = "") => {
     case TYPE.ARRAY:
       if (!Array.isArray(value)) return [value];
       return value;
+    case TYPE.BOOLEAN:
+      if (typeof value === "string") {
+        value = value.toLowerCase();
+        if (
+          value === "" ||
+          value === "0" ||
+          value === "f" ||
+          value === "false" ||
+          value === "n" ||
+          value === "no"
+        ) {
+          return false;
+        } else {
+          return true;
+        }
+      }
+      return Boolean(value);
     case TYPE.OBJECT:
       if (!key) key = "value"; // eslint-disable-line no-param-reassign
       // If it is a string, try parsing as JSON but catch errors

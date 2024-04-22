@@ -21,6 +21,72 @@ describe("Force function", () => {
       expect(response).toBe(tacos);
     });
   });
+  describe("Boolean", () => {
+    it("Forces true", () => {
+      const response = force("true", Boolean);
+      expect(response).toBeTrue();
+    });
+    it("Forces false", () => {
+      const response = force("false", Boolean);
+      expect(response).toBeFalse();
+    });
+    it("Forces f", () => {
+      const response = force("f", Boolean);
+      expect(response).toBeFalse();
+    });
+    it("Forces no", () => {
+      const response = force("false", Boolean);
+      expect(response).toBeFalse();
+    });
+    it("Forces n", () => {
+      const response = force("f", Boolean);
+      expect(response).toBeFalse();
+    });
+    it("Forces TRUE", () => {
+      const response = force("TRUE", Boolean);
+      expect(response).toBeTrue();
+    });
+    it("Forces FALSE", () => {
+      const response = force("FALSE", Boolean);
+      expect(response).toBeFalse();
+    });
+    it("Forces TRue", () => {
+      const response = force("TRue", Boolean);
+      expect(response).toBeTrue();
+    });
+    it("Forces FaLSe", () => {
+      const response = force("FaLSe", Boolean);
+      expect(response).toBeFalse();
+    });
+    it("Forces 1", () => {
+      const response = force(1, Boolean);
+      expect(response).toBeTrue();
+    });
+    it("Forces 0", () => {
+      const response = force(0, Boolean);
+      expect(response).toBeFalse();
+    });
+    it("Forces '1'", () => {
+      const response = force("1", Boolean);
+      expect(response).toBeTrue();
+    });
+    it("Forces '0'", () => {
+      const response = force("0", Boolean);
+      expect(response).toBeFalse();
+    });
+    it("Forces 'anything'", () => {
+      const response = force("anything", Boolean);
+      expect(response).toBeTrue();
+    });
+    it("Forces ''", () => {
+      const response = force("", Boolean);
+      expect(response).toBeFalse();
+    });
+    it("Returns booleans untouched", () => {
+      const response = force(true, Boolean);
+      expect(response).toBeTrue();
+    });
+  });
   describe("Objects", () => {
     it("Forces objects", () => {
       const response = force("taco", Object);
