@@ -57,6 +57,8 @@ const force = (value, type, key = "") => {
 //
 
 force.array = (value) => force(value, Array);
+force.boolean = (value) => force(value, Boolean);
+force.number = (value) => force(value, Number);
 force.object = (value, key = "value") => force(value, Object, key);
 force.string = (value, defaultValue = "") => force(value, String, defaultValue);
 

@@ -9,6 +9,8 @@ import validate from "./validate.function.js";
 
 validate.array = (argument, options) =>
   validate(argument, { type: TYPE.ARRAY, ...options });
+validate.boolean = (argument, options) =>
+  validate(argument, { type: TYPE.BOOLEAN, ...options });
 validate.class = (argument, options) =>
   validate(argument, { type: TYPE.CLASS, ...options });
 validate.function = (argument, options) =>

@@ -173,6 +173,14 @@ describe("Force function", () => {
       expect(force.array).toBeFunction();
       expect(force.array("taco")).toBeArray();
     });
+    it("Forces boolean", () => {
+      expect(force.boolean).toBeFunction();
+      expect(force.boolean("true")).toBeTrue();
+    });
+    it("Forces numbers", () => {
+      expect(force.number).toBeFunction();
+      expect(force.number("12")).toBeNumber();
+    });
     it("Forces objects", () => {
       expect(force.object).toBeFunction();
       expect(force.object("taco")).toBeObject();
