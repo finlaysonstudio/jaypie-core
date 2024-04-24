@@ -7,6 +7,8 @@ import {
   getHeaderFrom,
   getObjectKeyCaseInsensitive,
   placeholders,
+  sleep,
+  sleepAlways,
 } from "../functions.lib.js";
 
 //
@@ -21,5 +23,7 @@ describe("Functions Lib", () => {
     expect(getHeaderFrom).toBeFunction();
     expect(getObjectKeyCaseInsensitive).toBeFunction();
     expect(placeholders).toBeFunction();
+    expect(sleep).toBeFunction();
+    expect(sleepAlways).toBeFunction();
   });
 });
