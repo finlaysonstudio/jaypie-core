@@ -28,6 +28,7 @@ import {
   ProjectError,
   ProjectMultiError,
   RejectedError,
+  sleep,
   TeapotError,
   UnauthorizedError,
   UnavailableError,
@@ -88,6 +89,7 @@ describe("Jaypie Core", () => {
       expect(force).toBeFunction();
       expect(getHeaderFrom).toBeFunction();
       expect(placeholders).toBeFunction();
+      expect(sleep).toBeFunction();
       expect(validate).toBeFunction();
     });
   });

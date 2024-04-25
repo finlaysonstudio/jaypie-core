@@ -46,6 +46,7 @@ export {
   envBoolean,
   getHeaderFrom,
   placeholders,
+  sleep,
 } from "./lib/functions.lib.js";
 
 // HTTP
