@@ -18,11 +18,6 @@ const sleep = async (milliseconds = 1000) => {
   if (process.env.NODE_ENV === "test") {
     return;
   }
-  sleepAlways(milliseconds);
-};
-
-/** Sleeps even in test */
-const sleepAlways = async (milliseconds = 1000) => {
   await new Promise((resolve) => {
     setTimeout(resolve, milliseconds);
   });
@@ -34,4 +29,3 @@ const sleepAlways = async (milliseconds = 1000) => {
 //
 
 export default sleep;
-export { sleepAlways };

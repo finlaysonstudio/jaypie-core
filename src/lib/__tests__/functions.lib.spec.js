@@ -8,7 +8,6 @@ import {
   getObjectKeyCaseInsensitive,
   placeholders,
   sleep,
-  sleepAlways,
 } from "../functions.lib.js";
 
 //
@@ -24,6 +23,5 @@ describe("Functions Lib", () => {
     expect(getObjectKeyCaseInsensitive).toBeFunction();
     expect(placeholders).toBeFunction();
     expect(sleep).toBeFunction();
-    expect(sleepAlways).toBeFunction();
   });
 });

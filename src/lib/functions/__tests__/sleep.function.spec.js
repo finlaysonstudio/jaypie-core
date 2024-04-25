@@ -2,7 +2,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 // Subject
-import sleep, { sleepAlways } from "../sleep.function.js";
+import sleep from "../sleep.function.js";
 
 //
 //
@@ -38,14 +38,5 @@ describe("Sleep Function", () => {
     await sleep(1000);
     const newTime = Date.now();
     expect(newTime - currentTime).toBeLessThan(1000);
-  });
-});
-
-describe("Sleep Always Function", () => {
-  it("Sleeps in test", async () => {
-    const currentTime = Date.now();
-    await sleepAlways(1000);
-    const newTime = Date.now();
-    expect(newTime - currentTime).toBeGreaterThan(998);
   });
 });
