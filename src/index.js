@@ -17,37 +17,10 @@ export { JAYPIE, PROJECT } from "./core.js";
 export { default as jaypieHandler } from "./jaypieHandler.module.js";
 
 // Errors
-export {
-  BadGatewayError,
-  BadRequestError,
-  ConfigurationError,
-  ERROR,
-  ForbiddenError,
-  GatewayTimeoutError,
-  GoneError,
-  IllogicalError,
-  InternalError,
-  MethodNotAllowedError,
-  MultiError,
-  NotFoundError,
-  NotImplementedError,
-  ProjectError,
-  ProjectMultiError,
-  RejectedError,
-  TeapotError,
-  UnauthorizedError,
-  UnavailableError,
-  UnhandledError,
-  UnreachableCodeError,
-} from "./lib/errors.lib.js";
+export * from "./lib/errors.lib.js";
 
 // Functions
-export {
-  envBoolean,
-  getHeaderFrom,
-  placeholders,
-  sleep,
-} from "./lib/functions.lib.js";
+export * from "./lib/functions.lib.js";
 
 // HTTP
 export { default as HTTP } from "./lib/http.lib.js";

@@ -14,6 +14,7 @@ import {
   force,
   GatewayTimeoutError,
   getHeaderFrom,
+  getObjectKeyCaseInsensitive,
   GoneError,
   HTTP,
   IllogicalError,
@@ -28,6 +29,7 @@ import {
   ProjectError,
   ProjectMultiError,
   RejectedError,
+  safeParseFloat,
   sleep,
   TeapotError,
   UnauthorizedError,
@@ -88,7 +90,9 @@ describe("Jaypie Core", () => {
       expect(envBoolean).toBeFunction();
       expect(force).toBeFunction();
       expect(getHeaderFrom).toBeFunction();
+      expect(getObjectKeyCaseInsensitive).toBeFunction();
       expect(placeholders).toBeFunction();
+      expect(safeParseFloat).toBeFunction();
       expect(sleep).toBeFunction();
       expect(validate).toBeFunction();
     });
