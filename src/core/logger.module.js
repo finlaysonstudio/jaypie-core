@@ -3,6 +3,7 @@ import Logger from "../lib/log.lib.js";
 import { ConfigurationError } from "../lib/errors.lib.js";
 import { envBoolean } from "../lib/functions.lib.js";
 import logTags from "./logTags.function.js";
+import logVar from "./logVar.function.js";
 
 //
 //
@@ -78,7 +79,7 @@ class JaypieLogger {
     }
   }
   var(...args) {
-    return this._logger.var(...args);
+    return this._logger.var(logVar(...args));
   }
   warn(...args) {
     return this._logger.warn(...args);
