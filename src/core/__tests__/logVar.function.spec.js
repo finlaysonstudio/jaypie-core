@@ -1,28 +1,19 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
-import forceVar from "../forceVar.function.js";
+import axiosResponseVarPipeline from "../axiosResponseVar.pipeline.js";
 
 // Subject
 import logVar from "../logVar.function.js";
 
 //
 //
-// Mock constants
-//
-
-const MOCK = {
-  VAR: { key: "value" },
-};
-
-//
-//
 // Mock modules
 //
 
-vi.mock("../forceVar.function.js");
+vi.mock("../axiosResponseVar.pipeline.js");
 
 beforeEach(() => {
-  forceVar.mockReturnValue(MOCK.VAR);
+  axiosResponseVarPipeline.key = "project";
 });
 
 afterEach(() => {
@@ -36,16 +27,18 @@ afterEach(() => {
 
 describe("LogVar Function", () => {
   it("Works", async () => {
-    const response = logVar({ project: "mayhem" });
+    const response = logVar({ key: "value" });
     expect(response).not.toBeUndefined();
     expect(response).toBeObject();
-    expect(response).toEqual(MOCK.VAR);
+    expect(response).toEqual({ key: "value" });
   });
   describe("Features", () => {
-    it("Calls forceVar first", () => {
-      const response = logVar("key", "value");
-      expect(forceVar).toHaveBeenCalled();
+    it("Calls axiosResponseVarPipeline", () => {
+      axiosResponseVarPipeline.filter.mockReturnValue("soap");
+      const response = logVar("project", "mayhem");
+      expect(axiosResponseVarPipeline.filter).toHaveBeenCalled();
       expect(response).toBeObject();
+      expect(response).toEqual({ project: "soap" });
     });
   });
 });
