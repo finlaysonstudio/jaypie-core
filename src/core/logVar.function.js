@@ -1,4 +1,4 @@
-import { force } from "../lib/arguments.lib.js";
+import forceVar from "./forceVar.function.js";
 
 //
 //
@@ -6,22 +6,8 @@ import { force } from "../lib/arguments.lib.js";
 //
 
 const logVar = (key, value) => {
-  if (typeof key === "undefined") {
-    return {};
-  }
-  if (typeof key === "object") {
-    if (Object.keys(key).length === 1) {
-      return key;
-    } else {
-      return { value: key };
-    }
-  }
-  key = force.string(key);
-  if (typeof value === "undefined") {
-    return { [key]: "" };
-  } else {
-    return { [key]: value };
-  }
+  const keyValue = forceVar(key, value);
+  return keyValue;
 };
 
 //
