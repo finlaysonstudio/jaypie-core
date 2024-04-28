@@ -13,5 +13,10 @@ describe("Safe Parse Float Function", () => {
     expect(safeParseFloat("1")).toBe(1);
     expect(safeParseFloat("1.1")).toBe(1.1);
     expect(safeParseFloat("NaN")).toBe(0);
+    expect(safeParseFloat(1)).toBe(1);
+    expect(safeParseFloat(1.1)).toBe(1.1);
+    expect(safeParseFloat(undefined)).toBe(0);
+    expect(safeParseFloat(null)).toBe(0);
+    expect(safeParseFloat("")).toBe(0);
   });
 });
