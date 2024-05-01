@@ -31,7 +31,7 @@ afterEach(() => {
 // Run tests
 //
 
-describe("<%= Name %> <%= Subtype %>", () => {
+describe("<%= Name %><%= Subtype %>", () => {
   describe("Baseline", () => {
     it("Works", () => {
       expect(<%= name %>).not.toBeUndefined();
