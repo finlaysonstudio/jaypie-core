@@ -7,7 +7,7 @@ to: <%- '<' %>%= path %<%- '>' %>/__tests__/<%- '<' %>%= name %<%- '>' %><%- '<'
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 // Subject
-import <%= name %> from "../<%= name %><%= dotSubtype %>.js";
+import <%- '<' %>%= name %<%- '>' %> from "../<%- '<' %>%= name %<%- '>' %><%- '<' %>%= dotSubtype %<%- '>' %>.js";
 
 //
 //
@@ -26,14 +26,14 @@ afterEach(() => {
 // Run tests
 //
 
-<%_
+<%- '<' %>%_
   let Subtype = "";
   // If subtype is defined, capitalize the first letter
   if(subtype) Subtype = " " + subtype.charAt(0).toUpperCase() + subtype.slice(1);
-_%>
-describe("<%= Name %><%= Subtype %>", () => {
+_%<%- '>' %>
+describe("<%- '<' %>%= Name %<%- '>' %><%- '<' %>%= Subtype %<%- '>' %>", () => {
   it("Works", async () => {
-    const response = await <%= name %>();
+    const response = await <%- '<' %>%= name %<%- '>' %>();
     console.log("response :>> ", response);
     expect(response).not.toBeUndefined();
   });
