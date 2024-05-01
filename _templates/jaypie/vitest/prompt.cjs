@@ -8,6 +8,8 @@ module.exports = [
     initial: "src",
     message: "Path (e.g., 'src/util'):",
     onSubmit: (name, value, input) => {
+      // Remove leading './' and trailing '/'
+      value = value.replace(/^\.\//, "").replace(/\/$/, "");
       input.state.answers.path = value;
     },
   },

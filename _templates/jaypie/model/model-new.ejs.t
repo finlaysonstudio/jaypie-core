@@ -1,7 +1,7 @@
 ---
 inject: true
-to: express/models/index.js
-before: \#hygen-velm-model-new
+to: <%= path %>/<%= exportFile %>
+before: \#hygen-jaypie-model-new
 skip_if: '<%= Name %>: () => model'
 ---
     <%= Name %>: () => model("<%= name %>", <%= name %>Schema),

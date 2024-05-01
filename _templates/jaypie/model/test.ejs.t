@@ -7,7 +7,7 @@ to: <%= path %>/__tests__/<%= name %><%= dotSubtype %>.spec.js
   if(subtype) Subtype = " " + subtype.charAt(0).toUpperCase() + subtype.slice(1);
 _%>
 // eslint-disable-next-line no-unused-vars
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { model } from "mongoose";
 
@@ -16,25 +16,14 @@ import <%= name %> from "../<%= name %><%= dotSubtype %>.js";
 
 //
 //
-// Mock constants
-//
-
-//
-//
 // Mock modules
 //
 
-//
-//
-// Mock environment
-//
+// vi.mock("../file.js");
+// vi.mock("module");
 
-const DEFAULT_ENV = process.env;
-beforeEach(() => {
-  process.env = { ...process.env };
-});
 afterEach(() => {
-  process.env = DEFAULT_ENV;
+  vi.clearAllMocks();
 });
 
 //

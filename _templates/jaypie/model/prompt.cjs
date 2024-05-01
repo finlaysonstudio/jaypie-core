@@ -13,12 +13,21 @@ module.exports = [
   {
     type: "input",
     name: "pathInput",
-    initial: "express/models",
-    message: "Path (always 'express/models'):",
+    initial: "src/models",
+    message: "Path (e.g., 'express/models'):",
     onSubmit: (name, value, input) => {
       // Remove leading './' and trailing '/'
-      value = value.replace(/^\.?\/|\/$/g, "");
+      value = value.replace(/^\.\//, "").replace(/\/$/, "");
       input.state.answers.path = value;
+    },
+  },
+  {
+    type: "input",
+    name: "exportFileInput",
+    initial: "index.js",
+    message: "Export file name (usually 'index.js'):",
+    onSubmit: (name, value, input) => {
+      input.state.answers.exportFile = value;
     },
   },
   {
@@ -34,8 +43,8 @@ module.exports = [
   {
     type: "input",
     name: "subspecInput",
-    initial: "express:model",
-    message: "Sub-spec test command (always 'express:model'):",
+    initial: "model",
+    message: "Sub-spec test command (e.g., 'express:model'):",
     onSubmit: (name, value, input) => {
       input.state.answers.subspec = value;
       input.state.answers.colonSubspec = value ? `:${value}` : "";
