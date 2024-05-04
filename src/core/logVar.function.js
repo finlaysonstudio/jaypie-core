@@ -1,7 +1,8 @@
-import axiosResponseVarPipeline from "./axiosResponseVar.pipeline.js";
 import forceVar from "./forceVar.function.js";
+import axiosResponseVarPipeline from "./axiosResponseVar.pipeline.js";
+import errorVarPipeline from "./errorVar.pipeline.js";
 
-const pipelines = [axiosResponseVarPipeline];
+const pipelines = [axiosResponseVarPipeline, errorVarPipeline];
 
 //
 //
