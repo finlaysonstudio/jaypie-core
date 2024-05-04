@@ -12,6 +12,7 @@ const TEST = {
     ARRAY: ["one", "two", "three"],
     BOOLEAN: true,
     EMPTY_STRING: "",
+    ERROR: new Error("Sorpresa!"),
     OBJECT: { message: "hello" },
     PARSABLE_STRING: `{"message": "hello"}`,
     UNDEFINED: undefined,
@@ -61,6 +62,11 @@ describe("formatAsJsonString util", () => {
   it("Casts anything else to string", () => {
     const result = formatAsJsonString(TEST.SUBJECT.BOOLEAN);
     expect(result).toEqual(TEST.RESULT.BOOLEAN);
+  });
+  it("Calls toString on instance objects", () => {
+    const result = formatAsJsonString(TEST.SUBJECT.ERROR);
+    expect(result).toBeString();
+    expect(result).toContain("Error: Sorpresa!");
   });
   it("Doesn't die on circular JSON", () => {
     expect(() => {
