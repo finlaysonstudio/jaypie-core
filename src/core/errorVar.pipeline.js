@@ -28,7 +28,14 @@ function filterErrorVar(item) {
   }
   const newItem = {
     message: item.message,
+    name: item.name,
   };
+  if (item.cause) {
+    newItem.cause = item.cause;
+  }
+  if (item.stack) {
+    newItem.stack = item.stack;
+  }
   if (item.isProjectError) {
     newItem.isProjectError = item.isProjectError;
     newItem.title = item.title;

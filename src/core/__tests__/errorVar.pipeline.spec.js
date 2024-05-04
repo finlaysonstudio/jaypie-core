@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { ConfigurationError } from "../../lib/errors.lib.js";
 
 // Subject
 import errorVar from "../errorVar.pipeline.js";
@@ -27,14 +28,32 @@ describe("ErrorVar Pipeline", () => {
     expect(result).toBeObject();
     expect(result).toEqual({ message: "sorpresa" });
   });
-  it("Only returns the message if the object is an error instance", () => {
+  it("Only returns certain keys if the object is an error instance", () => {
     // Arrange
-    const error = new Error("Oh, I am slain!");
+    const error = new Error("Oh, I am slain!", { cause: "Sorpresa!" });
     // Act
     const result = filter(error);
     // Assert
     expect(result).not.toBeUndefined();
     expect(result).toBeObject();
-    expect(result).toEqual({ message: "Oh, I am slain!" });
+    expect(result).toContainAllKeys(["cause", "message", "name", "stack"]);
+  });
+  it("Only returns certain keys if the object is a Jaypie error", () => {
+    // Arrange
+    const error = new ConfigurationError("Oh, I am slain!");
+    // Act
+    const result = filter(error);
+    // Assert
+    expect(result).not.toBeUndefined();
+    expect(result).toBeObject();
+    expect(result).toContainAllKeys([
+      "detail",
+      "isProjectError",
+      "message",
+      "name",
+      "stack",
+      "status",
+      "title",
+    ]);
   });
 });
