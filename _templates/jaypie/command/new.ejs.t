@@ -27,7 +27,7 @@ const <%= name %> = async ({ dryRun = false, file, outputFile } = {}) => {
 
   // Setup
   if (dryRun) {
-    log.debug("<%= name %> --dry-run");
+    log.debug("<%= hyphenCase %> --dry-run");
   }
 
   // const fileBuffer = await readFile(file);
