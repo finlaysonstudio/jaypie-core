@@ -21,12 +21,8 @@ const LOG = {
 //
 
 class JaypieLogger {
-  constructor({
-    level = process.env.LOG_LEVEL, // DEFAULT.LEVEL provided by Logger is debug
-    tags = {},
-  } = {}) {
+  constructor({ level = process.env.LOG_LEVEL, tags = {} } = {}) {
     this.level = level;
-    // _NOT_ tagging `level`
     this._tags = { ...logTags(), ...tags };
     this._logger = new Logger.Logger({
       format: LOG.FORMAT.JSON,
@@ -36,13 +32,16 @@ class JaypieLogger {
     this._loggers = [];
     this._loggers.push(this._logger);
     this._withLoggers = {};
-    // Make sure `var()` is available under each level
+
     const levels = ["debug", "error", "fatal", "info", "trace", "warn"];
-    for (const level of levels) {
+    levels.forEach((level) => {
+      this[level] = (...args) => {
+        this._logger[level](...args);
+      };
       this[level].var = (...args) => {
         this._logger[level].var(...args);
       };
-    }
+    });
   }
 
   // @knowdev/log "classic" methods
