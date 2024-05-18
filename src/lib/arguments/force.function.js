@@ -17,7 +17,8 @@ const force = (value, type, options) => {
     }
   }
 
-  let { key } = options;
+  let { key, maximum, minimum, nan } = options;
+  if (nan === undefined) nan = false;
 
   switch (type) {
     case TYPE.ARRAY:
@@ -41,7 +42,22 @@ const force = (value, type, options) => {
       }
       return Boolean(value);
     case TYPE.NUMBER:
-      return Number(value);
+      // eslint-disable-next-line no-case-declarations
+      let number = Number(value);
+      if (isNaN(number)) {
+        if (nan) return number;
+        return 0;
+      }
+      if (minimum !== undefined && maximum !== undefined && minimum > maximum) {
+        return number;
+      }
+      if (minimum !== undefined && number < minimum) {
+        number = minimum;
+      }
+      if (maximum !== undefined && number > maximum) {
+        number = maximum;
+      }
+      return number;
     case TYPE.OBJECT:
       if (!key) key = "value"; // eslint-disable-line no-param-reassign
       // If it is a string, try parsing as JSON but catch errors
@@ -73,6 +89,7 @@ force.array = (value) => force(value, Array);
 force.boolean = (value) => force(value, Boolean);
 force.number = (value) => force(value, Number);
 force.object = (value, key = "value") => force(value, Object, key);
+force.positive = (value) => force(value, Number, { minimum: 0 });
 force.string = (value, defaultValue = "") => force(value, String, defaultValue);
 
 //

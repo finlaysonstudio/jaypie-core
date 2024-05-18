@@ -98,8 +98,13 @@ describe("Force function", () => {
       expect(response).toBeNumber();
       expect(response).toBe(12);
     });
-    it("Forces NaN", () => {
+    it("Forces NaN to zero", () => {
       const response = force("mayhem", Number);
+      expect(response).toBeNumber();
+      expect(response).toBe(0);
+    });
+    it("Allows NaN optionally", () => {
+      const response = force("mayhem", Number, { nan: true });
       expect(response).toBeNaN();
     });
     it("Forces negatives", () => {
@@ -109,6 +114,21 @@ describe("Force function", () => {
     });
     it("Forces decimals", () => {
       const response = force("12.5", Number);
+      expect(response).toBeNumber();
+      expect(response).toBe(12.5);
+    });
+    it("Allows minimums", () => {
+      const response = force("-12.5", Number, { minimum: 12 });
+      expect(response).toBeNumber();
+      expect(response).toBe(12);
+    });
+    it("Allows maximums", () => {
+      const response = force("12.5", Number, { maximum: 0 });
+      expect(response).toBeNumber();
+      expect(response).toBe(0);
+    });
+    it("Ignores both in conflict", () => {
+      const response = force("12.5", Number, { maximum: 0, minimum: 12 });
       expect(response).toBeNumber();
       expect(response).toBe(12.5);
     });
@@ -180,6 +200,11 @@ describe("Force function", () => {
     it("Forces numbers", () => {
       expect(force.number).toBeFunction();
       expect(force.number("12")).toBeNumber();
+    });
+    it("Forces positive", () => {
+      expect(force.positive).toBeFunction();
+      expect(force.positive("-1")).toBe(0);
+      expect(force.positive("taco")).toBe(0);
     });
     it("Forces objects", () => {
       expect(force.object).toBeFunction();
