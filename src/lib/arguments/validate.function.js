@@ -158,6 +158,49 @@ const validate = (
 
 //
 //
+// Convenience functions
+//
+
+validate.array = (argument, options) =>
+  validate(argument, { type: TYPE.ARRAY, ...options });
+validate.boolean = (argument, options) =>
+  validate(argument, { type: TYPE.BOOLEAN, ...options });
+validate.class = (argument, options) =>
+  validate(argument, { type: TYPE.CLASS, ...options });
+validate.function = (argument, options) =>
+  validate(argument, { type: TYPE.FUNCTION, ...options });
+validate.null = (argument, options) =>
+  validate(argument, { type: TYPE.NULL, ...options });
+validate.number = (argument, options) =>
+  validate(argument, { type: TYPE.NUMBER, ...options });
+validate.object = (argument, options) =>
+  validate(argument, { type: TYPE.OBJECT, ...options });
+validate.string = (argument, options) =>
+  validate(argument, { type: TYPE.STRING, ...options });
+validate.undefined = (argument, options) =>
+  validate(argument, { type: TYPE.UNDEFINED, ...options });
+
+validate.optional = {
+  array: (argument, options) =>
+    validate(argument, { type: TYPE.ARRAY, required: false, ...options }),
+  boolean: (argument, options) =>
+    validate(argument, { type: TYPE.BOOLEAN, required: false, ...options }),
+  class: (argument, options) =>
+    validate(argument, { type: TYPE.CLASS, required: false, ...options }),
+  function: (argument, options) =>
+    validate(argument, { type: TYPE.FUNCTION, required: false, ...options }),
+  null: (argument, options) =>
+    validate(argument, { type: TYPE.NULL, required: false, ...options }),
+  number: (argument, options) =>
+    validate(argument, { type: TYPE.NUMBER, required: false, ...options }),
+  object: (argument, options) =>
+    validate(argument, { type: TYPE.OBJECT, required: false, ...options }),
+  string: (argument, options) =>
+    validate(argument, { type: TYPE.STRING, required: false, ...options }),
+};
+
+//
+//
 // Export
 //
 

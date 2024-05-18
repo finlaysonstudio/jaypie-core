@@ -216,4 +216,114 @@ describe("Validate function", () => {
       expect.assertions(2);
     });
   });
+  describe("Convenience Functions", () => {
+    it("Provides expected functions", () => {
+      expect(validate.array).toBeFunction();
+      expect(validate.boolean).toBeFunction();
+      expect(validate.class).toBeFunction();
+      expect(validate.function).toBeFunction();
+      expect(validate.null).toBeFunction();
+      expect(validate.number).toBeFunction();
+      expect(validate.object).toBeFunction();
+      expect(validate.string).toBeFunction();
+      expect(validate.undefined).toBeFunction();
+    });
+    it("Validates arrays", () => {
+      const value = ["hello"];
+      const response = validate.array(value);
+      expect(response).toBeTrue();
+      expect(() => validate.array(12)).toThrow();
+    });
+    it("Validates booleans", () => {
+      const response = validate.boolean(true);
+      expect(response).toBeTrue();
+      expect(() => validate.boolean(12)).toThrow();
+    });
+    it("Validates classes", () => {
+      const response = validate.class(TEST.CLASS);
+      expect(response).toBeTrue();
+      expect(() => validate.class(12)).toThrow();
+    });
+    it("Validates functions", () => {
+      const response = validate.function(TEST.FUNCTION);
+      expect(response).toBeTrue();
+      expect(() => validate.function(12)).toThrow();
+    });
+    it("Validates null", () => {
+      const response = validate.null(null);
+      expect(response).toBeTrue();
+      expect(() => validate.null(12)).toThrow();
+    });
+    it("Validates numbers", () => {
+      const response = validate.number(12);
+      expect(response).toBeTrue();
+      expect(() => validate.number("12")).toThrow();
+    });
+    it("Validates objects", () => {
+      const response = validate.object({});
+      expect(response).toBeTrue();
+      expect(() => validate.object(12)).toThrow();
+    });
+    it("Validates strings", () => {
+      const response = validate.string("hello");
+      expect(response).toBeTrue();
+      expect(() => validate.string(12)).toThrow();
+    });
+    it("Validates undefined", () => {
+      const response = validate.undefined(undefined);
+      expect(response).toBeTrue();
+      expect(() => validate.undefined(12)).toThrow();
+    });
+    it("Provides optional variants", () => {
+      expect(validate.optional.array).toBeFunction();
+      expect(validate.optional.boolean).toBeFunction();
+      expect(validate.optional.class).toBeFunction();
+      expect(validate.optional.function).toBeFunction();
+      expect(validate.optional.null).toBeFunction();
+      expect(validate.optional.number).toBeFunction();
+      expect(validate.optional.object).toBeFunction();
+      expect(validate.optional.string).toBeFunction();
+      expect(validate.optional.undefined).toBeUndefined();
+    });
+    it("Validates optional arrays", () => {
+      const response = validate.optional.array(undefined);
+      expect(response).toBeTrue();
+      expect(() => validate.optional.array(12)).toThrow();
+    });
+    it("Validates optional booleans", () => {
+      const response = validate.optional.boolean(undefined);
+      expect(response).toBeTrue();
+      expect(() => validate.optional.boolean(12)).toThrow();
+    });
+    it("Validates optional classes", () => {
+      const response = validate.optional.class(undefined);
+      expect(response).toBeTrue();
+      expect(() => validate.optional.class(12)).toThrow();
+    });
+    it("Validates optional functions", () => {
+      const response = validate.optional.function(undefined);
+      expect(response).toBeTrue();
+      expect(() => validate.optional.function(12)).toThrow();
+    });
+    it("Validates optional null", () => {
+      const response = validate.optional.null(undefined);
+      expect(response).toBeTrue();
+      expect(() => validate.optional.null(12)).toThrow();
+    });
+    it("Validates optional numbers", () => {
+      const response = validate.optional.number(undefined);
+      expect(response).toBeTrue();
+      expect(() => validate.optional.number("12")).toThrow();
+    });
+    it("Validates optional objects", () => {
+      const response = validate.optional.object(undefined);
+      expect(response).toBeTrue();
+      expect(() => validate.optional.object(12)).toThrow();
+    });
+    it("Validates optional strings", () => {
+      const response = validate.optional.string(undefined);
+      expect(response).toBeTrue();
+      expect(() => validate.optional.string(12)).toThrow();
+    });
+  });
 });
