@@ -40,6 +40,7 @@
     "test:spec:functions.lib": "vitest run ./src/lib/__tests__/functions.lib.spec.js",
     "test:spec:http.lib": "vitest run ./src/lib/__tests__/http.lib.spec.js",
     "test:spec:index": "vitest run ./src/__tests__/index.spec.js",
+    "test:spec:isJaypieError.function": "vitest run ./src/lib/errors/__tests__/isJaypieError.function.spec.js",
     "test:spec:jaypieHandler.module": "vitest run ./src/__tests__/jaypieHandler.module.spec.js",
     "test:spec:knowdev.lib": "vitest run ./src/core/__tests__/knowdev.lib.spec.js",
     "test:spec:lambdaHandler.module": "vitest run ./src/__tests__/lambdaHandler.module.spec.js",

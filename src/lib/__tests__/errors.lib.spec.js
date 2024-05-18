@@ -11,6 +11,7 @@ import {
   GoneError,
   IllogicalError,
   InternalError,
+  isJaypieError,
   MethodNotAllowedError,
   MultiError,
   NotFoundError,
@@ -50,6 +51,7 @@ describe("Arguments Lib", () => {
     expect(GoneError).toBeFunction();
     expect(IllogicalError).toBeFunction();
     expect(InternalError).toBeFunction();
+    expect(isJaypieError).toBeFunction();
     expect(MethodNotAllowedError).toBeFunction();
     expect(MultiError).toBeFunction();
     expect(NotFoundError).toBeFunction();
