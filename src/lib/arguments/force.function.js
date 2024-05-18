@@ -5,7 +5,20 @@ import { TYPE } from "./constants.js";
 // Main
 //
 
-const force = (value, type, key = "") => {
+const force = (value, type, options) => {
+  // * Backwards compatibility when options was a single string
+  if (typeof options !== "object") {
+    if (options === undefined) {
+      options = { key: "" };
+    } else if (typeof options === "string") {
+      options = { key: options };
+    } else {
+      options = { key: String(options) };
+    }
+  }
+
+  let { key } = options;
+
   switch (type) {
     case TYPE.ARRAY:
       if (!Array.isArray(value)) return [value];
