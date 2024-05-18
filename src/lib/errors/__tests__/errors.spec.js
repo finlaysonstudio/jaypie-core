@@ -252,4 +252,27 @@ describe("JSON:API HTTP Error", () => {
       expect(response.status).toBe(HTTP.CODE.BAD_REQUEST);
     });
   });
+
+  describe("Error Type", () => {
+    it("Allows subtype to be passed as an undocumented option", () => {
+      const error = new ProjectError(undefined, undefined, {
+        _type: "subtype",
+      });
+      expect(error._type).toBe("subtype");
+    });
+    it("Defaults to unknown type", () => {
+      const error = new ProjectError();
+      expect(error._type).toBe(ERROR.TYPE.UNKNOWN_TYPE);
+    });
+    it("Is supported in provided errors", () => {
+      const error = new UnreachableCodeError();
+      expect(error._type).toBe(ERROR.TYPE.UNREACHABLE_CODE);
+    });
+    it("Is supported in multi-errors", () => {
+      const error1 = new UnreachableCodeError();
+      const error2 = new UnreachableCodeError();
+      const error = new ProjectMultiError([error1, error2]);
+      expect(error._type).toBe(ERROR.TYPE.MULTI_ERROR);
+    });
+  });
 });

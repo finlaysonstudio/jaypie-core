@@ -64,6 +64,27 @@ export const ERROR = {
     UNAUTHORIZED: "Service Unauthorized",
     UNAVAILABLE: "Service Unavailable",
   },
+  TYPE: {
+    BAD_GATEWAY: "BAD_GATEWAY",
+    BAD_REQUEST: "BAD_REQUEST",
+    CONFIGURATION_ERROR: "CONFIGURATION_ERROR",
+    FORBIDDEN: "FORBIDDEN",
+    GATEWAY_TIMEOUT: "GATEWAY_TIMEOUT",
+    GONE: "GONE",
+    ILLOGICAL: "ILLOGICAL",
+    INTERNAL_ERROR: "INTERNAL_ERROR",
+    METHOD_NOT_ALLOWED: "METHOD_NOT_ALLOWED",
+    MULTI_ERROR: "MULTI_ERROR",
+    NOT_FOUND: "NOT_FOUND",
+    NOT_IMPLEMENTED: "NOT_IMPLEMENTED",
+    REJECTED: "REJECTED",
+    TEAPOT: "TEAPOT",
+    UNAUTHORIZED: "UNAUTHORIZED",
+    UNAVAILABLE: "UNAVAILABLE",
+    UNHANDLED: "UNHANDLED",
+    UNKNOWN_TYPE: "UNKNOWN_TYPE",
+    UNREACHABLE_CODE: "UNREACHABLE_CODE",
+  },
 };
 
 //
@@ -78,6 +99,7 @@ export class ProjectError extends Error {
       status = HTTP.CODE.INTERNAL_ERROR,
       title = ERROR.TITLE.INTERNAL_ERROR,
     } = {},
+    { _type = ERROR.TYPE.UNKNOWN_TYPE } = {},
   ) {
     super(message);
     this.title = title;
@@ -85,6 +107,7 @@ export class ProjectError extends Error {
     this.status = status;
     this.name = NAME;
     this.isProjectError = true;
+    this._type = _type;
     this.json = () => {
       // eslint-disable-next-line no-shadow
       const { data, status } = formatError(this);
@@ -102,6 +125,7 @@ export class ProjectMultiError extends Error {
     this.isProjectError = true;
     const { status } = formatError(this);
     this.status = status;
+    this._type = ERROR.TYPE.MULTI_ERROR;
     this.json = () => {
       // eslint-disable-next-line no-shadow
       const { data } = formatError(this);
@@ -132,10 +156,14 @@ export const BadGatewayError = new Proxy(
 export const BadRequestError = new Proxy(
   class {
     constructor(message = ERROR.MESSAGE.BAD_REQUEST) {
-      return new ProjectError(message, {
-        status: HTTP.CODE.BAD_REQUEST,
-        title: ERROR.TITLE.BAD_REQUEST,
-      });
+      return new ProjectError(
+        message,
+        {
+          status: HTTP.CODE.BAD_REQUEST,
+          title: ERROR.TITLE.BAD_REQUEST,
+        },
+        { _type: ERROR.TYPE.BAD_REQUEST },
+      );
     }
   },
   proxyClassAsFunction,
@@ -144,10 +172,14 @@ export const BadRequestError = new Proxy(
 export const ForbiddenError = new Proxy(
   class {
     constructor(message = ERROR.MESSAGE.FORBIDDEN) {
-      return new ProjectError(message, {
-        status: HTTP.CODE.FORBIDDEN,
-        title: ERROR.TITLE.FORBIDDEN,
-      });
+      return new ProjectError(
+        message,
+        {
+          status: HTTP.CODE.FORBIDDEN,
+          title: ERROR.TITLE.FORBIDDEN,
+        },
+        { _type: ERROR.TYPE.FORBIDDEN },
+      );
     }
   },
   proxyClassAsFunction,
@@ -156,10 +188,14 @@ export const ForbiddenError = new Proxy(
 export const GatewayTimeoutError = new Proxy(
   class {
     constructor(message = ERROR.MESSAGE.GATEWAY_TIMEOUT) {
-      return new ProjectError(message, {
-        status: HTTP.CODE.GATEWAY_TIMEOUT,
-        title: ERROR.TITLE.GATEWAY_TIMEOUT,
-      });
+      return new ProjectError(
+        message,
+        {
+          status: HTTP.CODE.GATEWAY_TIMEOUT,
+          title: ERROR.TITLE.GATEWAY_TIMEOUT,
+        },
+        { _type: ERROR.TYPE.GATEWAY_TIMEOUT },
+      );
     }
   },
   proxyClassAsFunction,
@@ -168,10 +204,14 @@ export const GatewayTimeoutError = new Proxy(
 export const GoneError = new Proxy(
   class {
     constructor(message = ERROR.MESSAGE.GONE) {
-      return new ProjectError(message, {
-        status: HTTP.CODE.GONE,
-        title: ERROR.TITLE.GONE,
-      });
+      return new ProjectError(
+        message,
+        {
+          status: HTTP.CODE.GONE,
+          title: ERROR.TITLE.GONE,
+        },
+        { _type: ERROR.TYPE.GONE },
+      );
     }
   },
   proxyClassAsFunction,
@@ -180,10 +220,14 @@ export const GoneError = new Proxy(
 export const InternalError = new Proxy(
   class {
     constructor(message = ERROR.MESSAGE.INTERNAL_ERROR) {
-      return new ProjectError(message, {
-        status: HTTP.CODE.INTERNAL_ERROR,
-        title: ERROR.TITLE.INTERNAL_ERROR,
-      });
+      return new ProjectError(
+        message,
+        {
+          status: HTTP.CODE.INTERNAL_ERROR,
+          title: ERROR.TITLE.INTERNAL_ERROR,
+        },
+        { _type: ERROR.TYPE.INTERNAL_ERROR },
+      );
     }
   },
   proxyClassAsFunction,
@@ -192,10 +236,14 @@ export const InternalError = new Proxy(
 export const MethodNotAllowedError = new Proxy(
   class {
     constructor(message = ERROR.MESSAGE.METHOD_NOT_ALLOWED) {
-      return new ProjectError(message, {
-        status: HTTP.CODE.METHOD_NOT_ALLOWED,
-        title: ERROR.TITLE.METHOD_NOT_ALLOWED,
-      });
+      return new ProjectError(
+        message,
+        {
+          status: HTTP.CODE.METHOD_NOT_ALLOWED,
+          title: ERROR.TITLE.METHOD_NOT_ALLOWED,
+        },
+        { _type: ERROR.TYPE.METHOD_NOT_ALLOWED },
+      );
     }
   },
   proxyClassAsFunction,
@@ -204,10 +252,14 @@ export const MethodNotAllowedError = new Proxy(
 export const NotFoundError = new Proxy(
   class {
     constructor(message = ERROR.MESSAGE.NOT_FOUND) {
-      return new ProjectError(message, {
-        status: HTTP.CODE.NOT_FOUND,
-        title: ERROR.TITLE.NOT_FOUND,
-      });
+      return new ProjectError(
+        message,
+        {
+          status: HTTP.CODE.NOT_FOUND,
+          title: ERROR.TITLE.NOT_FOUND,
+        },
+        { _type: ERROR.TYPE.NOT_FOUND },
+      );
     }
   },
   proxyClassAsFunction,
@@ -216,10 +268,14 @@ export const NotFoundError = new Proxy(
 export const TeapotError = new Proxy(
   class {
     constructor(message = ERROR.MESSAGE.TEAPOT) {
-      return new ProjectError(message, {
-        status: HTTP.CODE.TEAPOT,
-        title: ERROR.TITLE.TEAPOT,
-      });
+      return new ProjectError(
+        message,
+        {
+          status: HTTP.CODE.TEAPOT,
+          title: ERROR.TITLE.TEAPOT,
+        },
+        { _type: ERROR.TYPE.TEAPOT },
+      );
     }
   },
   proxyClassAsFunction,
@@ -228,10 +284,14 @@ export const TeapotError = new Proxy(
 export const UnauthorizedError = new Proxy(
   class {
     constructor(message = ERROR.MESSAGE.UNAUTHORIZED) {
-      return new ProjectError(message, {
-        status: HTTP.CODE.UNAUTHORIZED,
-        title: ERROR.TITLE.UNAUTHORIZED,
-      });
+      return new ProjectError(
+        message,
+        {
+          status: HTTP.CODE.UNAUTHORIZED,
+          title: ERROR.TITLE.UNAUTHORIZED,
+        },
+        { _type: ERROR.TYPE.UNAUTHORIZED },
+      );
     }
   },
   proxyClassAsFunction,
@@ -240,10 +300,14 @@ export const UnauthorizedError = new Proxy(
 export const UnavailableError = new Proxy(
   class {
     constructor(message = ERROR.MESSAGE.UNAVAILABLE) {
-      return new ProjectError(message, {
-        status: HTTP.CODE.UNAVAILABLE,
-        title: ERROR.TITLE.UNAVAILABLE,
-      });
+      return new ProjectError(
+        message,
+        {
+          status: HTTP.CODE.UNAVAILABLE,
+          title: ERROR.TITLE.UNAVAILABLE,
+        },
+        { _type: ERROR.TYPE.UNAVAILABLE },
+      );
     }
   },
   proxyClassAsFunction,
@@ -254,10 +318,14 @@ export const UnavailableError = new Proxy(
 export const ConfigurationError = new Proxy(
   class {
     constructor(message = ERROR.MESSAGE.CONFIGURATION_ERROR) {
-      return new ProjectError(message, {
-        status: HTTP.CODE.INTERNAL_ERROR,
-        title: ERROR.TITLE.CONFIGURATION_ERROR,
-      });
+      return new ProjectError(
+        message,
+        {
+          status: HTTP.CODE.INTERNAL_ERROR,
+          title: ERROR.TITLE.CONFIGURATION_ERROR,
+        },
+        { _type: ERROR.TYPE.CONFIGURATION_ERROR },
+      );
     }
   },
   proxyClassAsFunction,
@@ -266,10 +334,14 @@ export const ConfigurationError = new Proxy(
 export const IllogicalError = new Proxy(
   class {
     constructor(message = ERROR.MESSAGE.ILLOGICAL) {
-      return new ProjectError(message, {
-        status: HTTP.CODE.INTERNAL_ERROR,
-        title: ERROR.TITLE.INTERNAL_ERROR,
-      });
+      return new ProjectError(
+        message,
+        {
+          status: HTTP.CODE.INTERNAL_ERROR,
+          title: ERROR.TITLE.INTERNAL_ERROR,
+        },
+        { _type: ERROR.TYPE.ILLOGICAL },
+      );
     }
   },
   proxyClassAsFunction,
@@ -280,10 +352,14 @@ export const MultiError = ProjectMultiError;
 export const RejectedError = new Proxy(
   class {
     constructor(message = ERROR.MESSAGE.REJECTED) {
-      return new ProjectError(message, {
-        status: HTTP.CODE.FORBIDDEN,
-        title: ERROR.TITLE.REJECTED,
-      });
+      return new ProjectError(
+        message,
+        {
+          status: HTTP.CODE.FORBIDDEN,
+          title: ERROR.TITLE.REJECTED,
+        },
+        { _type: ERROR.TYPE.REJECTED },
+      );
     }
   },
   proxyClassAsFunction,
@@ -292,10 +368,14 @@ export const RejectedError = new Proxy(
 export const NotImplementedError = new Proxy(
   class {
     constructor(message = ERROR.MESSAGE.NOT_IMPLEMENTED) {
-      return new ProjectError(message, {
-        status: HTTP.CODE.BAD_REQUEST,
-        title: ERROR.TITLE.NOT_IMPLEMENTED,
-      });
+      return new ProjectError(
+        message,
+        {
+          status: HTTP.CODE.BAD_REQUEST,
+          title: ERROR.TITLE.NOT_IMPLEMENTED,
+        },
+        { _type: ERROR.TYPE.NOT_IMPLEMENTED },
+      );
     }
   },
   proxyClassAsFunction,
@@ -304,10 +384,14 @@ export const NotImplementedError = new Proxy(
 export const UnhandledError = new Proxy(
   class {
     constructor(message = ERROR.MESSAGE.UNHANDLED) {
-      return new ProjectError(message, {
-        status: HTTP.CODE.INTERNAL_ERROR,
-        title: ERROR.TITLE.INTERNAL_ERROR,
-      });
+      return new ProjectError(
+        message,
+        {
+          status: HTTP.CODE.INTERNAL_ERROR,
+          title: ERROR.TITLE.INTERNAL_ERROR,
+        },
+        { _type: ERROR.TYPE.UNHANDLED },
+      );
     }
   },
   proxyClassAsFunction,
@@ -316,10 +400,16 @@ export const UnhandledError = new Proxy(
 export const UnreachableCodeError = new Proxy(
   class {
     constructor(message = ERROR.MESSAGE.UNREACHABLE_CODE) {
-      return new ProjectError(message, {
-        status: HTTP.CODE.INTERNAL_ERROR,
-        title: ERROR.TITLE.INTERNAL_ERROR,
-      });
+      return new ProjectError(
+        message,
+        {
+          status: HTTP.CODE.INTERNAL_ERROR,
+          title: ERROR.TITLE.INTERNAL_ERROR,
+        },
+        {
+          _type: ERROR.TYPE.UNREACHABLE_CODE,
+        },
+      );
     }
   },
   proxyClassAsFunction,
