@@ -38,16 +38,7 @@ const validate = (
       matchesType = isClass(argument);
       break;
     case TYPE.FUNCTION:
-      matchesType = typeof argument === "function";
-      if (typeof argument === "function") {
-        try {
-          // eslint-disable-next-line new-cap, no-new
-          new argument();
-          matchesType = false;
-        } catch (e) {
-          matchesType = true;
-        }
-      }
+      matchesType = typeof argument === "function" && !isClass(argument);
       break;
     case TYPE.NUMBER:
       matchesType = typeof argument === "number";
