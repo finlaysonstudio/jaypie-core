@@ -1,6 +1,7 @@
 import { BadRequestError, ConfigurationError } from "../errors.lib.js";
 
 import { TYPE } from "./constants.js";
+import isClass from "./isClass.function.js";
 
 //
 //
@@ -34,15 +35,7 @@ const validate = (
       matchesType = typeof argument === "boolean";
       break;
     case TYPE.CLASS:
-      if (typeof argument === "function") {
-        try {
-          // eslint-disable-next-line new-cap, no-new
-          new argument();
-          matchesType = true;
-        } catch (e) {
-          matchesType = false;
-        }
-      }
+      matchesType = isClass(argument);
       break;
     case TYPE.FUNCTION:
       matchesType = typeof argument === "function";
