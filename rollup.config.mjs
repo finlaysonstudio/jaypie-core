@@ -6,7 +6,7 @@ export default {
   input: "src/index.js", // Path to your main JavaScript file
   output: [
     {
-      file: "dist/jaypie-core.cjs.js", // Output file for CommonJS
+      file: "dist/jaypie-core.cjs", // Output file for CommonJS
       format: "cjs", // CommonJS format
     },
     {
