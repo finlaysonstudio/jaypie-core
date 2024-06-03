@@ -60,6 +60,7 @@
   },
   "dependencies": {
     "chalk": "^4.0.0",
+    "eslint-config-jaypie": "^0.1.2",
     "jsonapi-serializer": "^3.6.9",
     "lodash.clonedeep": "^4.5.0",
     "rollup-plugin-auto-external": "^2.0.0",
