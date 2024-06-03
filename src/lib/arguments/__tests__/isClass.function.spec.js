@@ -10,7 +10,7 @@ import isClass from "../isClass.function.js";
 
 const TEST = {
   CLASS: class {},
-  FUNCTION: function () {},
+  FUNCTION: () => {},
 };
 
 //

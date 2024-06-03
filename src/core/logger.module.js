@@ -34,12 +34,12 @@ class JaypieLogger {
     this._withLoggers = {};
 
     const levels = ["debug", "error", "fatal", "info", "trace", "warn"];
-    levels.forEach((level) => {
-      this[level] = (...args) => {
-        this._logger[level](...args);
+    levels.forEach((lvl) => {
+      this[lvl] = (...args) => {
+        this._logger[lvl](...args);
       };
-      this[level].var = (...args) => {
-        this._logger[level].var(...args);
+      this[lvl].var = (...args) => {
+        this._logger[lvl].var(...args);
       };
     });
   }
