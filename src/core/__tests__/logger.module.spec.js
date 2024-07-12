@@ -1,5 +1,5 @@
-// eslint-disable-next-line no-unused-vars
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import cloneDeep from "lodash.clonedeep";
+import { afterEach, describe, expect, it, vi } from "vitest";
 
 // Subject
 import logger from "../logger.module.js";
@@ -213,6 +213,21 @@ describe("Logger Module", () => {
           expect(log._loggers[0]).toBe(log._logger);
           expect(log._loggers[1]).toBe(fork._logger);
         });
+      });
+    });
+    describe("Long-living log", () => {
+      it("We establish a baseline of what a clean log looks like", () => {
+        // Arrange
+        const log = logger();
+        // Assert
+        expect(log._tags).toBeObject();
+        expect(log._tags).toContainKeys(["version"]);
+        expect(log._logger).toBeObject();
+        expect(log._logger.constructor.name).toBe("Logger");
+        expect(log._loggers).toBeArrayOfSize(1);
+        expect(log._loggers[0]).toBe(log._logger);
+        expect(log._withLoggers).toBeObject();
+        expect(Object.keys(log._withLoggers)).toBeArrayOfSize(0);
       });
     });
   });
