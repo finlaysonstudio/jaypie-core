@@ -1,4 +1,3 @@
-import cloneDeep from "lodash.clonedeep";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 // Subject
@@ -262,7 +261,21 @@ describe("Logger Module", () => {
         expect(log._withLoggers).toBeObject();
         expect(Object.keys(log._withLoggers)).toBeArrayOfSize(0);
       });
-      it.todo("Calls reset down to children");
+      it("Calls init down to children", () => {
+        // Arrange
+        const log = logger();
+        const fork = log.lib({ lib: "babel" });
+        vi.spyOn(log, "init");
+        vi.spyOn(fork, "init");
+        // Assure
+        expect(log.init).not.toHaveBeenCalled();
+        expect(fork.init).not.toHaveBeenCalled();
+        // Act
+        log.init();
+        // Assert
+        expect(log.init).toHaveBeenCalled();
+        expect(fork.init).toHaveBeenCalled();
+      });
     });
   });
 });
