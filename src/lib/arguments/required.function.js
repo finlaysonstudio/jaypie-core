@@ -7,7 +7,7 @@ import validate from "./validate.function.js";
 // Main
 //
 
-const required = (value, type, options) => {
+const required = (value, type, options = {}) => {
   switch (type) {
     case TYPE.ARRAY:
       return validate(value, { type: TYPE.ARRAY, required: true });
@@ -27,6 +27,11 @@ const required = (value, type, options) => {
       if (!value) {
         throw BadRequestError(
           `Argument "${value}" doesn't match required value for type "number"`,
+        );
+      }
+      if (options.positive && value <= 0) {
+        throw BadRequestError(
+          `Argument "${value}" doesn't match required value for type "positive"`,
         );
       }
       return true;
@@ -56,7 +61,7 @@ required.array = (value) => required(value, Array);
 required.boolean = (value) => required(value, Boolean);
 required.number = (value) => required(value, Number);
 required.object = (value) => required(value, Object);
-required.positive = (value) => required(value, Number, { minimum: 0 });
+required.positive = (value) => required(value, Number, { positive: true });
 required.string = (value, defaultValue = "") =>
   required(value, String, defaultValue);
 

@@ -8,9 +8,6 @@ import required from "../required.function.js";
 // Mock modules
 //
 
-// vi.mock("../file.js");
-// vi.mock("module");
-
 afterEach(() => {
   vi.clearAllMocks();
 });
@@ -39,6 +36,14 @@ describe("Required Function", () => {
         const response = required.number(12);
         expect(response).toBeTrue();
       });
+      it("Passes negative", () => {
+        const response = required.number(-12);
+        expect(response).toBeTrue();
+      });
+      it("Passes positive", () => {
+        const response = required.positive(12);
+        expect(response).toBeTrue();
+      });
       it("Passes objects", () => {
         const response = required.object({});
         expect(response).toBeTrue();
@@ -57,6 +62,9 @@ describe("Required Function", () => {
       });
       it("Fails non-numbers", () => {
         expect(() => required.number(null)).toThrowJaypieError();
+      });
+      it("Fails non-positives", () => {
+        expect(() => required.positive(-1)).toThrowJaypieError();
       });
       it("Fails non-objects", () => {
         expect(() => required.object(null)).toThrowJaypieError();
@@ -85,6 +93,10 @@ describe("Required Function", () => {
       // Empty string fails
       it("Fails on empty string", () => {
         expect(() => required.string("")).toThrowJaypieError();
+      });
+      // Positive fails zero
+      it("Fails non-positives", () => {
+        expect(() => required.positive(0)).toThrowJaypieError();
       });
     });
   });
