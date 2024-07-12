@@ -1,5 +1,4 @@
-// eslint-disable-next-line no-unused-vars
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 
 // Subject
 import logger from "../logger.module.js";
@@ -213,6 +212,69 @@ describe("Logger Module", () => {
           expect(log._loggers[0]).toBe(log._logger);
           expect(log._loggers[1]).toBe(fork._logger);
         });
+      });
+    });
+    describe("Long-living log", () => {
+      it("We establish a baseline of what a clean log looks like", () => {
+        // Arrange
+        const log = logger();
+        // Assert
+        expect(log._tags).toBeObject();
+        expect(log._tags).toContainKeys(["version"]);
+        expect(log._logger).toBeObject();
+        expect(log._logger.constructor.name).toBe("Logger");
+        expect(log._loggers).toBeArrayOfSize(1);
+        expect(log._loggers[0]).toBe(log._logger);
+        expect(log._withLoggers).toBeObject();
+        expect(Object.keys(log._withLoggers)).toBeArrayOfSize(0);
+      });
+      it("Offers ability to re-init and restores to new defaults", () => {
+        // Arrange
+        const log = logger();
+        const fork = log.lib({ lib: "babel" });
+        expect(Object.keys(log._tags)).toIncludeSameMembers(["version"]);
+        log.tag({ project: "mayhem" });
+        fork.tag({ layer: "MOCK_LAYER" });
+        // Assure
+        expect(Object.keys(log._tags)).toIncludeSameMembers([
+          "project",
+          "version",
+        ]);
+        expect(Object.keys(fork._tags)).toIncludeSameMembers([
+          "layer",
+          "lib",
+          "project",
+          "version",
+        ]);
+        expect(log._loggers).toBeArrayOfSize(2);
+        // Act
+        log.debug("Hello, log!");
+        fork.debug("Hello, lib!");
+        log.init();
+        // Assert
+        expect(log._tags).toBeObject();
+        expect(log._tags).toContainKeys(["version"]);
+        expect(log._logger).toBeObject();
+        expect(log._logger.constructor.name).toBe("Logger");
+        expect(log._loggers).toBeArrayOfSize(1);
+        expect(log._loggers[0]).toBe(log._logger);
+        expect(log._withLoggers).toBeObject();
+        expect(Object.keys(log._withLoggers)).toBeArrayOfSize(0);
+      });
+      it("Calls init down to children", () => {
+        // Arrange
+        const log = logger();
+        const fork = log.lib({ lib: "babel" });
+        vi.spyOn(log, "init");
+        vi.spyOn(fork, "init");
+        // Assure
+        expect(log.init).not.toHaveBeenCalled();
+        expect(fork.init).not.toHaveBeenCalled();
+        // Act
+        log.init();
+        // Assert
+        expect(log.init).toHaveBeenCalled();
+        expect(fork.init).toHaveBeenCalled();
       });
     });
   });

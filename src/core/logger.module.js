@@ -22,6 +22,20 @@ const LOG = {
 
 class JaypieLogger {
   constructor({ level = process.env.LOG_LEVEL, tags = {} } = {}) {
+    this._params = { level, tags };
+    this._loggers = [];
+    this.init();
+  }
+
+  init() {
+    // Loop through this._loggers and call init() on each
+    for (const logger of this._loggers) {
+      if (logger.init && typeof logger.init === "function") {
+        logger.init();
+      }
+    }
+    const level = this._params.level;
+    const tags = this._params.tags;
     this.level = level;
     this._tags = { ...logTags(), ...tags };
     this._logger = new Logger.Logger({
