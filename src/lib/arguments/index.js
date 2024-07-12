@@ -1,6 +1,7 @@
 import { TYPE } from "./constants.js";
 import force from "./force.function.js";
 import isClass from "./isClass.function.js";
+import required from "./required.function.js";
 import validate from "./validate.function.js";
 
 //
@@ -9,4 +10,4 @@ import validate from "./validate.function.js";
 //
 
 export default validate;
-export { force, isClass, TYPE };
+export { force, isClass, required, TYPE };

@@ -2,7 +2,7 @@ import { afterEach, beforeEach, describe, expect, it } from "vitest";
 
 // Subject
 import argumentsLib from "../arguments.lib.js";
-import { force, TYPE } from "../arguments.lib.js";
+import { force, required, TYPE } from "../arguments.lib.js";
 
 //
 //
@@ -24,8 +24,9 @@ afterEach(() => {
 
 describe("Arguments Lib", () => {
   it("Exports what we expect", () => {
-    expect(force).toBeFunction();
-    expect(TYPE).toBeObject();
     expect(argumentsLib).toBeFunction();
+    expect(force).toBeFunction();
+    expect(required).toBeFunction();
+    expect(TYPE).toBeObject();
   });
 });
