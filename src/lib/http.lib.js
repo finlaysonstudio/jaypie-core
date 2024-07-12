@@ -45,6 +45,7 @@ const HTTP = {
       CLOUDFRONT_TABLET: "CloudFront-Is-Tablet-Viewer",
       TRACE_ID: "X-Amzn-Trace-Id",
     },
+    AUTHORIZATION: "Authorization",
     CACHE_CONTROL: "Cache-Control",
     CONTENT_TYPE: "Content-Type",
     COOKIE: {
@@ -57,6 +58,7 @@ const HTTP = {
       PROTOCOL: "X-Forwarded-Proto",
     },
     HOST: "Host",
+    ORIGIN: "Origin",
     POSTMAN: {
       TOKEN: "Postman-Token",
     },
