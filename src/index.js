@@ -8,6 +8,8 @@ export {
   default as validate,
   force,
   isClass,
+  optional,
+  required,
   TYPE as VALIDATE,
 } from "./lib/arguments.lib.js";
 

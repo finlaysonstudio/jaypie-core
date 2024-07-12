@@ -25,10 +25,12 @@ import {
   MultiError,
   NotFoundError,
   NotImplementedError,
+  optional,
   placeholders,
   ProjectError,
   ProjectMultiError,
   RejectedError,
+  required,
   safeParseFloat,
   sleep,
   TeapotError,
@@ -91,7 +93,9 @@ describe("Jaypie Core", () => {
       expect(force).toBeFunction();
       expect(getHeaderFrom).toBeFunction();
       expect(getObjectKeyCaseInsensitive).toBeFunction();
+      expect(optional).toBeFunction();
       expect(placeholders).toBeFunction();
+      expect(required).toBeFunction();
       expect(safeParseFloat).toBeFunction();
       expect(sleep).toBeFunction();
       expect(validate).toBeFunction();
@@ -100,6 +104,7 @@ describe("Jaypie Core", () => {
   describe("Logging", () => {
     it("Exposes log", () => {
       expect(log).toBeObject();
+      expect(log.init).toBeFunction();
     });
   });
   describe("Jaypie", () => {
