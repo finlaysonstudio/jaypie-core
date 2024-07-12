@@ -262,6 +262,7 @@ describe("Logger Module", () => {
         expect(log._withLoggers).toBeObject();
         expect(Object.keys(log._withLoggers)).toBeArrayOfSize(0);
       });
+      it.todo("Calls reset down to children");
     });
   });
 });
