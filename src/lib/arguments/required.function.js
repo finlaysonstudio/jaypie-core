@@ -18,22 +18,30 @@ const required = (value, type, options) => {
           `Argument "${value}" doesn't match required value "true" for type "boolean"`,
         );
       }
-      return value;
+      return true;
     case TYPE.NUMBER:
-      return validate(value, {
+      validate(value, {
         type: TYPE.NUMBER,
-        required: true,
-        falsy: false,
         ...options,
       });
+      if (!value) {
+        throw BadRequestError(
+          `Argument "${value}" doesn't match required value for type "number"`,
+        );
+      }
+      return true;
     case TYPE.OBJECT:
       return validate(value, { type: TYPE.OBJECT, required: true });
     case TYPE.STRING:
-      return validate(value, {
+      validate(value, {
         type: TYPE.STRING,
-        required: true,
-        falsy: false,
       });
+      if (!value) {
+        throw BadRequestError(
+          `Argument "${value}" doesn't match required value for type "string"`,
+        );
+      }
+      return true;
     default:
       throw TypeError(`Unsupported type, "${type}"`);
   }
