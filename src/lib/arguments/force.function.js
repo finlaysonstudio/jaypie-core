@@ -17,6 +17,7 @@ const force = (value, type, options) => {
     }
   }
 
+  // eslint-disable-next-line no-autofix/prefer-const
   let { key, maximum, minimum, nan } = options;
   if (nan === undefined) nan = false;
 

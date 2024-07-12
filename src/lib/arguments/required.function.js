@@ -1,4 +1,4 @@
-import { BadRequestError, ConfigurationError } from "../errors.lib.js";
+import { BadRequestError } from "../errors.lib.js";
 import { TYPE } from "./constants.js";
 import validate from "./validate.function.js";
 
