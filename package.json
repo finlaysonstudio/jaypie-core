@@ -45,6 +45,8 @@
     "test:spec:jaypieHandler.module": "vitest run ./src/__tests__/jaypieHandler.module.spec.js",
     "test:spec:knowdev.lib": "vitest run ./src/core/__tests__/knowdev.lib.spec.js",
     "test:spec:lambdaHandler.module": "vitest run ./src/__tests__/lambdaHandler.module.spec.js",
+    "test:spec:lib:arguments:optional.function": "vitest run ./src/lib/arguments/__tests__/optional.function.spec.js",
+    "test:spec:lib:arguments:required.function": "vitest run ./src/lib/arguments/__tests__/required.function.spec.js",
     "test:spec:lib:client:index": "vitest run ./test/client/__tests__/index.spec.js",
     "test:spec:lib:functions:safeParseFloat.function": "vitest run ./src/lib/functions/__tests__/safeParseFloat.function.spec.js",
     "test:spec:lib:log:formatAsJsonString.function": "vitest run ./src/lib/log/util/__tests__/formatAsJsonString.spec.js",

@@ -204,6 +204,16 @@ describe("Validate function", () => {
         });
       });
     });
+    describe("Number", () => {
+      it("Rejects NaN", () => {
+        const value = NaN;
+        const response = validate(value, {
+          type: Number,
+          throws: false,
+        });
+        expect(response).toBeFalse();
+      });
+    });
   });
   describe("Error cases", () => {
     it("Throws if type is bogus", () => {
