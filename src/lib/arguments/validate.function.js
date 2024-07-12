@@ -83,6 +83,11 @@ const validate = (
     // Otherwise (not required) allow undefined
   } else if (argument === undefined) valid = true;
 
+  // Don't allow NaN as a valid number
+  if (type === TYPE.NUMBER) {
+    valid = valid && !Number.isNaN(argument);
+  }
+
   //
   //
   // Throw?
