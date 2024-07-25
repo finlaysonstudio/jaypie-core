@@ -1,6 +1,5 @@
 import getObjectKeyCaseInsensitive from "./getObjectKeyCaseInsensitive.js";
 import validate, { force } from "../arguments/index.js";
-import { JAYPIE, log as defaultLogger } from "../../core.js";
 
 const LOCAL_ENV = "local";
 
@@ -19,24 +18,15 @@ const LOCAL_ENV = "local";
  */
 const envsKey = (
   key,
-  {
-    env = process.env.PROJECT_ENV || process.env.DEFAULT_ENV,
-    quiet = false,
-  } = {},
+  { env = process.env.PROJECT_ENV || process.env.DEFAULT_ENV } = {},
 ) => {
-  const log = defaultLogger.lib({ lib: JAYPIE.LIB.CORE });
-
   // Validate
   env = force.string(env);
   validate.string(key, { falsy: false });
 
   if (!env) {
     env = LOCAL_ENV;
-    if (!quiet) {
-      log.warn(
-        `No environment key provided. Pass an environment key or set DEFAULT_ENV. Using ${String(`ENV_${env}_${key}`).toUpperCase()} as default environment key`,
-      );
-    }
+    // console.warn(`No environment key provided. Pass an environment key or set DEFAULT_ENV. Using ${String(`ENV_${env}_${key}`).toUpperCase()} as default environment key`);
   }
 
   // Setup
@@ -46,26 +36,20 @@ const envsKey = (
 
   // Return ${key} first, but hint about ${envKey}
   if (overrideKey) {
-    if (!quiet) {
-      log.trace(`Using ${key} from environment.`);
-      if (envValue) {
-        log.warn(
-          `Overriding ${envKey} with ${key}. Remove ${key} to prefer ${envKey}.`,
-        );
-      } else {
-        log.debug(
-          "MONGODB_URI overrides environment-specific values. Set ENV_SANDBOX_MONGODB_URI to connect to sandbox by default and pass --env KEY to use the ENV_${KEY}_MONGODB_URI",
-        );
-      }
+    // console.log(`Using ${key} from environment.`);
+    if (envValue) {
+      // console.warn(`Overriding ${envKey} with ${key}. Remove ${key} to prefer ${envKey}.`);
+    } else {
+      // console.log("MONGODB_URI overrides environment-specific values. Set ENV_SANDBOX_MONGODB_URI to connect to sandbox by default and pass --env KEY to use the ENV_${KEY}_MONGODB_URI");
     }
     return overrideKey;
   }
 
   if (envValue) {
-    if (!quiet) log.trace(`Using ${envKey} from environment.`);
+    // console.log(`Using ${envKey} from environment.`);
     return envValue;
   }
-  if (!quiet) log.warn(`${key} not found in environment`);
+  // console.log(`${key} not found in environment`);
   return false;
 };
 
