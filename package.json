@@ -68,11 +68,11 @@
     "uuid": "^10.0.0"
   },
   "devDependencies": {
-    "@jaypie/testkit": "^1.0.19",
+    "@jaypie/testkit": "^1.0.26",
     "@rollup/plugin-commonjs": "^26.0.1",
     "@rollup/plugin-node-resolve": "^15.2.3",
     "eslint": "^8.57.0",
-    "eslint-config-jaypie": "^1.0.7",
+    "eslint-config-jaypie": "^1.0.17",
     "hygen": "^6.2.11",
     "jest-extended": "^4.0.2",
     "jest-json-schema": "^6.1.0",
