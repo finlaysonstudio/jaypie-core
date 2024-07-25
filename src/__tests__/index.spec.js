@@ -23,6 +23,7 @@ import {
   log,
   MethodNotAllowedError,
   MultiError,
+  NAME, // eslint-disable-line import/named
   NotFoundError,
   NotImplementedError,
   optional,
@@ -57,6 +58,9 @@ describe("Jaypie Core", () => {
       expect(ERROR).toBeObject();
       expect(HTTP).toBeObject();
       expect(VALIDATE).toBeObject();
+    });
+    it("Does NOT export deprecated constants", () => {
+      expect(NAME).toBeUndefined();
     });
   });
   describe("Errors", () => {

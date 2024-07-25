@@ -5,13 +5,14 @@ import JsonApiSerializer from "jsonapi-serializer";
 
 import {
   ERROR,
-  NAME,
   MultiError,
   UnreachableCodeError,
   ProjectError,
   ProjectMultiError,
 } from "../errors.js";
 import formatError from "../formatError.js";
+
+const NAME = "ProjectError";
 
 //
 //

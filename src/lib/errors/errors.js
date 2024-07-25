@@ -18,7 +18,7 @@ const proxyClassAsFunction = {
 // Constants
 //
 
-export const NAME = "ProjectError";
+const NAME = "ProjectError";
 
 export const ERROR = {
   MESSAGE: {

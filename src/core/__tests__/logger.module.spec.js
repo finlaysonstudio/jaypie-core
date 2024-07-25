@@ -1,22 +1,17 @@
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 // Subject
 import logger from "../logger.module.js";
 
 //
 //
-// Mock constants
-//
-
-//
-//
-// Mock modules
-//
-
-//
-//
 // Mock environment
 //
+
+beforeEach(() => {
+  process.env.PROJECT_ENV = "";
+  process.env.PROJECT_SERVICE = "";
+});
 
 afterEach(() => {
   vi.clearAllMocks();
