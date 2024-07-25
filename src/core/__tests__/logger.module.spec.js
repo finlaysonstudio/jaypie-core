@@ -8,14 +8,14 @@ import logger from "../logger.module.js";
 // Mock environment
 //
 
-const ORIGINAL_PROCESS_ENV = { ...process.env };
+const ORIGINAL_PROCESS_ENV = process.env;
 beforeEach(() => {
-  process.env = { ...ORIGINAL_PROCESS_ENV };
+  process.env = {};
 });
 
 afterEach(() => {
   vi.clearAllMocks();
-  process.env = { ...ORIGINAL_PROCESS_ENV };
+  process.env = ORIGINAL_PROCESS_ENV;
 });
 
 //
