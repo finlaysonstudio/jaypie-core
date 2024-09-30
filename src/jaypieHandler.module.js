@@ -105,7 +105,15 @@ const jaypieHandler = (
       } else {
         // otherwise, respond as unhandled
         log.fatal("[handler] Caught unhandled error");
-        log.var({ unhandedError: error.message });
+        log.error(`[${error.name}] ${error.message}`);
+        log.var({
+          unhandedError: {
+            // class: error.constructor.name,
+            name: error.name,
+            message: error.message,
+            stack: error.stack,
+          },
+        });
         throw new UnhandledError();
       }
     }
